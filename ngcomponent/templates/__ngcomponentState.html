@@ -1,7 +1,16 @@
-<md-content class="transparent full-window" layout="column" layout-align="center center" flex>
-    <!-- html template for the state -->
-    <nbgen-put on-title>
-        <span translate="<%= componentName %>.labels.title"></span>
-    </nbgen-put>
-    <<%= componentElement %> class="full-window"></<%= componentElement %>>
-</md-content>
+<div class="full-absolute" layout="column">
+    <!-- html content for the state -->
+    <md-toolbar layout="row" layout-align="space-around center" md-theme="secondaryToolbar" md-whiteframe="1"
+            flex="none" class="tmv-toolbar groupHeader md-accent">
+        <md-button ng-class="{'md-icon-button': $ctrl.$tmvUiUtils.$mdMedia('xs')}" flex-gt-xs
+            tmv-icon="mdi-arrow-left" tmv-label="tx:global.common.back"
+            ng-click="$ctrl.goBack()">
+        </md-button>
+    </md-toolbar>
+    <md-content flex>
+        <nbgen-put on-title>
+            <span translate="<%= componentName %>.labels.title"></span>
+        </nbgen-put>
+        <<%= componentElement %> class="full-absolute"></<%= componentElement %>>
+    </md-content>
+</div>

@@ -1,11 +1,10 @@
-import angular from 'angular'
+import angular from 'angular';
 
-import template from './<%= componentName %>.html'
+import config from './<%= componentName %>Config.js';
+import template from './<%= componentName %>.html';
+import moduleName from '../../components/nbgenApp/nbgenApp.js';
 
-import config from './<%= componentName %>Config.js'
-
-const name = '<%= componentName %>'
-const moduleName = '<%= moduleName %>'
+const name = '<%= componentName %>';
 
 class <%= controllerName %> {
     constructor() {

@@ -25,7 +25,6 @@ module.exports = TmvGenerator.extend({
             description: 'Module name'
         });
 
-
         this._lodash = _;       // make lodash functions available on templates
         this._s = _s;
     },
@@ -36,6 +35,7 @@ module.exports = TmvGenerator.extend({
         this.controllerName = _s.capitalize(this.componentName) + 'Ctrl'
         this.componentElement = _s.dasherize(this.componentName)
         this.componentTitle = _s.humanize(this.componentName)
+        this.stateControllerName = _s.capitalize(this.componentName) + 'StateCtrl';
 
         this.moduleName = this.options.module || CONSTANTS.nbgenAppModuleName
         this.iconClass = this.options.iconClass || 'mdi-package'
@@ -44,19 +44,14 @@ module.exports = TmvGenerator.extend({
     prompting: {
         // functions for prompting parameters to be used in generation of codes
         // ask if want to add menu entry
-        addMenuEntry: function() {
-            var done = this.async();
-            var prompts = [{
-                type: 'confirm',
-                name: 'addMenuEntry',
-                default: true,
-                message: 'Add menu entry?'
-            }]
+        askToGenerateState: function() {
+            if (this.abort) return;
+            this.askForConfirmation('generateState', 'Generate Router UI state?', true);
+        },
 
-            this.prompt(prompts).then(function(props) {
-                this.addMenuEntry = props.addMenuEntry
-                done();
-            }.bind(this))
+        askToAddMenuEntry: function() {
+            if (this.abort || !this.generateState) return;
+            this.askForConfirmation('addMenuEntry', 'Add menu entry?', true);
         }
     },
 
@@ -81,20 +76,20 @@ module.exports = TmvGenerator.extend({
         writeTemplateFiles: function() {
             if (this.abort) return;
             // i18n file
-            this.template('__ngcomponent.hjson', path.join(CONSTANTS.i18nDir, this.moduleName, this.componentName + '.hjson'))
+            this.template('__ngcomponent.hjson', path.join(CONSTANTS.i18nDir, this.componentName + '.hjson'))
 
-            var destdir = path.join(CONSTANTS.componentsDir, this.moduleName)
-            if (this.options['admin-menu']) {
-                destdir = path.join(destdir, 'admin')
-            }
-            destdir = path.join(destdir, this.componentName)
+            var destdir = path.join(CONSTANTS.uiAppDir, this.componentName);
 
-            this.template('__ngcomponent.html', path.join(destdir, this.componentName + '.html'))
-            this.template('__ngcomponent.js', path.join(destdir, this.componentName + '.js'))
+            this.templateLocation = path.join(destdir, this.componentName + '.html')
+
+            this.template('__ngcomponent.html', this.templateLocation);
+            this.template('__ngcomponent.js', path.join(destdir, this.componentName + 'Ctrl.js'))
             this.template('__ngcomponentConfig.js', path.join(destdir, this.componentName + 'Config.js'))
             this.template('__ngcomponent.scss', path.join(destdir, '_' + this.componentName + '.scss'))
-            this.template('__ngcomponentState.html', path.join(destdir, this.componentName + 'State.html'))
-            this.template('__ngcomponentState.js', path.join(destdir, this.componentName + 'State.js'))
+            if (this.generateState) {
+                this.template('__ngcomponentState.html', path.join(destdir, this.componentName + 'State.html'))
+                this.template('__ngcomponentState.js', path.join(destdir, this.componentName + 'State.js'))
+            }
         },
 
         injectMenuEntry: function() {
@@ -128,6 +123,9 @@ module.exports = TmvGenerator.extend({
 
     install: {
         // perform any post installation routine here
+        injectFiles: function() {
+            this.injectFiles();
+        },
     },
 
     end: function() {

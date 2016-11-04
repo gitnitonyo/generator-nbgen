@@ -1,10 +1,23 @@
-import angular from 'angular'
+import angular from 'angular';
 
-import template from './<%= componentName %>State.html'
+import template from './<%= componentName %>State.html';
+import moduleName from '../../components/nbgenApp/nbgenApp.js';
 
-const name = '<%= componentName %>'
-const moduleName = '<%= moduleName %>'
-const i18npart = `${moduleName}/${name}`
+const name = '<%= componentName %>';
+const i18npart = `${name}`;
+
+class <%= stateControllerName %> {
+    constructor($scope, $state, $tmvUiUtils) {
+        'ngInject';
+
+        this.$tmvUiUtils = $tmvUiUtils;
+        this.$state = $state;
+    }
+
+    goBack() {
+        this.$state.go('home');
+    }
+}
 
 angular.module(moduleName)
     .config(function($stateProvider) {
@@ -16,11 +29,14 @@ angular.module(moduleName)
                 url: `/${name}`,
                 data: {
                     roles: [
+                        // specify roles allowed to access this route
                     ]
                 },
                 views: {
                     'content@': {
                         template,
+                        controller: <%= stateControllerName %>,
+                        controllerAs: '$ctrl'
                     }
                 },
                 resolve: {
