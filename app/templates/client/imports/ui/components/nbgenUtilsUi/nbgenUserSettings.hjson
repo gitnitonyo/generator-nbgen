@@ -1,0 +1,73 @@
+formLayout: {
+    formGroups: [
+        {
+            fields: [
+                {
+                    fieldName: "$$email"
+                    fieldDisable: true
+                    fieldLabel: "email"
+                    computedValue: "$tmvCollection.getEmail()"
+                }
+                {
+                    fieldName: "profile.name"
+                    fieldValidateRulesRequired: true
+                    fieldValidateRulesMaxlength: 100
+                    fieldValidateRulesMinlength: 3
+                }
+            ]
+        }
+        {
+            label: "label.contacts"
+            cssClass: "form-group-border"
+            fields: [
+                {
+                    fieldName: "profile.contacts.phone"
+                    gridClass: "col-xs-6"
+                    fieldValidateRulesMaxlength: 20
+                    fieldValidateRulesPattern: "/^\\+?[0-9()-]+$/"
+                    fieldInputType: "text"
+                }
+                {
+                    fieldName: "profile.contacts.mobile"
+                    gridClass: "col-xs-6"
+                    fieldValidateRulesMaxlength: 20
+                    fieldValidateRulesPattern: "/^\\+?[0-9()-]+$/"
+                    fieldInputType: "text"
+                }
+            ]
+        }
+        {
+            label: "label.address"
+            cssClass: "form-group-border"
+            fields: [
+                {
+                    fieldName: "profile.address.street"
+                    fieldValidateRulesMaxlength: 100
+                    fieldValidateRulesMinlength: 5
+                    fieldInputType: "text"
+                }
+                {
+                    fieldName: "profile.address.city"
+                    gridClass: "col-sm-6"
+                }
+                {
+                    fieldName: "profile.address.province"
+                    gridClass: "col-sm-6"
+                }
+                {
+                    fieldName: "profile.address.zipCode"
+                    gridClass: "col-sm-6"
+                }
+                {
+                    fieldName: "profile.address.country"
+                    gridClass: "col-sm-6"
+                    fieldDefaultValue: "'PH'"
+                    fieldInputType: "select"
+                    fieldOptions: "$root.$$countries"
+                    fieldOptionsLabel: "name"
+                    fieldOptionsValue: "code"
+                }
+            ]
+        }
+    ]
+}

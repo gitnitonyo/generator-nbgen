@@ -1,0 +1,60 @@
+
+// common styles; please use other scss files for application-specific styles
+
+$application-logo: '/assets/images/application-logo.png';
+$application-bg: '/assets/images/application-bg.jpg';
+
+nbgen-app {
+    @include nbgen-layout-row();
+
+    .nbgen-application-logo {
+        content: url($application-logo);
+        height: 65px;
+        width: 192px;
+    }
+
+    .nbgen-main-toolbar {
+        min-height: 48px;
+    }
+
+    .nbgen-support-toolbar {
+        min-height: 38px;
+    }
+
+    // md-sidenav {
+    //    @media (max-width: ($layout-breakpoint-md + $layout-breakpoint-lg) / 2) {
+    //        max-width: 270px;
+    //    }
+    // }
+
+    #nbgenTitleArea {
+        @media (max-width: $layout-breakpoint-sm) {
+            font-size: 90%;
+        }
+        @media (max-width: $layout-breakpoint-xs) {
+            font-size: 75%;
+        }
+    }
+
+    #nbgenApplicationContent,
+    #nbgenApplicationContent > .app-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+.tmv-profile {
+    flex: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    box-sizing: content-box;
+    font-size: 24px !important;
+    line-height: 26px !important;
+    text-align: center;
+    vertical-align: middle;
+}
+

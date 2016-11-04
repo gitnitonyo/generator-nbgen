@@ -1,0 +1,10 @@
+<tmv-put on-title class="ellipsis">
+    <span class="ellipsis" ng-bind-html="$tmvCollection.titleDisplay()"></span>
+</tmv-put>
+<md-toolbar layout="row" layout-align="space-around center" md-theme="secondaryToolbar" md-whiteframe="1"
+        flex="none" class="tmv-toolbar groupHeader md-accent" id="tmv-collection-toolbar">
+</md-toolbar>
+<div ng-if="!$tmvCollection.showDetails" nbgen-template="$tmvCollection.tmvCollectionHeadingListView">
+</div>
+<div ng-if="$tmvCollection.showDetails" nbgen-template="$tmvCollection.tmvCollectionHeadingDetailsView">
+</div>

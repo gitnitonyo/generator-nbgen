@@ -1,0 +1,378 @@
+/**
+ * Common styles for the app
+ */
+
+body {
+    background: rgb(0, 0, 0);
+}
+
+.dont-display {
+    display: none;
+}
+
+.tmv-loader-gradient {
+    background: rgb(20, 20, 20);
+    background: linear-gradient(0deg, #2f2f2f, #090909);
+}
+
+// loader
+#loader-wrapper.tmv-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10001;
+    #loader {
+        display: block;
+        position: relative;
+        left: 50%;
+        top: 50%;
+        width: 200px;
+        height: 200px;
+        margin: -100px 0 0 -100px;
+        z-index: 10002;
+    }
+
+    .loader-section {
+        position: fixed;
+        top: 0;
+        width: 51%;
+        height: 100%;
+        z-index: 10001;
+        transform: translateX(0);
+        &.section-left {
+            left: 0;
+        }
+        &.section-right {
+            right: 0;
+        }
+    }
+
+    .tmvSpinner {
+        margin: 25px auto;
+        width: 120px;
+        height: 60px;
+        text-align: center;
+        font-size: 10px;
+    }
+
+    .tmvSpinner > div {
+        background-color: #F0F0F0;
+        height: 100%;
+        opacity: 0.6;
+        width: 12px;
+        margin-left: 2px;
+        margin-right: 2px;
+        display: inline-block;
+
+        animation: sk-stretchdelay 1.2s infinite ease-in-out;
+    }
+
+    .tmvSpinner .rect2 {
+        animation-delay: -1.1s;
+    }
+
+    .tmvSpinner .rect3 {
+        animation-delay: -1.0s;
+    }
+
+    .tmvSpinner .rect4 {
+        animation-delay: -0.9s;
+    }
+
+    .tmvSpinner .rect5 {
+        animation-delay: -0.8s;
+    }
+
+    @-webkit-keyframes sk-stretchdelay {
+        0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
+        20% { -webkit-transform: scaleY(1.0) }
+    }
+
+    @keyframes sk-stretchdelay {
+        0%, 40%, 100% {
+            transform: scaleY(0.4);
+            -webkit-transform: scaleY(0.4);
+        }  20% {
+               transform: scaleY(1.0);
+               -webkit-transform: scaleY(1.0);
+           }
+    }
+}
+
+// when it's loaded
+$loader-anim-duration: 0.3s;
+$loader-anim-delay: 0s;
+$loader-section-anim-duration: 0s;
+$loader-section-anim-delay: $loader-anim-duration;
+$loader-duration: 0.5s;
+$loader-delay: $loader-anim-duration + $loader-section-anim-duration;
+
+.loaded {
+    #loader-wrapper.tmv-loading {
+        #loader {
+            opacity: 0;
+            transition: all $loader-anim-duration $loader-anim-delay ease-out;
+        }
+        .loader-section {
+            transition: all $loader-section-anim-duration $loader-section-anim-delay cubic-bezier(0.645, 0.045, 0.355, 1.000);
+            &.section-left {
+                opacity: 0;
+                // transform: translateX(-100%);
+            }
+            &.section-right {
+                // transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        visibility: hidden;
+        opacity: 0;
+        transition: all $loader-duration $loader-delay ease-out;
+    }
+}
+
+// load the roboto fonts
+@font-face {
+    font-family: 'Roboto-condensed';
+    src: url('/assets/fonts/roboto-condensed.eot');
+    src: url('/assets/fonts/roboto-condensed.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/roboto-condensed.woff') format('woff'), url('/assets/fonts/roboto-condensed.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/assets/fonts/roboto-regular.eot');
+    src: url('/assets/fonts/roboto-regular.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/roboto-regular.woff') format('woff'), url('/assets/fonts/roboto-regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto-medium';
+    src: url('/assets/fonts/roboto-medium.woff') format('woff'), url('/assets/fonts/roboto-medium.ttf') format('truetype');
+}
+
+.md-body-2 {
+    font-family: 'Roboto-medium', 'Roboto', sans-serif;
+}
+
+// Alignment
+.text-left           { text-align: left; }
+.text-right          { text-align: right; }
+.text-center         { text-align: center; }
+.text-justify        { text-align: justify; }
+.text-nowrap         { white-space: nowrap; }
+
+// Transformation
+.text-lowercase      { text-transform: lowercase; }
+.text-uppercase      { text-transform: uppercase; }
+.text-capitalize     { text-transform: capitalize; }
+.text-underline      { text-decoration: underline; }
+.text-italic         { font-style: italic; }
+.text-emphasis       { font-weight: bold; }
+.text-padding        { padding-left: 20px; padding-right: 20px; }
+.text-margin         { margin-left: 10px; margin-right: 10px; }
+
+.text-fullwidth      { width: 100%; }
+
+.text-ellipsis {
+    text-overflow: ellipsis;
+
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.transparent {
+    background: transparent !important;
+}
+
+.full-window {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    flex-direction: column;
+    display: flex;
+    box-sizing: border-box;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    -ms-grid-row-align: center;
+    align-items: center;
+    -webkit-align-content: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    max-width: 100%;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+
+    > * {
+        max-width: 100%;
+    }
+}
+
+.full-absolute {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.window-maximize {
+    position: relative;
+    min-width: 100%;
+    min-height: 100%;
+    width: 100%;
+    height: 100%;
+}
+
+.tmv-box-content {
+    @media (min-width: $layout-breakpoint-xs) {
+        max-width: 90%;
+    }
+}
+
+.tmv-mobile-width {
+    @media (min-width: $layout-breakpoint-xs) {
+        min-width: $layout-breakpoint-xs - 20px;
+        max-width: $layout-breakpoint-xs - 20px;
+    }
+}
+
+md-icon.mdi {
+    font-size: 24px;
+}
+
+// standard animation
+:not(.ng-enter),
+:not(.ng-leave) {
+    .tmv-anim {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        transition: all 0.3s linear;
+        &.ng-enter {
+            opacity: 0;
+            &.ng-enter-active {
+                opacity: 1;
+            }
+        }
+        &.ng-leave {
+            opacity: 1;
+            &.ng-leave-active {
+                opacity: 0;
+            }
+        }
+    }
+}
+
+$tmv-minimum-height: 280px;
+
+.tmv-hide-small-height {
+    @media (max-height: $tmv-minimum-height) {
+        display: none;
+    }
+}
+
+md-toolbar.tmv-toolbar {
+    min-height: 48px;
+    &.groupHeader {
+        min-height: 38px;
+        button {
+            line-height: 30px;
+            min-height: 30px;
+            margin: 0 8px;
+        }
+    }
+}
+
+md-toolbar md-input-container.search-box {
+
+    @media (min-width: $layout-breakpoint-xs) {
+        margin: 0px 10px;
+    }
+    @media (max-width: $layout-breakpoint-xs) {
+        margin: 0 0 2px;
+        input {
+            // max-width: 150px !important;
+        }
+    }
+    .md-errors-spacer {
+        min-height: 0px !important;
+    }
+}
+
+.tmv-avatar-icon {
+    position: relative;
+    top: -9px;
+    left: -1px;
+    padding: 1px !important;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+}
+
+div.md-avatar {
+    text-align: center;
+    > * {
+        line-height: 40px;
+    }
+    i.mdi {
+        font-size: 24px;
+    }
+}
+
+// provides specific styles for the collection
+.tmv-data-list .md-avatar img.md-avatar {
+    margin: -1px 0 0;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+}
+
+md-list {
+    padding: 0;
+}
+
+.fade-anim.ng-hide {
+    opacity: 0;
+}
+
+/* The finishing CSS styles for the enter animation */
+.fade-anim {
+    transition: 0.3s linear all;
+    opacity: 1;
+}
+
+
+// grid system
+@import "grid/_variables.scss";
+
+$grid-gutter-width: 0px;    // don't use gutter width but instead adjust the md-input-container
+
+@import "grid/mixins/_clearfix.scss";
+@import "grid/mixins/_grid-framework.scss";
+@import "grid/mixins/_grid.scss";
+@import "grid/_grid.scss";
+
+
+// inject:imports:scss
+@import "../ui/components/nbgenForm/_nbgenForm.scss";
+@import "../ui/components/nbgenApp/_nbgenApp.scss";
+@import "../ui/components/nbgenSocial/_nbgenSocial.scss";
+@import "../ui/components/nbgenUtilsUi/_nbgenSideMenu.scss";
+@import "../ui/components/nbgenUtilsUi/_nbgenUtilsUi.scss";
+@import "../ui/components/nbgenApp/nbgenLogin/_nbgenLogin.scss";
+@import "../ui/components/nbgenApp/nbgenMain/_nbgenMain.scss";
+@import "../ui/components/nbgenApp/nbgenSignup/_nbgenSignup.scss";
+@import "../ui/components/nbgenApp/admin/dbStatistics/_dbStatistics.scss";
+@import "../ui/components/nbgenApp/admin/serviceConfigurations/_serviceConfigurations.scss";
+@import "../ui/components/nbgenApp/admin/users/_users.scss";
+// endinject
+

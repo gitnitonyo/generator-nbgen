@@ -1,0 +1,14 @@
+<md-list class="md-dense">
+    <md-list-item class="md-1-line" ng-repeat="announcement in nbgenAnnouncement.announcements">
+        <div class="md-list-item-text" layout="column">
+            <div class="md-caption text-emphasis" style="padding-top: 5px">{{announcement.title}}</div>
+            <div class="md-caption">
+                <i>Posted date:&nbsp; {{announcement.dateToPost | date: 'MM/dd/yyyy'}}</i>
+            </div>
+            <div ng-bind-html="announcement.content" class="md-caption tmv-announcement-content">
+            </div>
+            <div>&nbsp;</div>
+        </div>
+        <md-divider></md-divider>
+    </md-list-item>
+</md-list>

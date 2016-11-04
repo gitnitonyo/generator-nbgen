@@ -1,0 +1,41 @@
+// i18n translation file
+users: {
+    home: {
+        title: "Users"
+        createNew: "Create a new User"
+        deleteConfirmation: "Are you sure you want to delete this item?"
+        insertSuccess: "Item successfully created."
+        updateSuccess: "Item successfully updated."
+        removeSuccess: "Item successfully removed."
+    }
+    // translation for fields
+    label: {
+        contacts: "Contacts"
+        address: "Address"
+        lastLoginDetails: "Last Login Details"
+    }
+    email: "Email"
+    profile: {
+        name: "Name"
+        contacts: {
+            phone: "Phone",
+            mobile: "Mobile"
+        },
+        address: {
+            street: "Street",
+            city: "City",
+            province: "Province"
+            zipCode: "Zip Code"
+            country: "Country"
+        }
+    }
+    notesOnNew: "** Email notification will be sent to this user to activate his/her account."
+    pickUserRoles: {
+        label: {
+            currentRoles: "Current assigned roles:"
+            modifyRoles: "Modify Roles"
+            pickRoles: "Please pick up at least 1 role"
+
+        }
+    }
+}

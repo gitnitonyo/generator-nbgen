@@ -1,0 +1,21 @@
+<tmv-put location="tmv-collection-toolbar" only-children>
+    <md-button
+        ng-class="{'md-icon-button': $tmvCollection.$tmvUiUtils.$mdMedia('xs')}"
+        tmv-label="{{$tmvCollection.$labels.cancelButton || 'global.common.cancel' | translate}}"
+        tmv-icon="mdi-close"
+        ng-click="$tmvCollection.closeDetailsView()"
+        flex-gt-xs
+        >
+    </md-button>
+    <md-button
+        ng-hide="$tmvCollection.hideFormSaveAction($tmvCollection.$currentItem)"
+        ng-if="$tmvCollection.viewMode != 'view'"
+        tmv-label="{{$tmvCollection.$labels.saveButton || 'global.common.save' | translate}}"
+        tmv-icon="mdi-content-save"
+        ng-class="{'md-icon-button': $tmvCollection.$tmvUiUtils.$mdMedia('xs')}"
+        ng-click="$tmvCollection.saveDetails()"
+        ng-disabled="editForm.$invalid || editForm.$pristine"
+        flex-gt-xs
+        >
+    </md-button>
+</tmv-put>

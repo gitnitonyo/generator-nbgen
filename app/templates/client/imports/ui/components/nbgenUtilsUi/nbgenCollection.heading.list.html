@@ -1,0 +1,26 @@
+<tmv-put location="tmvDataInfo">
+    <div class="side-margin text-center">
+        <span class="text-emphasis">{{$tmvCollection.$collectionCount}}</span><br>
+        <span>item(s)</span>
+    </div>
+</tmv-put>
+<tmv-put on-search layout="row" flex ng-if="$tmvCollection.displaySearch()">
+    <md-input-container md-no-float="" class="search-box md-block" flex md-theme="dark">
+        <md-icon md-font-icon="mdi-magnify" class="mdi"></md-icon>
+        <input type="text" placeholder="{{($tmvCollection.$labels.searchLabel || 'global.common.search') | translate}}"
+               ng-model="$tmvCollection.searchText" autocomplete="off"
+               autocorrect="off">
+    </md-input-container>
+</tmv-put>
+<tmv-put location="tmv-collection-toolbar" only-children>
+    <md-button ng-class="{'md-icon-button': $tmvCollection.$tmvUiUtils.$mdMedia('xs')}" flex-gt-xs
+        tmv-icon="mdi-arrow-left" tmv-label="tx:global.common.back"
+        ng-click="$tmvCollection.goBack()">
+    </md-button>
+</tmv-put>
+<tmv-put on-fab ng-if="!$tmvCollection.hideAdd()">
+    <md-button class="md-fab md-fab-bottom-right" tmv-icon="mdi-plus"
+               tmv-label="{{$tmvCollection.$labels.addButton || 'global.common.add' | translate}}"
+               ng-click="$tmvCollection.createItem($event)">
+    </md-button>
+</tmv-put>

@@ -1,0 +1,18 @@
+// i18n translation file
+<%= collectionName %>: {
+    home: {
+        title: "<%= _s.humanize(collectionName) %>"
+        createNew: "Create a new <%= collection.documentNameCapitalized %>"
+        deleteConfirmation: "Are you sure you want to delete this item?"
+        insertSuccess: "Item successfully created."
+        updateSuccess: "Item successfully updated."
+        removeSuccess: "Item successfully removed."
+    }
+    // translation for fields
+    <%_ fields.forEach(function(f) { _%>
+    <%- f.fieldName %>: "<%- _s.humanize(f.fieldName) %>"
+    <%_ }) _%>
+    labels: {
+        // define other labels here
+    }
+}

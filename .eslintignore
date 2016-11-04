@@ -1,0 +1,5 @@
+*node_modules*
+**/*.ejs
+*bower_components*
+!Gruntfile.js
+!.Gruntfile.js

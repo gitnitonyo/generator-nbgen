@@ -1,0 +1,29 @@
+<head>
+    <title><%= configOptions.title %></title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <base href="/">
+</head>
+<!-- this the initial html displayed by app -->
+<body layout="column">
+    <div id="loader-wrapper" class="tmv-loading">
+        <div id="loader" class="layout-column layout-align-center-center text-center">
+            <img src="assets/images/application-logo.png" height="50"/>
+            <div class="tmvSpinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+            <span class="md-body-2 text-emphasis" style="color: #f0f0f0">
+                <%= configOptions.title %> is loading...
+            </span><br>
+        </div>
+        <!-- <div class="loader-section section-left tmv-loader-gradient"></div>
+        <div class="loader-section section-right tmv-loader-gradient"></div> -->
+    </div>
+    <nbgen-app></nbgen-app>
+</body>

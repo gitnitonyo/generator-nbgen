@@ -1,0 +1,61 @@
+.nbgen-sidemenu-container {
+    margin: 0;
+    padding: 0;
+    ul {
+        margin: 0;
+        padding: 0;
+        > li {
+            > button,
+            > a {
+                padding: 0px 15px 0px 25px;
+                > div {
+                    > md-icon:first-child {
+                        margin-right: 15px;
+                    }
+                    > span[translate] {
+                        text-transform: none;
+                    }
+                }
+                border-radius: 0px;
+            }
+            > button {
+                margin: 1px 0px;
+            }
+        }
+    }
+    > li {
+        > button,
+        > a {
+            padding: 0px 15px 0px 15px;
+            > div > md-icon:first-child {
+                margin-right: 15px;
+            }
+            border-radius: 0px;
+        }
+        > button {
+            margin: 1px 0px;
+        }
+    }
+    // handle animation here
+    .toggle-icon {
+        @include animation-based(0.2s);
+        @include animation-rotate(180deg);
+        padding: 0;
+        &.toggled {
+            @include animation-rotate(0deg);
+        }
+    }
+
+    // animation for menu on the left when toggled
+    .menu-toggle-list {
+        overflow: hidden;
+        height: 0;
+        -webkit-transition:height 100ms ease-in;
+        -moz-transition:height 100ms ease-in;
+        -o-transition:height 100ms ease-in;
+        transition:height 100ms ease-in;
+    }
+    .menu-toggle-list.open {
+        height: auto;
+    }
+}

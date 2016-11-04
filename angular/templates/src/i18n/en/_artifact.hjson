@@ -1,0 +1,7 @@
+{
+    <%= _stateName %>: {
+        home: {
+            title: "<%= _s.startCase(stateName) %>"
+        }
+    }
+}

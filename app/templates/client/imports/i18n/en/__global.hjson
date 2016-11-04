@@ -1,0 +1,180 @@
+nbgenApp:
+{
+    labels:
+    {
+        poweredBy: "Powered by <b>nbgen 2.0</b>"
+        needHelp: "Need Help?"
+        termsOfUse: "Terms of Use"
+        announcement: "Announcement / News"
+    }
+}
+global:
+{
+    menu: {
+        home: "Home"
+        login: "Sign In"
+        account: "Account"
+        accountSettings: "Account Info"
+        password: "Change Password"
+        logout: "Sign Out"
+        vendors: "Vendors"
+        users: "Users"
+        admin: "Admin"
+        serviceConfigurations: "Auth Services"
+        countries: "Countries"
+        companies: "Companies"
+        adminSettings: "Settings"
+        appDbStats: "DB Statistics"
+        announcements: "Announcements"
+        _menu_: "Menu items will be put here"
+    }
+    messages: {
+        notImplemented: "This function is not yet implemented"
+        notConnectedLogin: "You are not connected to the service. You'll not be able to login."
+        notConnected: "You are currently not connected to the service. The application will try to resync your data when service becomes available."
+        popupWindowClose: "Popup window was closed before completing transaction"
+    }
+    common: {
+        or: "or"
+        cancel: "Cancel"
+        ok: "Ok"
+        signIn: "Sign In"
+        signUp: "Sign up"
+        error: "Error"
+        message: "Message"
+        confirm: "Confirm"
+        signOut: "Sign Out"
+        edit: "Edit"
+        delete: "Delete"
+        save: "Save"
+        back: "Back"
+        add: "Add"
+        send: "Send"
+        print: "Print"
+        search: "Search"
+        numItems: "No. of Items"
+        forgotPassword: "Forgot password?"
+        noData: "No data to display",
+        loseChangesConfirmation: "You will lose changes if you continue. Do you want to continue?"
+        loading: "Loading..."
+    }
+    login: {
+        loginUsing: "Sign in using:"
+        haveAnAccount: "Have an account already?"
+        username: "Email"
+        password: "Password"
+        title: "Login"
+        prompt: "Please enter credentials"
+        facebook: "Facebook"
+        google: "Google"
+        twitter: "Twitter"
+        registerPrompt: "Don't have an account yet?"
+        invalid: "Invalid username/email or password"
+        changePassword: "Change Password"
+        changePasswordSuccess: "Password successfully changed."
+        newPassword: "New Password",
+        oldPassword: "Old Password",
+        reEnterPassword: "Reenter Password",
+        specifyEmail: "Please specify email address"
+        resetPasswordPrompt: "An email has been dispatched for resetting your password"
+        email: "Email"
+        resetPassword: "Reset Password"
+        loginToContinue: "You must login to continue"
+        custom: {
+            passwordsDontMatch: "Provided passwords don't match."
+        }
+        user: {
+            label: {
+                settings: "Settings"
+                contacts: "Contacts"
+                address: "Address"
+            }
+            profile: {
+                name: "Name",
+                contacts: {
+                    phone: "Phone"
+                    mobile: "Mobile"
+                }
+                address: {
+                    street: "Street"
+                    city: "City"
+                    province: "Province"
+                    zipCode: "Zip Code"
+                    country: "Country"
+                }
+            }
+            email: "Email"
+        }
+    }
+}
+registration: {
+    home: {
+        title: "Registration",
+        prompt: "Sign up",
+        emailPrompt: "Thank you for registering to our app!<br/>An email has been sent to your email account. Please click the link specified there to activate your account.",
+        enrollmentTitle: "New User",
+        enrollmentPrompt: "Please enter new password",
+        setPassword: "Save"
+    }
+    email: "Email",
+    password: "Password",
+    reenterPassword: "Reenter Password",
+    activatedPrompt: "Thank you for activating your acount! You are now ready to use this facility."
+    profile: {
+        name: "Name"
+        mobile: "Mobile"
+    },
+    custom: {
+        passwordsDontMatch: "Provided passwords do not match"
+    }
+}
+form: {
+    validation: {
+        required: "This field is required."
+        minlength: "This field is required to be at least {{min}} characters."
+        maxlength: "This field cannot be longer than {{max}} characters."
+        min: "This field should be more than {{min}}."
+        max: "This field cannot be more than {{max}}."
+        pattern: "Invalid format."
+        number: "This field should be a number."
+        datetimelocal: "This field should be a date and time."
+        email: "This field should be a valid email."
+        unique: "This field must be unique."
+        alpha: "Only letters are allowed."
+        alphaNumeric: "Only letters and numbers are allowed."
+        numeric: "Only numbers are allowed."
+    }
+}
+appDbStats: {
+    home: {
+        title: "DB Statistics"
+    }
+}
+responseErrors: {
+    400: "{{reason}}"
+    401: "Unauthorized"
+    402: "Payment required"
+    403: "{{reason}}"
+    404: "{{message}}"
+    405: "Action is not allowed ({{reason}})"
+    406: "Action is not acceptable"
+    407: "Proxy authentication required"
+    408: "Request timeout"
+    409: "There's a conflict on your request ({{reason}})"
+    410: "Item no longer exists"
+    413: "Payload too large"
+    414: "URI too long"
+    415: "Unsupported media type"
+    416: "Request range not satisfiable"
+    422: "Unprocessable entity"
+    423: "Item is locked"
+    426: "Upgrade required"
+    428: "Precondition required"
+    429: "Too many requests"
+    431: "Request header fields too large"
+    500: "Unexpected error. Please contact administrator"
+    501: "Server error: {{reason}}"
+    530: "We are unable to connect to OICP server to retrieve the verification code. You may call helpdesk or try again later."
+    531: "There's no more available TPLs for allocation. Please contact helpdesk."
+    "-1": "Server may be down"
+}

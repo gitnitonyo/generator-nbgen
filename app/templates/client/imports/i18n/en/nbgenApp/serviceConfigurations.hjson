@@ -1,0 +1,19 @@
+// i18n translation file
+serviceConfigurations: {
+    home: {
+        title: "Authentication Services"
+        createNew: "Create a new ServiceConfiguration"
+        deleteConfirmation: "Are you sure you want to delete this item?"
+        insertSuccess: "Item successfully created."
+        updateSuccess: "Item successfully updated."
+        removeSuccess: "Item successfully removed."
+    }
+    // translation for fields
+    appId: "appId",
+    clientId: "clientId",
+    consumerKey: "consumerKey",
+    secret: "secret",
+    labels: {
+        // define other labels here
+    }
+}

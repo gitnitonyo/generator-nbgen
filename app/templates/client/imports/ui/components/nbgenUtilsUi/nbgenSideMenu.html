@@ -1,0 +1,33 @@
+<ul class="nbgen-sidemenu-container">
+    <li layout="column" ng-repeat="menuItem in nbgenSideMenu.menuItems" ng-if="nbgenSideMenu.doFilterFn(menuItem)">
+        <md-button class="md-no-style" ng-click="nbgenSideMenu.performAction(menuItem, $event)"
+                   aria-label="{{menuItem.label | translate}}"
+                   ng-disabled="nbgenSideMenu.isActive(menuItem)"
+                   ng-if="menuItem.menuId !== '__divider__'">
+            <div layout="row">
+                <md-icon md-font-icon="{{menuItem.iconClass}}" ng-class="menuItem.additionalIconClasses"></md-icon>
+                <span translate="{{menuItem.label}}" ng-attr-style="{{menuItem.textStyle}}"></span>
+                <span flex></span>
+                <span ng-if="!!menuItem.submenu" class="toggle-icon" ng-class="{'toggled': menuItem.isOpen}">
+                    <md-icon md-font-icon="mdi-chevron-up" class="mdi"></md-icon>
+                </span>
+            </div>
+        </md-button>
+        <md-divider ng-if="menuItem.menuId === '__divider__'"></md-divider>
+        <ul class="menu-toggle-list" ng-if="!!menuItem.submenu" ng-class="{'open': menuItem.isOpen}">
+            <li layout="column" ng-repeat="submenuItem in menuItem.submenu" ng-if="nbgenSideMenu.doFilterFn(submenuItem)">
+                <md-button class="md-no-style" ng-click="nbgenSideMenu.performAction(submenuItem, $event)"
+                           aria-label="{{submenuItem.label | translate}}"
+                           ng-disabled="nbgenSideMenu.isActive(submenuItem)"
+                           ng-if="submenuItem.menuId !== '__divider__'">
+                    <div layout="row">
+                        <md-icon md-font-icon="{{submenuItem.iconClass}}" ng-class="submenuItem.additionalIconClasses"></md-icon>
+                        <span translate="{{submenuItem.label}}" ng-attr-style="{{submenuItem.textStyle}}"></span>
+                        <span flex></span>
+                    </div>
+                </md-button>
+                <md-divider ng-if="submenuItem.menuId === '__divider__'"></md-divider>
+            </li>
+        </ul>
+    </li>
+</ul>

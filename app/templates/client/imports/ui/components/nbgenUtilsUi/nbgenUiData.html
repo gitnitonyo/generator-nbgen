@@ -1,0 +1,40 @@
+<md-dialog aria-label="{{vm.dlgTitle}}" class="nbgen-dialog"
+    ng-class="vm.cssClass" ng-style="vm.cssStyle">
+    <form name="editForm" novalidate="">
+        <md-toolbar ng-if="vm.primaryTitle !== false" class="md-accent">
+            <div class="md-toolbar-tools">
+                <h2 ng-if="!vm.dlgTitleInterpolated" translate="{{vm.dlgTitle}}"></h2>
+                <h2 ng-if="vm.dlgTitleInterpolated" ng-bind-html="vm.dlgTitle"></h2>
+                <span flex></span>
+                <md-button class="md-icon-button" nbgen-icon="mdi-close"
+                    aria-label="Close" ng-click="vm.cancelFn()">
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ng-if="!vm.template">
+            <h2 class="md-title" ng-if="vm.primaryTitle == false">
+                <span ng-if="!vm.dlgTitleInterpolated" translate="{{vm.dlgTitle}}"></span>
+                <span ng-if="vm.dlgTitleInterpolated" ng-bind-html="vm.dlgTitle"></span>
+            </h2>
+            <tmv-form ng-if="vm.formSchema" form-schema="vm.formSchema"
+                form-model="vm.formModel">
+            </tmv-form>
+        </md-dialog-content>
+        <md-dialog-content ng-if="vm.template" class="md-dialog-content">
+            <h2 class="md-title" ng-if="vm.primaryTitle == false">
+                <span ng-if="!vm.dlgTitleInterpolated" translate="{{vm.dlgTitle}}"></span>
+                <span ng-if="vm.dlgTitleInterpolated" ng-bind-html="vm.dlgTitle"></span>
+            </h2>
+            <div nbgen-template="vm.template"></div>
+        </md-dialog-content>
+        <md-dialog-actions class="side-margin">
+            <md-button ng-click="vm.cancelFn()" nbgen-no-focus class="md-primary">
+                {{vm.cancelLabel | translate}}
+            </md-button>
+            <md-button ng-if="!vm.readOnly" class="md-accent" type="submit" nbgen-no-focus
+                ng-click="vm.okFn(vm.formModel)" ng-disabled="!vm.template && (editForm.$invalid)">
+                {{vm.okLabel | translate}}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

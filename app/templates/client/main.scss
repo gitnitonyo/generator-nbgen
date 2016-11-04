@@ -1,0 +1,17 @@
+// angular material styles
+@import "{}/node_modules/angular-material/angular-material.scss";
+
+// material design icons
+$mdi-font-path: "/assets/fonts";
+@import "{}/node_modules/mdi/scss/materialdesignicons.scss";
+
+@import "{}/node_modules/angular-ui-router-anim-in-out/scss/anim-in-out.scss";
+
+// common application mixins
+@import "./imports/scss/_mixins.scss";
+
+// common styles
+@import "./imports/scss/_common.scss";
+
+// application-specific styles
+@import "./imports/scss/_app.custom.scss";

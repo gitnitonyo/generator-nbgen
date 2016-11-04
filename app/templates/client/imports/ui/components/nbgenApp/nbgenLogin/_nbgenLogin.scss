@@ -1,0 +1,19 @@
+nbgen-login {
+    form {
+        min-width: 85%;
+        @media (min-width: $layout-breakpoint-xs) {
+            min-width: $layout-breakpoint-xs - 60px;
+        }
+        .signin-btn {
+            min-width: 160px;
+            min-height: 50px;
+            font-size: 110%;
+            border: 2px solid rgba(250, 250, 250, 1);
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            border-radius: 15px;
+            &:not([disabled]) {
+                // color: rgba(250, 250, 250, 1);
+            }
+        }
+    }
+}

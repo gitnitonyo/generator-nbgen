@@ -1,0 +1,51 @@
+@mixin nbgen-layout() {
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+@mixin nbgen-layout-column() {
+    @include nbgen-layout();
+    flex-direction: column;
+    flex: 1;
+    box-sizing: border-box;
+}
+
+@mixin nbgen-fullwidth-absolute() {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+@mixin nbgen-layout-row() {
+    @include nbgen-layout()
+    flex-direction: row;
+    flex: 1;
+    box-sizing: border-box;
+}
+
+// useful animation mixin
+@mixin animation-based($duration) {
+    transition: all $duration ease-in-out;
+    -webkit-transition: all $duration ease-in-out;
+    -moz-transition: all $duration ease-in-out;
+}
+
+@mixin animation-rotate($deg) {
+    transform: rotate($deg);
+    -webkit-transform: rotate($deg);
+    -ms-transform: rotate($deg);
+    -moz-transform: rotate($deg);
+}
+
+@mixin scaleY($percent) {
+    transform: scaleY($percent);
+    -webkit-transform: scaleY($percent);
+    -ms-transform: scaleY($percent);
+    -moz-transform: scaleY($percent);
+}

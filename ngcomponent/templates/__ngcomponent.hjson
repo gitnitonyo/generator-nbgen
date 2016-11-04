@@ -1,0 +1,6 @@
+<%= componentName %>: {
+    // translation file
+    labels: {
+        title: "<%= _s.humanize(componentName) %>"
+    }
+}

@@ -1,0 +1,6 @@
+dbStatistics: {
+    // translation file
+    labels: {
+        title: "Db statistics"
+    }
+}

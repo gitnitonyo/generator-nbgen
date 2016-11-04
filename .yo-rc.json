@@ -1,0 +1,26 @@
+{
+  "generator-tmv": {
+    "nbgPrefix": "nbgen",
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": [
+      "en"
+    ],
+    "serverType": "meteor",
+    "collections": {
+      "jobRequests": {
+        "baseName": "jobRequest",
+        "name": "JobRequests",
+        "documentName": "jobRequest",
+        "documentNameCapitalized": "JobRequest",
+        "componentName": "nbgenJobRequests",
+        "componentNameDashed": "nbgen-job-requests",
+        "options": {
+          "serverGenerated": true,
+          "generateUI": true
+        },
+        "fields": []
+      }
+    }
+  }
+}
