@@ -5,9 +5,9 @@ Meteor.startup(() => {
     if (!process.env.MAIL_URL) {
         // setup default email service
         const smtp = {
-            username: "nubevisiontech@gmail.com",
-            password: "NubeVision$2015",
-            server: "smtp.gmail.com",
+            username: "xxxxxxxxxxx@gmail.com",  // replace with your own email
+            password: "xxxxxxxxxxxx",       // replace with your own password
+            server: "smtp.gmail.com",       // replace with proper smtp server
             port: 465
         }
 
