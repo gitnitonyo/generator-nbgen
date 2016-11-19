@@ -1,6 +1,6 @@
 {
   "name": "generator-nbgen",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "nbgen, Nubevision Tech's continuous generation toolset",
   "keywords": [
     "yeoman-generator",
@@ -69,7 +69,9 @@
     "collection",
     "mobile",
     "ngcomponent",
-    "testdata"
+    "testdata",
+    "tmv-constants.js",
+    "tmv-generator-base.js"
   ],
   "eslintConfig": {
     "env": {
