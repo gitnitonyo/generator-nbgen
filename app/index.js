@@ -156,11 +156,11 @@ module.exports = TmvClientGenerator.extend({
             ]
             var filesToBeCopied = [
                 '__package.json',
-                '.gulpfile.js',
-                '.editorconfig',
-                '.gitignore',
-                '.eslintrc.json',
-                '.eslintignore',
+                '__.gulpfile.js',
+                '__.editorconfig',
+                '__.gitignore',
+                '__.eslintrc.json',
+                '__.eslintignore',
             ]
 
             this.log("Copying files...")
