@@ -15,7 +15,7 @@ util.inherits(TmvClientGenerator, scriptBase);
 
 module.exports = TmvClientGenerator.extend({
     constructor: function () {
-        yeoman.Base.apply(this, arguments);
+        scriptBase.apply(this, arguments);
         this.configOptions = _.assign({}, this.defaultConfigOptions(), this.config.getAll());
         _.assign(this, this.configOptions);
         this.webappDir = CONSTANTS.defaultWebappDir || 'src/webapp';
@@ -26,11 +26,19 @@ module.exports = TmvClientGenerator.extend({
     initializing: function () {
 
     },
-    prompting: function () {
-        this.askForBasename();
+    prompting: {
+        checkForNewVersion: function() {
+            if (this.abort) return;
+            this.checkNewerVersion();
+        },
+        askBasename: function() {
+            if (this.abort) return;
+            this.askForBasename();
+        }
     },
     configuring: {
         setBaseApp: function () {
+            if (this.abort) return;
             this.angularAppName = this.angularAppName || (this.baseName + 'App');
             this.title = _.startCase(this.baseName)
             this.config.set('title', this.title)
@@ -120,6 +128,7 @@ module.exports = TmvClientGenerator.extend({
         },
 
         cleanupProjectDir: function() {
+            if (this.abort) return;
             // remove directories and files which will be replaced
             var filesToRemove = [
                 'package.json',
@@ -137,11 +146,12 @@ module.exports = TmvClientGenerator.extend({
         }
     },
     default: function () {
-
+        if (this.abort) return;
     },
     writing: {
         // loads config
         loadConfigOptions() {
+            if (this.abort) return;
             this.configOptions = _.assign(this.configOptions, this.config.getAll())
         },
 
@@ -184,6 +194,7 @@ module.exports = TmvClientGenerator.extend({
     },
     install: {
         meteorUpdate: function() {
+            if (this.abort) return;
             var done = this.async();
             this.log('Updating packages...')
             this.meteorExec(['update', '--all-packages'], function(code) {
@@ -194,6 +205,7 @@ module.exports = TmvClientGenerator.extend({
             }.bind(this))
         },
         meteorNpmInstall: function() {
+            if (this.abort) return;
             var done = this.async();
             this.log('Downloading & Installing node packages...')
             this.execCmd('meteor', ['npm', 'install'], {cwd: CONSTANTS.meteorDir}, function(code) {
@@ -204,28 +216,18 @@ module.exports = TmvClientGenerator.extend({
                 done();
             }.bind(this))
         },
-        // add android platform
-        /*
-        meteorAddAndroid: function() {
-            var done = this.async();
-            this.log('Adding android platform...')
-            this.meteorExec(['add-platform', 'android'], function(code) {
-                if (code !== 0) {
-                    this.warning("Error adding android platform")
-                }
-                done()
-            }.bind(this))
-        },
-        */
 
         injectFiles: function() {
+            if (this.abort) return;
             this.injectFiles();
         },
     },
     end: function () {
-        if (!this.abort) {
-            this.config.set('appGenerated', true);
-            this.log(chalk.green("\n\nApplication successfully generated\n"));
-        }
+        if (this.abort) return;
+        this.config.set('appGenerated', true);
+        this.log(
+            chalk.green("\n\nApplication successfully generated\n") +
+            chalk.green(chalk.magenta('npm start') + ' to start the application.\n')
+        );
     }
 });

@@ -16,7 +16,7 @@ util.inherits(TmvGenerator, scriptBase)
 
 module.exports = TmvGenerator.extend({
     constructor: function() {
-        yeoman.Base.apply(this, arguments)
+        scriptBase.apply(this, arguments);
 
         this._lodash = _;       // make lodash functions available on templates
         this._s = _s;
@@ -28,6 +28,10 @@ module.exports = TmvGenerator.extend({
 
     prompting: {
         // functions for prompting parameters to be used in generation of codes
+        checkForNewVersion: function() {
+            if (this.abort) return;
+            this.checkNewerVersion();
+        },
     },
 
     configuring: function() {

@@ -50,7 +50,7 @@ angular.module(nbgenApp)
             },
             views: {
                 'content@': {
-                    template: '<nbgen-main class="app-content anim-slide-below-fade" layout="column"></nbgen-main>',
+                    template: '<nbgen-main class="app-content anim-fade" layout="column"></nbgen-main>',
                 }
             },
             resolve: {

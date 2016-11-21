@@ -6,6 +6,7 @@ var util = require('util'),
     yeoman = require('yeoman-generator'),
     _ = require('lodash'),
     _s = require('underscore.string'),
+    chalk = require('chalk'),
     scriptBase = require('../tmv-generator-base'),
     CONSTANTS = require('../tmv-constants');         // eslint-disable-line
 
@@ -15,7 +16,7 @@ util.inherits(TmvGenerator, scriptBase)
 
 module.exports = TmvGenerator.extend({
     constructor: function() {
-        yeoman.Base.apply(this, arguments)
+        scriptBase.apply(this, arguments)
 
         this._lodash = _;       // make lodash functions available on templates
         this._s = _s;
@@ -27,6 +28,10 @@ module.exports = TmvGenerator.extend({
 
     prompting: {
         // functions for prompting parameters to be used in generation of codes
+        checkForNewerVersion: function() {
+            if (this.abort) return;
+            this.checkNewerVersion();
+        }
     },
 
     configuring: function() {
@@ -55,5 +60,6 @@ module.exports = TmvGenerator.extend({
 
     end: function() {
         // provide post generation messages
+        this.log(chalk.green("Files successfully generated."));
     }
 })

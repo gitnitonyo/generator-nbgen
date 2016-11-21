@@ -7,6 +7,7 @@ var util = require('util'),
     pluralize = require('pluralize'),
     prompts = require('./prompts'),
     path = require('path'),
+    chalk = require('chalk'),
     stringifyObject = require('stringify-object'),
     scriptBase = require('../tmv-generator-base'),
     CONSTANTS = require('../tmv-constants');
@@ -17,7 +18,7 @@ util.inherits(TmvCollectionGenerator, scriptBase);
 
 module.exports = TmvCollectionGenerator.extend({
     constructor: function () {
-        yeoman.Base.apply(this, arguments);
+        scriptBase.apply(this, arguments);
 
         this.configOptions = _.assign({}, this.defaultConfigOptions(), this.config.getAll());
         _.assign(this, this.configOptions);
@@ -33,6 +34,7 @@ module.exports = TmvCollectionGenerator.extend({
         this._lodash = _;
     },
     initializing: function () {
+        if (this.abort) return;
         this.collectionName = _s.camelize(pluralize(this.name));
         this.collections = this.collections || { };
         this.collection = this.collections[this.collectionName] || { };
@@ -57,24 +59,33 @@ module.exports = TmvCollectionGenerator.extend({
         this.iconClass = this.options.iconClass || 'mdi-package'
     },
     prompting: {
+        checkForNewVersion: function() {
+            if (this.abort) return;
+            this.checkNewerVersion();
+        },
         askIfServer: function() {
+            if (this.abort) return;
             this.askForConfirmation('regenerateServer', 'Do you want to regenerate server files?', false)
         },
         askIfPublic: function() {
+            if (this.abort) return;
             if (this.regenerateServer !== false) {
                 this.askForConfirmation('isPublic', 'Will the documents be publicly available?', false)
             }
         },
         askToGenerateUI: function() {
+            if (this.abort) return;
             this.askForConfirmation('generateUI', `Generate UI for ${this.collection.name}?`,
                 !(this.collection.options && this.collection.options.generateUI))
         },
         askForFields: function() {
+            if (this.abort) return;
             if (this.generateUI) {
                 prompts.askForFields.call(this);
             }
         },
         askIfMenuEntry: function() {
+            if (this.abort) return;
             if (this.generateUI) {
                 this.askForConfirmation('addMenuEntry', 'Add menu entry?', false)
             }
@@ -193,6 +204,7 @@ module.exports = TmvCollectionGenerator.extend({
             if (!this.generateUI) return;
 
             var targetDir = path.join(CONSTANTS.uiAppDir, this.collectionName);
+            this.clientDest = targetDir;
             var i18nDir = CONSTANTS.i18nDir;
 
             this.componentsImportDir = path.relative(targetDir, CONSTANTS.componentsDir);
@@ -247,10 +259,22 @@ module.exports = TmvCollectionGenerator.extend({
     },
     install: {
         injectFiles: function() {
+            if (this.abort) return;
             this.injectFiles();
         },
     },
     end: function () {
-
+        if (this.abort) return;
+        this.log(chalk.green("\nCodes for managing Collection successfully generated.\n"));
+        if (this.collectionTargetDir) {
+            this.log(chalk.green("Collection js generated in " + chalk.magenta(this.collectionTargetDir) + "\n"));
+        }
+        if (this.serverDest) {
+            this.log(chalk.green("Server files generated in " + chalk.magenta(this.serverDest) + "\n"));
+        }
+        if (this.clientDest) {
+            this.log(chalk.green("Client files generated in " + chalk.magenta(this.clientDest) + "\n"));
+        }
+        this.log(chalk.green("You may customize these files if necessary.\n"));
     }
 });

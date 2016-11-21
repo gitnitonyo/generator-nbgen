@@ -98,7 +98,7 @@ angular.module(nbgenApp)
             },
             views: {
                 'content@': {
-                    template: `<${nameDashed} class="app-content anim-slide-below-fade" layout="column"></${nameDashed}>`,
+                    template: `<${nameDashed} class="app-content anim-fade" layout="column"></${nameDashed}>`,
                 }
             },
             resolve: {

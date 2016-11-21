@@ -8,8 +8,9 @@ var util = require('util'),
     path = require('path'),
     glob = require('glob'),
     CONSTANTS = require('./tmv-constants'),
-    shelljs = require('shelljs'),
-    exec = require('child_process').exec;
+    packagejs = require('./package.json'),
+    semver = require('semver'),
+    shelljs = require('shelljs');
 
 module.exports = Generator;
 
@@ -298,13 +299,53 @@ Generator.prototype.injectFiles = function() {
     })
 }
 
-function escapeRegExp(str) {
+Generator.prototype.checkNewerVersion = function() {
+    if (this.abort) return;
+    var done = this.async();
+    this.log('Checking for newer version...');
+    // check for newer version from npm registry
+    var name = this.config.name;
+
+    try {
+        shelljs.exec('npm show ' + name + ' version', {silent: true}, function(code, stdout, stderr) {
+            if (!stderr && semver.lt(packagejs.version, stdout)) {
+                this.log(
+                    chalk.yellow(' ______________________________________________________________________________\n\n') +
+                    chalk.yellow('  nbgen update available: ') + chalk.green.bold(stdout.replace('\n','')) + chalk.gray(' (current: ' + packagejs.version + ')') + '\n' +
+                    chalk.yellow('  Run ' + chalk.magenta('npm install -g ' + name ) + ' to update.\n') +
+                    chalk.yellow(' ______________________________________________________________________________\n')
+                );
+                var prompts = [{
+                    type: 'confirm',
+                    name: 'continueWithoutUpdate',
+                    message: 'There is a newer version available. Would you like to continue?',
+                    default: false,
+                }]
+
+                this.prompt(prompts).then(function(props) {
+                    if (!props.continueWithoutUpdate) {
+                        this.abort = true;
+                    }
+                    done();
+                }.bind(this))
+            } else {
+                done();
+            }
+        }.bind(this))
+    }
+    catch(err) {
+        // no need stop processing if checking of version fails
+        done();
+    }
+}
+
+function escapeRegExp(str) { // eslint-disable-line
     return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 }
 
 // _.classify uses _.titleize which lowercase the string,
 // so if the user chooses a proper ClassName it will not rename properly
-function classify(string) {
+function classify(string) { // eslint-disable-line
     string = string.replace(/[\W_](\w)/g, function (match) { return ' ' + match[1].toUpperCase(); }).replace(/\s/g, '');
     return string.charAt(0).toUpperCase() + string.slice(1);
 }

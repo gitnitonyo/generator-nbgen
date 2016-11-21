@@ -18,7 +18,7 @@ util.inherits(TmvTestDataGenerator, scriptBase);
 
 module.exports = TmvTestDataGenerator.extend({
     constructor: function () {
-        yeoman.Base.apply(this, arguments);
+        scriptBase.apply(this, arguments);
         this.configOptions = _.assign({}, this.defaultConfigOptions(), this.config.getAll());
         _.assign(this, this.configOptions);
 
@@ -47,6 +47,9 @@ module.exports = TmvTestDataGenerator.extend({
         this.testDataConfig.fields = { };
     },
     prompting: {
+        checkForNewVersion: function() {
+            this.checkNewerVersion();
+        },
         askForTestDetails: function () {
             if (this.abort) return;
             prompts.askForTestDataDetails.call(this);
@@ -58,6 +61,7 @@ module.exports = TmvTestDataGenerator.extend({
         }
     },
     configuring: function () {
+        if (this.abort) return;
         this.testDataCollection = [ ];
         var recordNo, possibleValues;
         for (recordNo = 0; recordNo < this.numberOfRecords; recordNo ++) {
@@ -185,9 +189,11 @@ module.exports = TmvTestDataGenerator.extend({
         }
     },
     default: function () {
+        if (this.abort) return;
 
     },
     writing: function () {
+        if (this.abort) return;
         this.targetFile = path.join(CONSTANTS.meteorDir, 'private/dataload/' + this.collectionName + '.json');
         this.fs.write(this.targetFile, JSON.stringify(this.testDataCollection, null, 2));
     },

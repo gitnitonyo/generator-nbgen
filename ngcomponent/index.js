@@ -6,6 +6,7 @@ var util = require('util'),
     yeoman = require('yeoman-generator'),
     path = require('path'),
     _ = require('lodash'),
+    chalk = require('chalk'),
     _s = require('underscore.string'),
     scriptBase = require('../tmv-generator-base'),
     CONSTANTS = require('../tmv-constants');         // eslint-disable-line
@@ -16,7 +17,7 @@ util.inherits(TmvGenerator, scriptBase)
 
 module.exports = TmvGenerator.extend({
     constructor: function() {
-        yeoman.Base.apply(this, arguments)
+        scriptBase.apply(this, arguments);
 
         // This makes `name` a required argument.
         this.argument('name', {
@@ -43,6 +44,10 @@ module.exports = TmvGenerator.extend({
 
     prompting: {
         // functions for prompting parameters to be used in generation of codes
+        checkForNewVersion: function() {
+            if (this.abort) return;
+            this.checkNewerVersion();
+        },
         // ask if want to add menu entry
         askToGenerateState: function() {
             if (this.abort) return;
@@ -79,6 +84,7 @@ module.exports = TmvGenerator.extend({
             this.template('__ngcomponent.hjson', path.join(CONSTANTS.i18nDir, this.componentName + '.hjson'))
 
             var destdir = path.join(CONSTANTS.uiAppDir, this.componentName);
+            this.clientDest = destdir;
 
             this.templateLocation = path.join(destdir, this.componentName + '.html')
 
@@ -124,11 +130,17 @@ module.exports = TmvGenerator.extend({
     install: {
         // perform any post installation routine here
         injectFiles: function() {
+            if (this.abort) return;
             this.injectFiles();
         },
     },
 
     end: function() {
+        if (this.abort) return;
         // provide post generation messages
+        this.log(chalk.green("\nAngular component successfully generated.\n"));
+        if (this.clientDest) {
+            this.log(chalk.green("Files are generated in " + chalk.magenta(this.clientDest)));
+        }
     }
 })
