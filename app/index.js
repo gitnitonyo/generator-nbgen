@@ -183,6 +183,16 @@ module.exports = TmvClientGenerator.extend({
         },
     },
     install: {
+        meteorUpdate: function() {
+            var done = this.async();
+            this.log('Updating packages...')
+            this.meteorExec(['update', '--all-packages'], function(code) {
+                if (code !== 0) {
+                    this.warning("Error updating meteor")
+                }
+                done()
+            }.bind(this))
+        },
         meteorNpmInstall: function() {
             var done = this.async();
             this.log('Downloading & Installing node packages...')
@@ -207,16 +217,6 @@ module.exports = TmvClientGenerator.extend({
             }.bind(this))
         },
         */
-        meteorUpdate: function() {
-            var done = this.async();
-            this.log('Updating packages...')
-            this.meteorExec(['update', '--all-packages'], function(code) {
-                if (code !== 0) {
-                    this.warning("Error updating meteor")
-                }
-                done()
-            }.bind(this))
-        },
 
         injectFiles: function() {
             this.injectFiles();
