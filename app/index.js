@@ -226,8 +226,12 @@ module.exports = TmvClientGenerator.extend({
         if (this.abort) return;
         this.config.set('appGenerated', true);
         this.log(
-            chalk.green("\n\nApplication successfully generated\n") +
-            chalk.green(chalk.magenta('npm start') + ' to start the application.\n')
+            chalk.green("\n\nApplication successfully generated.\n") +
+            chalk.green("Please modify email settings in " + chalk.magenta("server/imports/api/email/fixtures.js") + " for email notifications to properly work.\n") +
+            chalk.green(chalk.magenta('npm start') + ' to start the application.\n') +
+            chalk.green("Initial credentials:\n") +
+            chalk.green("super-admin: " + chalk.magenta('superAdmin@nubevtech.com/superAdmin') + "\n") +
+            chalk.green("normal-user: " + chalk.magenta('normalUser@nubevtech.com/normalUser') + "\n")
         );
     }
 });
