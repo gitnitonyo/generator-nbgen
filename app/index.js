@@ -117,8 +117,9 @@ module.exports = TmvClientGenerator.extend({
 
             var done = this.async();
             this.log("Downloading packages...")
-            this.meteorExec(['add'].concat(packagesToBeAdded), function(code) {
+            this.meteorExec(['add'].concat(packagesToBeAdded), function(code, stdout, stderr) {
                 if (code !== 0) {
+                    this.log(stderr);
                     this.warning('Error adding meteor packages');
                     this.abort = true;
                 } else {
@@ -208,8 +209,9 @@ module.exports = TmvClientGenerator.extend({
             if (this.abort) return;
             var done = this.async();
             this.log('Downloading & Installing node packages...')
-            this.execCmd('meteor', ['npm', 'install'], {cwd: CONSTANTS.meteorDir}, function(code) {
+            this.execCmd('meteor', ['npm', 'install'], {cwd: CONSTANTS.meteorDir}, function(code, stdout, stderr) {
                 if (code !== 0) {
+                    this.log(stderr);
                     this.warning("Error installing node packages");
                     this.abort = true;
                 }
