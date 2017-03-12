@@ -11,10 +11,25 @@ export class ServiceConfigurationsCtrl extends NbgenCollectionBaseCtrl {
 
         super($scope, $injector);
         // initialization routines here
-        this.subscription = this.subscription || subscription;
-        this.collection = this.collection || collection;
-        this.uiLayout = this.uiLayout || config.uiLayout;
-        this.options = { hideAdd: true, hideDelete: true }
+    }
+
+    // lifecycle methods; check angular docs for details
+    $onInit() {
+        // all controllers have been initialized
+        if (!this.uiLayout) {
+            this.uiLayout = config.uiLayout || { };
+        }
+        if (!this.subscription) {
+            this.subscription = subscription;
+        }
+        if (!this.collection) {
+            this.collection = collection;
+        }
+        if (!this.options) {
+            this.options = { hideAdd: true, hideDelete: true }
+        }
+        super.$onInit && super.$onInit();
+        // put codes here
     }
 
     getInitials(item) {

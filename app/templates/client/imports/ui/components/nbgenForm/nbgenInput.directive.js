@@ -24,52 +24,56 @@ angular.module(nbgenForm)
 
             let dom;
 
-            switch (tmvInput.fieldSchema.fieldInputType) {
-                case 'select':
-                    // handle select style drop down list
-                    dom = tmvInput._constructSelectDom(formCtrl);
-                    break;
-                case 'select2':
-                    // handle more dynamic dropdown list
-                    dom = tmvInput._constructSelect2Dom(formCtrl);
-                    break;
-                case 'radio':
-                    // handle radio buttons
-                    dom = tmvInput._constructRadioDom(formCtrl);
-                    break;
-                case 'checkbox':
-                    // handle checkboxes
-                    dom = tmvInput._constructCheckboxDom(formCtrl);
-                    break;
-                case 'textarea':
-                    // handle text area
-                    dom = tmvInput._constructTextDom(formCtrl);
-                    break;
-                case 'button':
-                    dom = tmvInput._constructButtonDom(formCtrl);
-                    break;
-                case 'template':
-                    // handle template
-                    dom = tmvInput._constructTemplateDom(formCtrl);
-                    break;
-                case 'date':
-                    // handle date
-                    // if (tmvInput.fieldSchema.inline === true) {
-                    dom = tmvInput._constructDateDom(formCtrl);
-                    // } else {
-                    //    dom = tmvInput._constructTextDom(formCtrl)
-                    // }
-                    break;
-                case 'static':
-                    // readonly field
-                    tmvInput.fieldSchema.fieldReadOnly = true;
-                    dom = tmvInput._constructStaticDom(formCtrl);
-                    break
-                case 'hidden':
-                    dom = tmvInput._constructHiddenDom(formCtrl)
-                    break
-                default:
-                    dom = tmvInput._constructTextDom(formCtrl);
+            if (tmvInput.fieldSchema.template) {
+                dom = tmvInput._constructTemplateDom(formCtrl);
+            } else {
+                switch (tmvInput.fieldSchema.fieldInputType) {
+                    case 'select':
+                        // handle select style drop down list
+                        dom = tmvInput._constructSelectDom(formCtrl);
+                        break;
+                    case 'select2':
+                        // handle more dynamic dropdown list
+                        dom = tmvInput._constructSelect2Dom(formCtrl);
+                        break;
+                    case 'radio':
+                        // handle radio buttons
+                        dom = tmvInput._constructRadioDom(formCtrl);
+                        break;
+                    case 'checkbox':
+                        // handle checkboxes
+                        dom = tmvInput._constructCheckboxDom(formCtrl);
+                        break;
+                    case 'textarea':
+                        // handle text area
+                        dom = tmvInput._constructTextDom(formCtrl);
+                        break;
+                    case 'button':
+                        dom = tmvInput._constructButtonDom(formCtrl);
+                        break;
+                    case 'template':
+                        // handle template
+                        dom = tmvInput._constructTemplateDom(formCtrl);
+                        break;
+                    case 'date':
+                        // handle date
+                        // if (tmvInput.fieldSchema.inline === true) {
+                        dom = tmvInput._constructDateDom(formCtrl);
+                        // } else {
+                        //    dom = tmvInput._constructTextDom(formCtrl)
+                        // }
+                        break;
+                    case 'static':
+                        // readonly field
+                        tmvInput.fieldSchema.fieldReadOnly = true;
+                        dom = tmvInput._constructStaticDom(formCtrl);
+                        break
+                    case 'hidden':
+                        dom = tmvInput._constructHiddenDom(formCtrl)
+                        break
+                    default:
+                        dom = tmvInput._constructTextDom(formCtrl);
+                }
             }
 
             $transclude(function(el, scope) {

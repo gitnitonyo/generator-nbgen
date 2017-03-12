@@ -80,9 +80,6 @@ module.exports = TmvGenerator.extend({
         // list of functions for executing template or copying files into the project folder
         writeTemplateFiles: function() {
             if (this.abort) return;
-            // i18n file
-            this.template('__ngcomponent.hjson', path.join(CONSTANTS.i18nDir, this.componentName + '.hjson'))
-
             var destdir = path.join(CONSTANTS.uiAppDir, this.componentName);
             this.clientDest = destdir;
 
@@ -93,6 +90,8 @@ module.exports = TmvGenerator.extend({
             this.template('__ngcomponentConfig.js', path.join(destdir, this.componentName + 'Config.js'))
             this.template('__ngcomponent.scss', path.join(destdir, '_' + this.componentName + '.scss'))
             if (this.generateState) {
+                // i18n file
+                this.template('__ngcomponent.hjson', path.join(CONSTANTS.i18nDir, this.componentName + '.hjson'))
                 this.template('__ngcomponentState.html', path.join(destdir, this.componentName + 'State.html'))
                 this.template('__ngcomponentState.js', path.join(destdir, this.componentName + 'State.js'))
             }

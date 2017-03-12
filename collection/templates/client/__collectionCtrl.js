@@ -11,14 +11,24 @@ export class <%= collection.name %>Ctrl extends NbgenCollectionBaseCtrl {
         'ngInject';
 
         super($scope, $injector);
-        this.subscription = subscription;
-        this.collection = collection;
-        this.uiLayout = config.uiLayout || { };
-        this.options = config.options || { };
     }
 
     // lifecycle methods; check angular docs for details
     $onInit() {
+        // all controllers have been initialized
+        if (!this.uiLayout) {
+            this.uiLayout = config.uiLayout || { };
+        }
+        if (!this.subscription) {
+            this.subscription = subscription;
+        }
+        if (!this.collection) {
+            this.collection = collection;
+        }
+        if (!this.options) {
+            this.options = config.options || { };
+        }
+
         super.$onInit && super.$onInit();
         // put codes here
     }

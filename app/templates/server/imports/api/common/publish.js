@@ -13,7 +13,11 @@ import {COLLECTION_OWNER_FIELD, COLLECTION_PUBLIC_FIELD, COLLECTION_GROUP_FIELD,
 export function publishCollection(publishName, collection, selectorFn, optionsFn, makePublic) {
     Meteor.publish(publishName, function(selector, options) {
         if (makePublic === true) {
-            return collection.find({}, options)
+            selector = selector || {}
+            options = options || {}
+
+            Counts.publish(this, `${publishName}.count`, collection.find(selector), {noReady: true})
+            return collection.find(selector, options)
         }
 
         // initialze for filter publicly set documents

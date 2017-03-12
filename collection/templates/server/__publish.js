@@ -3,7 +3,7 @@
  */
 import {<%= collection.name %>} from '<%= relativePathToCollection %>/collection.js'
 import {publishCollection} from '../common/publish.js'
-import {appRoles} from '/imports/common/app.roles.js'
+import {COLLECTION_PUBLIC_FIELD, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD} from '/imports/common/app.roles.js'
 
 const publishName = '<%= collectionName %>'
 const collection = <%= collection.name %>
@@ -23,9 +23,9 @@ function optionsFn(options) {
 
     // by default don't publish processing fields
     const fields = (options && options.fields) || { }
-    fields[appRoles.COLLECTION_OWNER_FIELD] = 0
-    fields[appRoles.COLLECTION_PUBLIC_FIELD] = 0
-    fields[appRoles.COLLECTION_GROUP_FIELD] = 0
+    fields[COLLECTION_OWNER_FIELD] = 0
+    fields[COLLECTION_PUBLIC_FIELD] = 0
+    fields[COLLECTION_GROUP_FIELD] = 0
     options.fields = fields
 
 
