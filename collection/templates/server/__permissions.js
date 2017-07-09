@@ -6,9 +6,9 @@ import {<%= collection.name %>} from '<%= relativePathToCollection %>/collection
 
 import {appRoles, getActiveGroup, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD} from '/imports/common/app.roles.js';
 import {checkPermission} from '../common/permissions.js';
-<% if (generateAuditLog) { -%>
+<%_ if (generateAuditLog) { _%>
 import { postAuditLog } from '../auditLogs/methods.js';
-<% } -%>
+<%_ } _%>
 
 <%= collection.name %>.allow({
     insert: (userId, doc) => {
@@ -17,9 +17,9 @@ import { postAuditLog } from '../auditLogs/methods.js';
             doc[COLLECTION_GROUP_FIELD] = getActiveGroup(userId);
             doc.createdBy = userId;
             doc.createdAt = new Date();
-            <% if (generateAuditLog) { -%>
+            <%_ if (generateAuditLog) { _%>
             postAuditLog(userId, 'insert', { doc }, '<%= collectionName %>');
-            <% } -%>
+            <%_ } _%>
 
             return true;
         }
@@ -30,9 +30,9 @@ import { postAuditLog } from '../auditLogs/methods.js';
             modifier.$set = modifier.$set || {};
             modifier.$set.modifiedBy = userId;
             modifier.$set.modifiedAt = new Date();
-            <% if (generateAuditLog) { -%>
+            <%_ if (generateAuditLog) { _%>
             postAuditLog(userId, 'update', { doc, fields, modifier }, '<%= collectionName %>');
-            <% } -%>
+            <%_ } _%>
 
             return true;
         }
@@ -40,9 +40,9 @@ import { postAuditLog } from '../auditLogs/methods.js';
     },
     remove: (userId, doc) => {  // eslint-disable-line
         if (checkPermission.call(this, userId, permissionMappings, 'remove', doc)) {
-            <% if (generateAuditLog) { -%>
+            <%_ if (generateAuditLog) { _%>
             postAuditLog(userId, 'remove', { doc }, '<%= collectionName %>');
-            <% } -%>
+            <%_ } _%>
             return true;
         }
         return false;

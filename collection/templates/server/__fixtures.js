@@ -10,9 +10,7 @@ import {COLLECTION_GROUP_FIELD, GLOBAL_GROUP} from '/imports/common/app.roles.js
 // properties:
 // index - object to be passed as index
 // options - options for the index (e.g. {unique: true})
-const indices = [{
-
-}]
+const indices = [ ];
 /* global Assets */
 
 Meteor.startup(() => {

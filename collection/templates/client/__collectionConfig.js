@@ -38,6 +38,11 @@ const config = {
          *
          */
 
+        // defines local variables to be bound into $tmvCollection controller
+        locals: {
+
+        },
+
         functions: {
             // functions defined where will be bound to the $tmvCollection controller
         }
