@@ -2,33 +2,50 @@
 /**
  * Define insert / update and delete permission for the <%= collection.name %> collection
  */
-import {<%= collection.name %>} from '<%= relativePathToCollection %>/collection.js'
+import {<%= collection.name %>} from '<%= relativePathToCollection %>/collection.js';
 
-import {appRoles, getActiveGroup, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD} from '/imports/common/app.roles.js'
-import {checkPermission} from '../common/permissions.js'
+import {appRoles, getActiveGroup, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD} from '/imports/common/app.roles.js';
+import {checkPermission} from '../common/permissions.js';
+<% if (generateAuditLog) { -%>
+import { postAuditLog } from '../auditLogs/methods.js';
+<% } -%>
 
 <%= collection.name %>.allow({
     insert: (userId, doc) => {
         if (checkPermission.call(this, userId, permissionMappings, 'insert', doc)) {
-            doc[COLLECTION_OWNER_FIELD] = userId
-            doc[COLLECTION_GROUP_FIELD] = getActiveGroup(userId)
-            doc.createdBy = userId
-            doc.createAt = new Date()
-            return true
+            doc[COLLECTION_OWNER_FIELD] = userId;
+            doc[COLLECTION_GROUP_FIELD] = getActiveGroup(userId);
+            doc.createdBy = userId;
+            doc.createdAt = new Date();
+            <% if (generateAuditLog) { -%>
+            postAuditLog(userId, 'insert', { doc }, '<%= collectionName %>');
+            <% } -%>
+
+            return true;
         }
-        return false
+        return false;
     },
     update: (userId, doc, fields, modifier) => {
         if (checkPermission.call(this, userId, permissionMappings, 'update', doc, fields, modifier)) {
-            modifier.$set = modifier.$set || {}
-            modifier.$set.modifiedBy = userId
-            modifier.$set.modifiedAt = new Date()
-            return true
+            modifier.$set = modifier.$set || {};
+            modifier.$set.modifiedBy = userId;
+            modifier.$set.modifiedAt = new Date();
+            <% if (generateAuditLog) { -%>
+            postAuditLog(userId, 'update', { doc, fields, modifier }, '<%= collectionName %>');
+            <% } -%>
+
+            return true;
         }
-        return false
+        return false;
     },
     remove: (userId, doc) => {  // eslint-disable-line
-        return checkPermission.call(this, userId, permissionMappings, 'remove', doc)
+        if (checkPermission.call(this, userId, permissionMappings, 'remove', doc)) {
+            <% if (generateAuditLog) { -%>
+            postAuditLog(userId, 'remove', { doc }, '<%= collectionName %>');
+            <% } -%>
+            return true;
+        }
+        return false;
     }
 })
 

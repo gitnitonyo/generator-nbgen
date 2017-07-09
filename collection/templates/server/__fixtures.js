@@ -6,9 +6,20 @@ import {<%= collection.name %>} from '<%= relativePathToCollection %>/collection
 
 import {COLLECTION_GROUP_FIELD, GLOBAL_GROUP} from '/imports/common/app.roles.js'
 
+// add indices for the collection here
+// properties:
+// index - object to be passed as index
+// options - options for the index (e.g. {unique: true})
+const indices = [{
+
+}]
 /* global Assets */
 
 Meteor.startup(() => {
+    indices.forEach(item => {
+        <%=collection.name%>._ensureIndex(item.index, item.options);
+    });
+
     if (<%= collection.name %>.find({}).count() == 0) {
         // initial load
         Assets.getText('dataload/<%= collectionName %>.json', function(err, result) {
