@@ -226,6 +226,10 @@ module.exports = TmvCollectionGenerator.extend({
             // collection-specific styles
             this.template('client/___collection.scss', path.join(targetDir, '_' + this.collectionName + '.scss'))
 
+            // action toolbar templates
+            this.copy('client/actionToolbarDetailsView.html', path.join(targetDir, 'actionToolbarDetailsView.html'));
+            this.copy('client/actionToolbarListView.html', path.join(targetDir, 'actionToolbarListView.html'));
+
             this.clientIsGenerated = true;
         },
 
