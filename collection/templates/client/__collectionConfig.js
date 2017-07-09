@@ -69,4 +69,3 @@ const config = {
 }
 
 export default config;
-export { config.uiLayout as uiLayout };   // for use by other tmv-form

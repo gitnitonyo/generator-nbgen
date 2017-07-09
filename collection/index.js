@@ -35,11 +35,11 @@ module.exports = TmvCollectionGenerator.extend({
     },
     initializing: function () {
         if (this.abort) return;
-        this.collectionName = _s.camelize(pluralize(this.name));
+        this.collectionName = _.camelCase(pluralize(this.name));
         this.collections = this.collections || { };
         this.collection = this.collections[this.collectionName] || { };
         if (_.isEmpty(this.collection)) {
-            this.collection.baseName = this.name
+            this.collection.baseName = this.collectionName;
             this.collection.name = this.collectionNameCapitalized = _s.capitalize(this.collectionName);
             this.collection.documentName = pluralize(this.collectionName, 1);
             this.collection.documentNameCapitalized = _s.capitalize(this.collection.documentName);
@@ -227,8 +227,8 @@ module.exports = TmvCollectionGenerator.extend({
             this.template('client/___collection.scss', path.join(targetDir, '_' + this.collectionName + '.scss'))
 
             // action toolbar templates
-            this.copy('client/actionToolbarDetailsView.html', path.join(targetDir, 'actionToolbarDetailsView.html'));
-            this.copy('client/actionToolbarListView.html', path.join(targetDir, 'actionToolbarListView.html'));
+            this.template('client/__actionToolbarDetailsView.html', path.join(targetDir, 'actionToolbarDetailsView.html'));
+            this.template('client/__actionToolbarListView.html', path.join(targetDir, 'actionToolbarListView.html'));
 
             this.clientIsGenerated = true;
         },
