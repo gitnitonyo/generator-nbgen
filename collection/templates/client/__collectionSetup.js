@@ -2,10 +2,10 @@
  * Setup the <%= collectionName %> component
  */
 
-import { setupNbgenComponent } from '<%= componentsImportDir %>/nbgenUtilsUi/nbgenCollectionv2.js';
-import { appRoles } from '<%= commonImportDir %>/app.roles.js';
+import { setupNbgenComponent } from '/client/imports/ui/components/nbgenUtilsUi/nbgenCollection/nbgenCollectionv2.js';
+import { appRoles } from '/import/common/app.roles.js';
 
-import moduleName from '<%= entryPointImportDir %>/main.js';
+import moduleName from '/client/imports/ui/components/nbgenApp/nbgenApp.js';
 
 import { <%= collection.name %>Ctrl } from './<%= collectionName %>Ctrl.js';
 
@@ -24,4 +24,4 @@ if (!config || !config.options || config.options.noState !== true) {
 }
 
 // initialize <<%= collectionName %>> component
-setupNbgenComponent(componentName, moduleName, <%= collection.name %>Ctrl, { state: stateConfig });
+setupNbgenComponent(componentName, moduleName, <%= collection.name %>Ctrl, { require: {nbgenApp: '^nbgenApp'}, state: stateConfig });

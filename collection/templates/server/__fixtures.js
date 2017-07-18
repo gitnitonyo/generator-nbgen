@@ -2,7 +2,7 @@
  * Contains data initialization routines for <%= collection.name %> collection
  */
 import {Meteor} from 'meteor/meteor'
-import {<%= collection.name %>} from '<%= relativePathToCollection %>/collection.js'
+import {<%= collection.name %>} from '/imports/common/<%= collectionName %>/collection.js'
 
 import {COLLECTION_GROUP_FIELD, GLOBAL_GROUP} from '/imports/common/app.roles.js'
 

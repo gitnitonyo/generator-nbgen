@@ -117,6 +117,7 @@ angular.module(name, [
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('global');
                         $translatePartialLoader.addPart('language');
+                        $translatePartialLoader.addPart('appRoles');
                         return $translate.refresh();
                     }],
                 }

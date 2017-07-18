@@ -2,7 +2,7 @@
 import actionToolbarListView from './actionToolbarListView.html';
 import actionToolbarDetailsView from './actionToolbarDetailsView.html';
 
-// import { appRoles } from '<%= commonImportDir %>/app.roles.js';
+// import { appRoles } from '/imports/common/app.roles.js';
 const config = {
     options: {
         actionToolbarListView,

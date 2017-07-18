@@ -1,8 +1,8 @@
 /**
  * Controls published information for <%= collection.name %> collection
  */
-import {<%= collection.name %>} from '<%= relativePathToCollection %>/collection.js'
-import {publishCollection} from '../common/publish.js'
+import {<%= collection.name %>} from '/imports/common/<%= collectionName %>/collection.js'
+import {publishCollection} from '/server/imports/api/common/publish.js'
 import {COLLECTION_PUBLIC_FIELD, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD} from '/imports/common/app.roles.js'
 
 const publishName = '<%= collectionName %>'

@@ -70,7 +70,9 @@ module.exports = TmvCollectionGenerator.extend({
         // would add audit log capability
         askIfAudit: function() {
             if (this.abort) return;
-            this.askForConfirmation('generateAuditLog', 'Do you want to include audit logs on collection operation?', true);
+            if (this.regenerateServer !== false) {
+                this.askForConfirmation('generateAuditLog', 'Do you want to include audit logs on collection operation?', true);
+            }
         },
         askIfPublic: function() {
             if (this.abort) return;

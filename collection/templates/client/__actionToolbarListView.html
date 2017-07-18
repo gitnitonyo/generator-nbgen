@@ -2,9 +2,8 @@
     <div class="toolbar-title">
         <span translate="<%=collectionName%>.home.title"></span>
     </div>
-    <nbgen-toolbar-actions>
-        <md-button ng-class="{'md-icon-button': $tmvCollection.$tmvUiUtils.$mdMedia('xs')}"
-            tmv-icon="mdi-arrow-left" tmv-label="tx:global.common.back"
+    <nbgen-toolbar-actions flex="none">
+        <md-button tmv-icon="mdi-arrow-left" tmv-label="tx:global.common.back"
             ng-click="$tmvCollection.goBack()">
         </md-button>
     </nbgen-toolbar-actions>

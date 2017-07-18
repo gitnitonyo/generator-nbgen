@@ -2,10 +2,9 @@
     <div class="toolbar-title">
         <span translate="<%=collectionName%>.home.titleDetails"></span>
     </div>
-    <nbgen-toolbar-actions>
+    <nbgen-toolbar-actions flex="none">
         <md-button
             class="tmv-collection-original"
-            ng-class="{'md-icon-button': $tmvCollection.$tmvUiUtils.$mdMedia('xs')}"
             tmv-label="{{$tmvCollection.$labels.cancelButton || 'global.common.cancel' | translate}}"
             tmv-icon="mdi-close"
             ng-click="$tmvCollection.closeDetailsView()"
@@ -13,11 +12,9 @@
         </md-button>
         <md-button
             class="tmv-collection-original"
-            ng-hide="$tmvCollection.hideFormSaveAction($tmvCollection.$currentItem)"
-            ng-if="$tmvCollection.viewMode != 'view'"
+            ng-hide="$tmvCollection.viewMode === 'view' || $tmvCollection.hideFormSaveAction($tmvCollection.$currentItem)"
             tmv-label="{{$tmvCollection.$labels.saveButton || 'global.common.save' | translate}}"
             tmv-icon="mdi-content-save"
-            ng-class="{'md-icon-button': $tmvCollection.$tmvUiUtils.$mdMedia('xs')}"
             ng-click="$tmvCollection.saveDetails()"
             ng-disabled="$tmvCollection.saveDisabled(editForm)"
             >
