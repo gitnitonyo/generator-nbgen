@@ -280,7 +280,7 @@ function askForField(cb) {
     this.prompt(prompts).then(function (props) {
         if (props.fieldName && props.fieldName.length > 0) {
             var field = {
-                fieldName: _s.camelize(props.fieldName, true),
+                fieldName: props.fieldName,
                 fieldType: props.fieldType,
                 fieldValidateRulesRequired: (props.fieldValidateRules && props.fieldValidateRules.indexOf('required') !== -1) ? true : undefined,
                 fieldValidateRulesMinlength: props.fieldValidateRulesMinlength,

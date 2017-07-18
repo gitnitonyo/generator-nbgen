@@ -1,13 +1,13 @@
 // i18n translation file
 <%= collectionName %>: {
     home: {
-        title: "<%= _s.humanize(collectionName) %>"
-        titleDetails: "<%= _s.humanize(collection.documentNameCapitalized) %> Details"
-        createNew: "Create a new <%= collection.documentNameCapitalized %>"
-        deleteConfirmation: "Are you sure you want to delete this item?"
-        insertSuccess: "Item successfully created."
-        updateSuccess: "Item successfully updated."
-        removeSuccess: "Item successfully removed."
+        title: "<%= _s.titleize(_s.humanize(collectionName)) %>"
+        titleDetails: "<%= _s.titleize(_s.humanize(collection.documentNameCapitalized)) %> Details"
+        createNew: "Create a new <%= _s.titleize(_s.humanize(collection.documentNameCapitalized)) %>"
+        deleteConfirmation: "Are you sure you want to delete this <%= _s.titleize(_s.humanize(collection.documentNameCapitalized)) %>?"
+        insertSuccess: "<%= _s.titleize(_s.humanize(collection.documentNameCapitalized)) %> successfully created."
+        updateSuccess: "<%= _s.titleize(_s.humanize(collection.documentNameCapitalized)) %> successfully updated."
+        removeSuccess: "<%= _s.titleize(_s.humanize(collection.documentNameCapitalized)) %> successfully removed."
     }
     // translation for fields
     <%_ fields.forEach(function(f) { _%>

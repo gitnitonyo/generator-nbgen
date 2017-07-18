@@ -3,7 +3,7 @@
  */
 
 import { setupNbgenComponent } from '/client/imports/ui/components/nbgenUtilsUi/nbgenCollection/nbgenCollectionv2.js';
-import { appRoles } from '/import/common/app.roles.js';
+import { appRoles } from '/imports/common/app.roles.js';
 
 import moduleName from '/client/imports/ui/components/nbgenApp/nbgenApp.js';
 

@@ -67,6 +67,7 @@ const config = {
         // fields processing including validations can also be specified here
         formLayout: {
             formGroups: [{
+                cssClass: "form-group-border",
                 fields: <%- fieldsString %>
             }]
         }
