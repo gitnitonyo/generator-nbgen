@@ -1,16 +1,18 @@
 <div layout="row" layout-align="start center">
-    <div class="toolbar-title">
-        <span translate="<%=collectionName%>.home.titleDetails"></span>
-    </div>
-    <span flex></span>
-    <nbgen-toolbar-actions flex="none">
+    <div class="toolbar-back">
         <md-button
-            class="tmv-collection-original"
+            class="tmv-collection-original md-icon-button"
             tmv-label="{{$tmvCollection.$labels.cancelButton || 'global.common.cancel' | translate}}"
             tmv-icon="mdi-close"
             ng-click="$tmvCollection.closeDetailsView()"
             >
         </md-button>
+    </div>
+    <div class="toolbar-title">
+        <span translate="<%=collectionName%>.home.titleDetails"></span>
+    </div>
+    <span flex></span>
+    <nbgen-toolbar-actions flex="none">
         <md-button
             class="tmv-collection-original"
             ng-hide="$tmvCollection.viewMode === 'view' || $tmvCollection.hideFormSaveAction($tmvCollection.$currentItem)"

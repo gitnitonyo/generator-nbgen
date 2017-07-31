@@ -1,16 +1,18 @@
 <div class="full-absolute" layout="column">
     <!-- html content for the state -->
-    <md-subheader id="tmv-collection-toolbar" class="md-no-sticky groupHeader nbgen-border-color" flex="none"
-        layout="column" layout-align="center" tmv-color=";background-hue-3">
-        <div layout="row">
+    <md-toolbar flex="none" class="md-accent tmv-toolbar groupHeader" id="tmv-collection-toolbar">
+        <div layout="row" layout-align="start center">
+            <div class="toolbar-back">
+                <md-button tmv-icon="mdi-arrow-left" tmv-label="tx:global.common.back"
+                    ng-click="$ctrl.goBack()" class="md-icon-button">
+                </md-button>
+            </div>
             <div class="toolbar-title">
                 <span class="<%=componentName%>.labels.title"></span>
             </div>
             <span flex></span>
             <nbgen-toolbar-actions flex="none">
-                <md-button tmv-icon="mdi-arrow-left" tmv-label="tx:global.common.back"
-                    ng-click="$ctrl.goBack()">
-                </md-button>
+
             </nbgen-toolbar-actions>
         </div>
     </md-toolbar>

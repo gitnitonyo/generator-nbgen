@@ -35,7 +35,7 @@ module.exports = TmvCollectionGenerator.extend({
     },
     initializing: function () {
         if (this.abort) return;
-        this.collectionName = _.camelCase(pluralize(this.name));
+        this.collectionName = _.camelCase(this.name);
         this.collections = this.collections || { };
         this.collection = this.collections[this.collectionName] || { };
         if (_.isEmpty(this.collection)) {
@@ -95,6 +95,12 @@ module.exports = TmvCollectionGenerator.extend({
             if (this.abort) return;
             if (this.generateUI) {
                 this.askForConfirmation('addMenuEntry', 'Add menu entry?', false)
+            }
+        },
+        askIfGenerateToolbar: function() {
+            if (this.abort) return;
+            if (this.generateUI) {
+                this.askForConfirmation('generateToolbar', 'Generate Custom Action Toolbar', false);
             }
         }
     },
@@ -234,8 +240,10 @@ module.exports = TmvCollectionGenerator.extend({
             this.template('client/___collection.scss', path.join(targetDir, '_' + this.collectionName + '.scss'))
 
             // action toolbar templates
-            this.template('client/__actionToolbarDetailsView.html', path.join(targetDir, 'actionToolbarDetailsView.html'));
-            this.template('client/__actionToolbarListView.html', path.join(targetDir, 'actionToolbarListView.html'));
+            if (this.generateToolbar === true) {
+                this.template('client/__actionToolbarDetailsView.html', path.join(targetDir, 'actionToolbarDetailsView.html'));
+                this.template('client/__actionToolbarListView.html', path.join(targetDir, 'actionToolbarListView.html'));
+            }
 
             this.clientIsGenerated = true;
         },

@@ -1,11 +1,14 @@
 <div layout="row" layout-align="start center">
+    <div class="toolbar-back">
+        <md-button tmv-icon="mdi-arrow-left" tmv-label="tx:global.common.back"
+            ng-click="$tmvCollection.goBack()" class="md-icon-button">
+        </md-button>
+    </div>
     <div class="toolbar-title">
         <span translate="<%=collectionName%>.home.title"></span>
     </div>
     <span flex></span>
     <nbgen-toolbar-actions flex="none">
-        <md-button tmv-icon="mdi-arrow-left" tmv-label="tx:global.common.back"
-            ng-click="$tmvCollection.goBack()">
-        </md-button>
+
     </nbgen-toolbar-actions>
 </div>
