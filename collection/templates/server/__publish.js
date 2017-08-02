@@ -4,10 +4,19 @@
 import {<%= collection.name %>} from '/imports/common/<%= collectionName %>/collection.js'
 import {publishCollection} from '/server/imports/api/common/publish.js'
 import {COLLECTION_PUBLIC_FIELD, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD} from '/imports/common/app.roles.js'
+import { getActiveGroup } from '/imports/common/app.roles.js';
+import { appRoles } from '/imports/common/app.roles.js';    // eslint-disable-line
+import { Roles } from 'meteor/alanning:roles';
 
-const publishName = '<%= collectionName %>'
-const collection = <%= collection.name %>
-const isPublic = <%= !!collection.options.isPublic %>
+const publishName = '<%= collectionName %>';
+const collection = <%= collection.name %>;
+const isPublic = <%= !!collection.options.isPublic %>;
+const allowedRoles = [ ];
+
+export function viewAllowed(userId) {
+    const activeGroup = getActiveGroup(userId);
+    return Roles.userIsInRole(userId, allowedRoles, activeGroup);
+}
 
 publishCollection(publishName, collection, selectorFn, optionsFn, isPublic)
 
@@ -15,7 +24,13 @@ publishCollection(publishName, collection, selectorFn, optionsFn, isPublic)
 // for customizing set selector; you may set application-specific filter here
 // please check publishCollection for default filter
 function selectorFn(selector) {
-    return selector
+    if (allowedRoles && allowedRoles.length > 0 && viewAllowed(this.userId)) {
+        // user is allowed to view
+        const activeGroup = getActiveGroup(this.userId);
+        selector = {$or: [{[COLLECTION_GROUP_FIELD]: activeGroup}, selector || { }]};
+    }
+
+    return selector;
 }
 
 // for customizing options, you may set field filter here

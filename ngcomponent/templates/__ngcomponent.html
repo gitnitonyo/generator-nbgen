@@ -1,6 +1,13 @@
-<div class="text-padding">
+<%_ if (generateState) { _%>
+<tmv-put location="tmv-toolbar-actions">
+    <nbgen-toolbar-actions>
+        <!-- put any action buttons here -->
+    </nbgen-toolbar-actions>
+</tmv-put>
+<%_ } _%>
+<div>
     <!-- template for the <<%= componentElement %>></<%=componentElement %>> -->
-    <p>
+    <p class="text-padding">
         Modify content in <%= templateLocation %>
     </p>
 </div>

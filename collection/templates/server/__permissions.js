@@ -43,12 +43,24 @@ const permissionMappings = {
     }
 }
 
+export function insertPermission(userId, doc) {
+    return checkPermission.call(this, userId, permissionMappings, 'insert', doc);
+}
+
+export function updatePermission(userId, doc, fields, modifier) {
+    return checkPermission.call(this, userId, permissionMappings, 'update', doc, fields, modifier);
+}
+
+export function removePermission(userId, doc) {
+    return checkPermission.call(this, userId, permissionMappings, 'remove', doc);
+}
+
 /**
  * More control over permission
  */
 <%= collection.name %>.allow({
     insert: (userId, doc) => {
-        if (checkPermission.call(this, userId, permissionMappings, 'insert', doc)) {
+        if (insertPermission.call(this, userId, doc)) {
             doc[COLLECTION_OWNER_FIELD] = userId;
             doc[COLLECTION_GROUP_FIELD] = getActiveGroup(userId);
             doc.createdBy = userId;
@@ -62,7 +74,7 @@ const permissionMappings = {
         return false;
     },
     update: (userId, doc, fields, modifier) => {
-        if (checkPermission.call(this, userId, permissionMappings, 'update', doc, fields, modifier)) {
+        if (updatePermission.call(this, userId, doc, fields, modifier)) {
             modifier.$set = modifier.$set || {};
             modifier.$set.modifiedBy = userId;
             modifier.$set.modifiedAt = new Date();
@@ -75,7 +87,7 @@ const permissionMappings = {
         return false;
     },
     remove: (userId, doc) => {  // eslint-disable-line
-        if (checkPermission.call(this, userId, permissionMappings, 'remove', doc)) {
+        if (removePermission.call(this, userId, doc)) {
             <%_ if (generateAuditLog) { _%>
             postAuditLog(userId, 'remove', { doc }, '<%= collectionName %>');
             <%_ } _%>
