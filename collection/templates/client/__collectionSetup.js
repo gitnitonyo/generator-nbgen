@@ -2,7 +2,7 @@
  * Setup the <%= collectionName %> component
  */
 
-import { setupNbgenComponent } from '/client/imports/ui/components/nbgenUtilsUi/nbgenCollection/nbgenCollectionv2.js';
+import { setupNbgenComponent } from '../../components/nbgenComponents';
 import { appRoles } from '/imports/common/app.roles.js';
 
 import moduleName from '/client/imports/ui/components/nbgenApp/nbgenApp.js';

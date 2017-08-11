@@ -141,6 +141,9 @@ module.exports = TmvCollectionGenerator.extend({
 
             this.serverIsGenerated = true;
 
+            // generate index.js
+            this.template('__index.js', path.join(this.serverDest, 'index.js'));
+
             // inject import statement into the server's entry point
             /* no need the gulp process automatically handles this
             var needle = "// nbgen: imports for collections will be placed above; don't delete"
@@ -238,6 +241,10 @@ module.exports = TmvCollectionGenerator.extend({
 
             // collection-specific styles
             this.template('client/___collection.scss', path.join(targetDir, '_' + this.collectionName + '.scss'))
+
+            if (this.regenerateServer) {
+                this.template('__index.js', path.join(targetDir, 'index.js'));
+            }
 
             // action toolbar templates
             if (this.generateToolbar === true) {

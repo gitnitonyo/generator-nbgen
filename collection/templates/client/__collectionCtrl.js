@@ -1,4 +1,4 @@
-import { NbgenCollectionBaseCtrl } from '/client/imports/ui/components/nbgenUtilsUi/nbgenCollection/nbgenCollectionv2.js';
+import { NbgenCollectionBaseCtrl } from '../../components/nbgenComponents';
 import { <%= collection.name %> } from '/imports/common/<%= collectionName %>/collection.js';
 
 import config from './<%= collectionName %>Config.js';
