@@ -5,7 +5,7 @@
 import { setupNbgenComponent } from '../../components/nbgenComponents';
 import { appRoles } from '/imports/common/app.roles.js';
 
-import moduleName from '/client/imports/ui/components/nbgenApp/nbgenApp.js';
+import moduleName from '../nbgenApp';
 
 import { <%= collection.name %>Ctrl } from './<%= collectionName %>Ctrl.js';
 

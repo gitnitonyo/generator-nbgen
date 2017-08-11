@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 import template from './<%= componentName %>State.html';
-import moduleName from '../../components/nbgenApp/nbgenApp.js';
+import moduleName from '../nbgenApp';
 
 const name = '<%= componentName %>';
 const i18npart = `${name}`;
