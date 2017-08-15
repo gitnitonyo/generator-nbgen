@@ -128,21 +128,15 @@ module.exports = TmvCollectionGenerator.extend({
                 'fixtures.js',
             ]
 
-            // write collection definition to the common area so it can also be accessed by client
-            this.collectionTargetDir = path.join(CONSTANTS.commonDir, this.collectionName)
-            this.template('server/__collection.js', path.join(this.collectionTargetDir, 'collection.js'))
-
             // write the server files
             this.serverDest = path.join(CONSTANTS.defaultServerDir, 'imports/api', this.collectionName)
-            this.relativePathToCollection = path.relative(this.serverDest, this.collectionTargetDir)
+            this.template('server/__collection.js', path.join(this.serverDest, 'index.js'))
+
             files.forEach(function(filename) {
                 this.template(`server/__${filename}`, path.join(this.serverDest, filename))
             }.bind(this))
 
             this.serverIsGenerated = true;
-
-            // generate index.js
-            this.template('__index.js', path.join(this.serverDest, 'index.js'));
 
             // inject import statement into the server's entry point
             /* no need the gulp process automatically handles this
@@ -193,7 +187,7 @@ module.exports = TmvCollectionGenerator.extend({
                 listLayout.push(fieldObj);
             }
             this.listLayoutString = stringifyObject(listLayout, {indent: Array(5).join(' ')})
-                .replace(/\n/g, '\n' + Array(13).join(' '));
+                .replace(/\n/g, '\n' + Array(9).join(' '));
         },
 
         generateFormLayout: function() {
@@ -231,7 +225,7 @@ module.exports = TmvCollectionGenerator.extend({
             this.template('client/__collection.hjson', path.join(i18nDir, this.collectionName + '.hjson'))
 
             // collection controller js file
-            this.template('client/__collectionCtrl.js', path.join(targetDir, this.collectionName + 'Ctrl.js'))
+            this.template('client/__collection.js', path.join(targetDir, this.collectionName + 'Collection.js'))
 
             // configuration js file
             this.template('client/__collectionConfig.js', path.join(targetDir, this.collectionName + 'Config.js'))
@@ -242,13 +236,12 @@ module.exports = TmvCollectionGenerator.extend({
             // collection-specific styles
             this.template('client/___collection.scss', path.join(targetDir, '_' + this.collectionName + '.scss'))
 
-            if (this.regenerateServer) {
-                this.template('__index.js', path.join(targetDir, 'index.js'));
-            }
+            // main entry point for this module
+            this.template('client/__index.js', path.join(targetDir, 'index.js'));
 
             // action toolbar templates
             if (this.generateToolbar === true) {
-                this.template('client/__actionToolbarDetailsView.html', path.join(targetDir, 'actionToolbarDetailsView.html'));
+                this.template('client/__actionToolbarFormView.html', path.join(targetDir, 'actionToolbarFormView.html'));
                 this.template('client/__actionToolbarListView.html', path.join(targetDir, 'actionToolbarListView.html'));
             }
 

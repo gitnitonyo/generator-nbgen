@@ -2,7 +2,7 @@
  * Contains data initialization routines for <%= collection.name %> collection
  */
 import {Meteor} from 'meteor/meteor'
-import {<%= collection.name %>} from '/imports/common/<%= collectionName %>/collection.js'
+import {<%= collection.name %>} from '.'
 
 import {COLLECTION_GROUP_FIELD, GLOBAL_GROUP} from '/imports/common/app.roles.js'
 
@@ -13,6 +13,8 @@ import {COLLECTION_GROUP_FIELD, GLOBAL_GROUP} from '/imports/common/app.roles.js
 const indices = [{
     index: {[COLLECTION_GROUP_FIELD]: 1},
 }];
+
+const fileToLoad = 'dataload/<%=collectionName%>.json';
 /* global Assets */
 
 Meteor.startup(() => {
@@ -22,7 +24,7 @@ Meteor.startup(() => {
 
     if (<%= collection.name %>.find({}).count() == 0) {
         // initial load
-        Assets.getText('dataload/<%= collectionName %>.json', function(err, result) {
+        Assets.getText(fileToLoad, function(err, result) {
             if (!err) {
                 let collectionList = JSON.parse(result)
 
@@ -36,6 +38,3 @@ Meteor.startup(() => {
         })
     }
 })
-
-// nbgen: protection marker start
-// nbgen: protection marker end

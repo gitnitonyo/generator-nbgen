@@ -1,3 +1,7 @@
-<%= collectionName %> {
-    // provides specific styles for the collection
+.tmv-list-section.<%= _s.dasherize(collectionName) %> {
+    // provides specific styles for the collection in the list
+}
+
+.tmv-form-section.<%= _s.dasherize(collectionName) %> {
+    // provides specific styles for the collection in the form
 }

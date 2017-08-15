@@ -1,27 +1,11 @@
-/**
- * Setup the <%= collectionName %> component
- */
-
-import { setupNbgenComponent } from '../../components/nbgenComponents';
+import moduleName from '../nbgenApp';
+import { setupTmvCollection } from '../../components/nbgenComponents';
+import config from './<%=collectionName%>Config.js';
 import { appRoles } from '/imports/common/app.roles.js';
 
-import moduleName from '../nbgenApp';
+const stateName = '<%=collectionName%>';
 
-import { <%= collection.name %>Ctrl } from './<%= collectionName %>Ctrl.js';
+const rolesAllowed = [ appRoles.NORMAL ];
+const i18npart = '<%=collectionName%>';
 
-import config from './<%= collectionName %>Config.js';
-
-const componentName = '<%= collectionName %>';
-
-// specify the user roles which can access this component's url
-const rolesAllowed = [ appRoles.NORMAL_USER ];
-let stateConfig;    // set to configure ui-router state
-if (!config || !config.options || config.options.noState !== true) {
-    stateConfig = {
-        rolesAllowed,
-        i18npart: componentName
-    }
-}
-
-// initialize <<%= collectionName %>> component
-setupNbgenComponent(componentName, moduleName, <%= collection.name %>Ctrl, { require: {nbgenApp: '^nbgenApp'}, state: stateConfig });
+setupTmvCollection(stateName, moduleName, { rolesAllowed, i18npart }, config);

@@ -1,7 +1,7 @@
 /**
  * Controls published information for <%= collection.name %> collection
  */
-import {<%= collection.name %>} from '/imports/common/<%= collectionName %>/collection.js'
+import {<%= collection.name %>} from '.'
 import {publishCollection} from '/server/imports/api/common/publish.js'
 import {COLLECTION_PUBLIC_FIELD, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD} from '/imports/common/app.roles.js'
 import { getActiveGroup } from '/imports/common/app.roles.js';
@@ -20,7 +20,6 @@ export function viewAllowed(userId) {
 
 publishCollection(publishName, collection, selectorFn, optionsFn, isPublic)
 
-// nbgen: protection marker start
 // for customizing set selector; you may set application-specific filter here
 // please check publishCollection for default filter
 function selectorFn(selector) {
@@ -49,4 +48,3 @@ function optionsFn(options) {
 
     return options
 }
-// nbgen: protection marker end

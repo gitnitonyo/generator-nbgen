@@ -2,7 +2,7 @@
 /**
  * Define insert / update and delete permission for the <%= collection.name %> collection
  */
-import {<%= collection.name %>} from '/imports/common/<%= collectionName %>/collection.js';
+import {<%= collection.name %>} from '.';
 
 import {appRoles, getActiveGroup, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD} from '/imports/common/app.roles.js';
 import {checkPermission} from '/server/imports/api/common/permissions.js';

@@ -12,8 +12,5 @@ const collectionName = '<%= collectionName %>'
 <% if (collectionName === 'users') { -%>
 export const <%= collection.name %> = Meteor.users
 <% } else { -%>
-export const <%= collection.name %> = new Mongo.Collection(collectionName)
+export const <%= collection.name %> = Mongo.Collection.get(collectionName) || new Mongo.Collection(collectionName);
 <% } -%>
-
-// nbgen: protection marker start
-// nbgen: protection marker end
