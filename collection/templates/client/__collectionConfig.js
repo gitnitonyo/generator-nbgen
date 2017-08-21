@@ -14,12 +14,20 @@ const config = {
 
     // optionally provide a custom template in action bars
     <%_ if (generateToolbar) { _%>
-        actionToolbarListView,
-        actionToolbarFormView,
+    actionToolbarListView,
+    actionToolbarFormView,
     <%_ } else { _%>
     // actionToolbarListView: '',
     // actionToolbarFormView: '',
     <%_ } _%>
+
+    functions: {
+        // define functions here available in both list and form controllers
+    },
+
+    locals: {
+        // define local properties here which will available for both list and form controllers
+    },
 
     listLayout: {
         // optionally provide a template for list actions
