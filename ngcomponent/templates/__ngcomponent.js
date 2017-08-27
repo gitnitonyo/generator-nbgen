@@ -2,9 +2,10 @@ import angular from 'angular';
 
 import config from './<%= componentName %>Config.js';
 import template from './<%= componentName %>.html';
-import moduleName from '../../components/nbgenApp/nbgenApp.js';
+import moduleName from '../nbgenApp';
 
 const name = '<%= componentName %>';
+const controllerAs = '$tmvCollection';
 
 class <%= controllerName %> {
     constructor() {
@@ -37,7 +38,7 @@ class <%= controllerName %> {
 angular.module(moduleName)
     .component(name, {
         template,
-        controllerAs: name,
+        controllerAs: controllerAs,
         controller: <%= controllerName %>,
         require: {
             <%= moduleName %>: '^<%= moduleName %>',

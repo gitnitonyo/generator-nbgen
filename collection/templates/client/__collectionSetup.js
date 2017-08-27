@@ -1,5 +1,5 @@
 import moduleName from '../nbgenApp';
-import { setupTmvCollection } from '../../components/nbgenComponents';
+import { setupTmvCollection } from '/client/imports/ui/components/nbgenComponents';
 import config from './<%=collectionName%>Config.js';
 import { appRoles } from '/imports/common/app.roles.js';
 

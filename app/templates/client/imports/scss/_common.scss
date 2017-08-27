@@ -213,7 +213,7 @@ $loader-delay: $loader-anim-duration + $loader-section-anim-duration;
     }
 }
 
-.full-absolute {
+.full-absolute, .tmv-absolute {
     position: absolute;
     top: 0;
     left: 0;
@@ -239,6 +239,13 @@ $loader-delay: $loader-anim-duration + $loader-section-anim-duration;
     @media (min-width: $layout-breakpoint-xs) {
         min-width: $layout-breakpoint-xs - 20px;
         max-width: $layout-breakpoint-xs - 20px;
+    }
+}
+
+.tmv-box-width {
+    min-width: 100%;
+    @media (min-width: $layout-breakpoint-xs) {
+        min-width: $layout-breakpoint-xs - 20px;
     }
 }
 

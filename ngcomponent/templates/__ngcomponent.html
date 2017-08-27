@@ -1,13 +1,13 @@
-<%_ if (generateState) { _%>
-<tmv-put location="tmv-toolbar-actions">
-    <nbgen-toolbar-actions>
-        <!-- put any action buttons here -->
-    </nbgen-toolbar-actions>
-</tmv-put>
-<%_ } _%>
 <div>
     <!-- template for the <<%= componentElement %>></<%=componentElement %>> -->
-    <p class="text-padding">
+    <form name="$tmvCollection.editForm" novalidate="" class="text-padding">
+        <%_ if (generateState) { _%>
+        <tmv-put location="tmv-toolbar-actions">
+            <nbgen-toolbar-actions>
+                <!-- put any action buttons here -->
+            </nbgen-toolbar-actions>
+        </tmv-put>
+        <%_ } _%>
         Modify content in <%= templateLocation %>
-    </p>
+    </form>
 </div>

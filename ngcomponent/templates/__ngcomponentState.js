@@ -6,6 +6,9 @@ import moduleName from '../nbgenApp';
 const name = '<%= componentName %>';
 const i18npart = `${name}`;
 
+// specify roles here whore are able to access this state
+const roles = [ ];
+
 class <%= stateControllerName %> {
     constructor($scope, $state, $tmvUiUtils) {
         'ngInject';
@@ -28,9 +31,7 @@ angular.module(moduleName)
                 parent: 'site',
                 url: `/${name}`,
                 data: {
-                    roles: [
-                        // specify roles allowed to access this route
-                    ]
+                    roles: roles,
                 },
                 views: {
                     'content@': {

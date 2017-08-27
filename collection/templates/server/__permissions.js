@@ -2,10 +2,10 @@
 /**
  * Define insert / update and delete permission for the <%= collection.name %> collection
  */
-import {<%= collection.name %>} from '.';
+import { <%= collection.name %> } from './collection.js';
 
-import {appRoles, getActiveGroup, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD} from '/imports/common/app.roles.js';
-import {checkPermission} from '/server/imports/api/common/permissions.js';
+import { appRoles, getActiveGroup, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD } from '/imports/common/app.roles.js';
+import { checkPermission } from '/server/imports/api/common/permissions.js';
 <%_ if (generateAuditLog) { _%>
 import { postAuditLog } from '/server/imports/api/auditLogs/methods.js';
 <%_ } _%>
