@@ -1,7 +1,7 @@
 /**
  * Controls published information for <%= collection.name %> collection
  */
-import { <%= collection.name %> } from './collection.js';
+import { <%= collection.name %> } from '.';
 import { publishCollection } from '/server/imports/api/common/publish.js'
 import { COLLECTION_PUBLIC_FIELD, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD } from '/imports/common/app.roles.js'
 import { getActiveGroup } from '/imports/common/app.roles.js';
