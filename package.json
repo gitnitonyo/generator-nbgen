@@ -1,6 +1,6 @@
 {
   "name": "generator-nbgen",
-  "version": "0.2.27",
+  "version": "0.2.28",
   "description": "nbgen, Nubevision Tech's continuous generation toolset",
   "keywords": [
     "yeoman-generator",
