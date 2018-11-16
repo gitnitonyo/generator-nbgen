@@ -59,10 +59,10 @@ module.exports = TmvCollectionGenerator.extend({
         this.iconClass = this.options.iconClass || 'mdi-package'
     },
     prompting: {
-        checkForNewVersion: function() {
-            if (this.abort) return;
-            this.checkNewerVersion();
-        },
+        // checkForNewVersion: function() {
+        //    if (this.abort) return;
+        //    this.checkNewerVersion();
+        // },
         askIfServer: function() {
             if (this.abort) return;
             this.askForConfirmation('regenerateServer', 'Do you want to regenerate server files?', false)

@@ -5,7 +5,7 @@ import { appRoles } from '/imports/common/app.roles.js';
 
 const stateName = '<%=collectionName%>';
 
-const rolesAllowed = [ appRoles.NORMAL ];
+const rolesAllowed = [ appRoles.NORMAL_USER ];
 const i18npart = '<%=collectionName%>';
 
 setupTmvCollection(stateName, moduleName, { rolesAllowed, i18npart }, config);

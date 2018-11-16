@@ -11,7 +11,7 @@ import { Roles } from 'meteor/alanning:roles';
 const publishName = '<%= collectionName %>';
 const collection = <%= collection.name %>;
 const isPublic = <%= !!collection.options.isPublic %>;
-const allowedRoles = [ ];
+const allowedRoles = [ appRoles.SUPER_ADMIN, appRoles.USER_ADMIN, appRoles.NORMAL_USER ];
 
 export function viewAllowed(userId) {
     const activeGroup = getActiveGroup(userId);

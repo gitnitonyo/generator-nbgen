@@ -17,7 +17,7 @@ module.exports =  {
     clientDir: 'client',
     nbgenAppModuleName: 'nbgenApp',
     mainModuleFile: 'client/main.js',
-    nbgenAppMenuFile: 'client/imports/ui/components/nbgenApp/nbgenAppMenu.js',
+    nbgenAppMenuFile: 'client/imports/ui/app/nbgenApp/nbgenAppMenu.js',
     nbgenGlobalhjson: 'client/imports/i18n/en/global.hjson',
     nbgenServerEntryPoint: 'server/main.js',
     commonDir: 'imports/common'
