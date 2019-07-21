@@ -19,7 +19,7 @@ const fileToLoad = 'dataload/<%=collectionName%>.json';
 
 Meteor.startup(() => {
     indices.forEach(item => {
-        <%=collection.name%>._ensureIndex(item.index, item.options);
+        <%=collection.name%>.rawCollection().createIndex(item.index, item.options);
     });
 
     if (<%= collection.name %>.find({}).count() == 0) {
