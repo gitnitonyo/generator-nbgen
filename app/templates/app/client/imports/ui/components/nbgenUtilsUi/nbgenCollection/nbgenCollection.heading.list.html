@@ -1,0 +1,45 @@
+<tmv-put location="tmvDataInfo">
+    <div class="side-margin text-center">
+        <span class="text-emphasis">{{$tmvCollection.layout.hasNoCount === true ? $tmvCollection.$items.length : $tmvCollection.$collectionCount}}</span><br>
+        <span>item(s)</span>
+    </div>
+</tmv-put>
+<tmv-put on-search layout="row" flex ng-if="$tmvCollection.displaySearch()">
+    <md-input-container md-no-float="" class="search-box md-block" flex>
+        <md-icon md-font-icon="mdi-magnify" class="mdi"></md-icon>
+        <input type="text" placeholder="{{($tmvCollection.$labels.searchLabel || 'global.common.search') | translate}}"
+               ng-model="$tmvCollection.searchText" autocomplete="off"
+               autocorrect="off">
+    </md-input-container>
+</tmv-put>
+<tmv-put location="tmv-collection-toolbar" only-children>
+    <div ng-if="$tmvCollection.options.actionToolbarListView"
+        nbgen-template="$tmvCollection.options.actionToolbarListView"
+        layout="row" layout-align="start center" class="full-absolute">
+    </div>
+    <div ng-if="!$tmvCollection.options.actionToolbarListView" layout="column">
+        <div layout="row" layout-align="start center">
+            <div class="toolbar-back">
+                <md-button tmv-icon="mdi-arrow-left" tmv-label="tx:global.common.back"
+                    ng-click="$tmvCollection.goBack()" class="md-icon-button">
+                </md-button>
+            </div>
+            <div class="toolbar-title">
+                <span ng-bind-html="$tmvCollection.titleDisplay()"></span>
+            </div>
+            <span flex></span>
+            <div ng-if="$tmvCollection.options.actionListTemplate" flex="none" nbgen-template="$tmvCollection.options.actionListTemplate">
+            </div>
+            <div ng-if="!$tmvCollection.options.actionListTemplate" flex="none">
+                <nbgen-toolbar-actions>
+                </nbgen-toolbar-actions>
+            </div>
+        </div>
+    </div>
+</tmv-put>
+<tmv-put on-fab only-children ng-if="!$tmvCollection.hideAdd()">
+    <md-button class="md-fab md-fab-bottom-right" tmv-icon="mdi-plus"
+               tmv-label="{{$tmvCollection.$labels.addButton || 'global.common.add' | translate}}"
+               ng-click="$tmvCollection.createItem($event)" tooltip-direction="top">
+    </md-button>
+</tmv-put>

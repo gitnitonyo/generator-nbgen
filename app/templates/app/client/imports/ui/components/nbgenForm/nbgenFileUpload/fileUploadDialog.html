@@ -1,0 +1,103 @@
+<div class="upload-dialog-container">
+    <h2 class="md-title">
+        {{ 'global.common.uploadAFile' | translate }}
+    </h2>
+    <p>&nbsp;</p>
+    <div class="file-upload-section" layout="row" layout-align="center">
+        <div layout="column"
+            layout-align="center center">
+            <div class="drop-box">
+                <div class="drop-box-content text-center"
+                    layout="column"
+                    layout-align="center center"
+                    ng-show="!$tmvCollection._isUploading && !$tmvCollection.$currentItem._file"
+                    >
+                    <input type="file"
+                        class="file-select"
+                        ngf-select="$tmvCollection.uploadFile($file)"
+                        ngf-drop="$tmvCollection.uploadFile($file)"
+                        ng-model="$tmvCollection.$currentItem._file"
+                        ng-required="true"
+                        name="uploadFile"
+                        ngf-model-invalid="$tmvCollection.$currentItem.invalidFiles"
+                        ngf-model-options="$tmvCollection._modelOptions"
+                        ngf-multiple="$tmvCollection._isMultiple"
+                        ngf-pattern="$tmvCollection._pattern"
+                        ngf-accept="$tmvCollection._accept"
+                        ngf-validate="$tmvCollection._validateObj"
+                        ngf-drop-available="$tmvCollection._dropAvailable"
+                        ngf-validate-fn="$tmvCollection._validateFile($file)"
+                        ngf-max-size="$tmvCollection._maxSize"
+                        ngf-fix-orientation="true"
+                    >
+                    <span class="md-subhead">
+                        Select File
+                    </span>
+                    <span ng-if="$tmvCollection._dropAvailable" class="md-subhead">
+                        or Drop File Here
+                    </span>
+                </div>
+                <div class="drop-box-content text-center"
+                    layout="column"
+                    layout-align="center center"
+                    ng-if="$tmvCollection._isUploading"
+                    >
+                    <!-- display progress bar -->
+                    <div class="tmv-put-center">
+                        <md-progress-circular md-mode="{{$tmvCollection._progressMode}}" value="{{$tmvCollection._progressPercentage}}" md-diameter="70"></md-progress-circular>
+                    </div>
+                    <div class="md-caption tmv-put-center">
+                         {{$tmvCollection._progressPercentage | number}}%
+                    </div>
+                    <div class="md-caption tmv-put-bottom" style="margin-bottom: 20px;">
+                        Uploading ...
+                    </div>
+                </div>
+                <div class="drop-box-content text-center"
+                    layout="column"
+                    layout-align="center center"
+                    ng-if="!$tmvCollection._isUploading && $tmvCollection.$currentItem._file"
+                    >
+                    <img ngf-src="$tmvCollection.$currentItem._file"
+                        ng-if="$tmvCollection.$currentItem._file.type.startsWith('image')">
+                    <video controls ngf-src="$tmvCollection.$currentItem._file"
+                        ng-if="$tmvCollection.$currentItem._file.type.startsWith('video')"></video>
+                    <audio controls ngf-src="$tmvCollection.$currentItem._file"
+                        ng-if="$tmvCollection.$currentItem._file.type.startsWith('audio')"></audio>
+                    <md-icon md-font-icon="mdi-file-pdf" class="mdi"
+                        ng-if="$tmvCollection.$currentItem._file.type === 'application/pdf'"></md-icon>
+                </div>
+            </div>
+            <div class="nbgen-file-upload-message-area" style="height: 46px; margin-top: 5px; margin-bottom: 5px">
+                <div ng-messages="$tmvCollection.editForm.uploadFile.$error" class="md-caption tmv-warn-color"
+                    role="alert"
+                    >
+                    <div ng-message="validateFn">Invalid file</div>
+                    <div ng-message="maxSize">File size is too large. Please limit to {{$tmvCollection._maxSize}}</div>
+                </div>
+                <div ng-if="!$tmvCollection._isUploading && $tmvCollection.$currentItem._file"
+                    class="text-center">
+                    <div class="md-caption">
+                        Type: <b>{{$tmvCollection.$currentItem._file.type}}</b>
+                    </div>
+                    <div class="md-caption">
+                        Size: <b>{{$tmvCollection.$currentItem._file.size | number}}</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="file-description">
+        <md-input-container class="md-block">
+            <label>{{ $tmvCollection.descriptionPrompt | translate}}</label>
+            <input type="text" ng-model="$tmvCollection.$currentItem.fileDescription"
+                name="fileDescription"
+                ng-required="true"
+                ng-readonly="$tmvCollection._description"
+                >
+            <div ng-messages="$tmvCollection.editForm.fileDescription.$error">
+                <div ng-message="required">This field is required</div>
+            </div>
+        </md-input-container>
+    </div>
+</div>

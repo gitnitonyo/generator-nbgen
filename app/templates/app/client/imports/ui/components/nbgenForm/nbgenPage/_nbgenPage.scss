@@ -1,0 +1,81 @@
+.tmv-pages-container, .tmv-page-container {
+    @include clearfix();
+}
+
+.tmv-pages-container.tmv-form-group {
+    padding: $tmv-gutter-width;
+    overflow: hidden;
+    .tmv-pages-numbers {
+        position: relative;
+        // margin-top: -15px;
+        // border-bottom: 1px solid rgba(0, 0, 0, 0.24);
+        .tmv-pages-number {
+            height: 24px;
+            width: 24px;
+            min-height: 24px;
+            min-width: 24px;
+            margin: 4px;
+            border-radius: 50%;
+            position: relative;
+            border-width: 0;
+            &:focus, &:active {
+                outline: none;
+            }
+
+            > .tmv-pages-page-number {
+                font-size: 12px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+        .tmv-page-label {
+            position: absolute;
+            opacity: 0;
+            left: 5px;
+            top: calc(100% + 4px);
+            font-weight: bold;
+        }
+
+        .tmv-page-number-container {
+            > .tmv-pages-number {
+                &:hover {
+                    ~ .tmv-page-label {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* animation for page transition */
+
+.tmv-pages-active.tmv-page-container {
+    transition: all 0.3s;
+    opacity: 1;
+    margin-left: 0;
+}
+
+.tmv-pages-active.tmv-page-container.ng-hide {
+    transition: none;
+    opacity: 0;
+}
+
+.tmv-page-from-left > .tmv-pages-active.tmv-page-container.ng-hide {
+    margin-left: -100%;
+}
+
+.tmv-page-from-right > .tmv-pages-active.tmv-page-container.ng-hide {
+    margin-left: 100%;
+}
+
+.tmv-pages-container {
+    transition: all 0.3s;
+    opacity: 1;
+    &.ng-hide {
+        transition: none;
+        opacity: 0;
+    }
+}

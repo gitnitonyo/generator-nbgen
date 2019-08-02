@@ -1,0 +1,52 @@
+.tmv-collection-list {
+    > .tmv-collection-list-content-wrapper {
+        position: relative;
+
+        .tmv-list-table-header {
+            padding: 10px 16px;
+            .tmv-list-table-column {
+                white-space: normal;
+                line-height: 1;
+                padding: 0 5px;
+                &.tmv-list-action-buttons {
+                    button {
+                        margin: 0;
+                        padding: 5px;
+                    }
+                }
+            }
+            a.tmv-list-sort-link {
+                color: inherit;
+                text-decoration: none;
+                .sort-icons {
+                    font-size: 24px;
+                    color: rgba(0, 0, 0, 0.3);
+                    .up {
+                        top: 0;
+                    }
+                    .down {
+                        top: 8px;
+                    }
+                }
+            }
+        }
+    }
+}
+.tmv-collection-form {
+    .tmv-collection-form-content-wrapper {
+        position: relative;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+.tmv-toolbar {
+    .nbgen-input-in-bar {
+        md-input-container {
+            margin: 0px;
+            .md-errors-spacer {
+                min-height: 0px;
+            }
+        }
+    }
+}

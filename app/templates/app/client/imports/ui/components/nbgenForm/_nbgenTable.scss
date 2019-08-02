@@ -1,0 +1,30 @@
+.nbgen-table-container, .nbgen-table {
+    display: block;
+    overflow: auto;
+    min-width: 100%;
+    @include nbgen-table();
+
+    a.tr {
+        &:link, &:visited, &:hover, &:active {
+            text-decoration: none;
+        }
+        &:hover {
+
+        }
+    }
+    .thead .tr .td {
+        border-bottom: 1px solid;
+    }
+    .tbody .tr .td {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid;
+    }
+
+    .table:not(.table-responsive) {
+        .td {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    }
+}

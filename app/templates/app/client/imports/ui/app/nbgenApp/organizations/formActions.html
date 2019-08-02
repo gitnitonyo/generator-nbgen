@@ -1,0 +1,36 @@
+<nbgen-toolbar-actions flex="none">
+    <md-button
+        class="tmv-collection-original"
+        ng-hide="$tmvCollection.viewMode === 'view' || $tmvCollection.hideFormSaveAction($tmvCollection.$currentItem)"
+        tmv-label="{{$tmvCollection.$labels.saveButton || 'global.common.save' | translate}}"
+        tmv-icon="mdi-content-save"
+        ng-click="$tmvCollection.saveDetails()"
+        ng-disabled="$tmvCollection.saveDisabled()"
+        >
+    </md-button>
+    <!-- deactivate -->
+    <md-button
+        ng-show="$tmvCollection.viewMode === 'view' && $tmvCollection.$currentItem._approvalNeeded !== true && $tmvCollection.$currentItem._deactivated !== true"
+        tmv-label="tx:organizations.labels.deactivate"
+        tmv-icon="mdi-folder-remove"
+        ng-click="$tmvCollection.deactivateOrg($event)"
+    >
+    </md-button>
+
+    <!-- activate button -->
+    <md-button
+        ng-show="$tmvCollection.viewMode === 'view' && $tmvCollection.$currentItem._approvalNeeded !== true && $tmvCollection.$currentItem._deactivated === true"
+        tmv-label="tx:organizations.labels.activate"
+        tmv-icon="mdi-folder-plus"
+        ng-click="$tmvCollection.activateOrg($event)"
+    >
+    </md-button>
+
+    <md-button
+        ng-show="$tmvCollection.viewMode === 'view' && $tmvCollection.$currentItem._approvalNeeded === true"
+        tmv-label="tx:organizations.labels.approve"
+        tmv-icon="mdi-briefcase-check"
+        ng-click="$tmvCollection.approveOrg($event)"
+    >
+    </md-button>
+</nbgen-toolbar-actions>

@@ -1,0 +1,10 @@
+<md-progress-linear md-mode="indeterminate" ng-disabled="$ctrl.$nbHistory.historyResult"></md-progress-linear>
+<md-content class="nb-history-panel-container" md-whiteframe="2" ng-if="$ctrl.$nbHistory.historyResult">
+    <md-list>
+        <md-list-item ng-repeat="item in $ctrl.$nbHistory.historyResult"
+            ng-click="$ctrl.selectEntry(item)"
+            >
+            <p>{{item.historyStr}}</p>
+        </md-list-item>
+    </md-list>
+</md-content>

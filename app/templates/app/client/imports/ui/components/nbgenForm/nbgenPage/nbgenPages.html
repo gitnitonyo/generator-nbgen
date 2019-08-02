@@ -1,0 +1,65 @@
+<div class="tmv-form-group tmv-pages-container tmv-pages-above" ng-show="$tmvPages.isActive()">
+    <div layout="row" layout-align="space-between center" layout-wrap>
+        <div class="tmv-pages-numbers tmv-no-wrap" layout="row">
+            <div ng-repeat="$page in $tmvPages.getPages()" class="tmv-page-number-container"
+                ng-class="{'tmv-page-active': $page === $tmvPages.getActivePage()}"
+                >
+                <button class="tmv-pages-number"
+                    md-colors="$tmvPages.determineColors($page)"
+                    ng-disabled="$page === $tmvPages.getActivePage() || !$page._visited"
+                    ng-click="$tmvPages.gotoPage($index)"
+
+                    >
+                    <span class="tmv-pages-page-number">{{ $index+1 }}</span>
+                </button>
+                <div class="tmv-page-label md-caption" ng-if="$page.pageSchema.label">
+                    {{ $page.pageSchema.label | translate }}
+                </div>
+            </div>
+        </div>
+        <div class="tmv-pages-actions tmv-no-wrap" layout="row">
+            <md-button tmv-label="tx:Previous" class="md-primary md-icon-button" ng-disabled="$tmvPages.onFirstPage()"
+                tmv-icon="mdi-arrow-left"
+                ng-click="$tmvPages.gotoPreviousPage()"
+                >
+            </md-button>
+            <md-button tmv-label="tx:Next" class="md-primary md-icon-button" ng-disabled="$tmvPages.onLastPage()"
+                tmv-icon="mdi-arrow-right"
+                ng-click="$tmvPages.gotoNextPage()"
+                >
+            </md-button>
+        </div>
+    </div>
+</div>
+<div class="tmv-form-group tmv-pages-container tmv-pages-bottom" ng-show="$tmvPages.isActive()">
+    <div layout="row" layout-align="space-between center" layout-wrap>
+        <div class="tmv-pages-numbers tmv-no-wrap" layout="row">
+            <div ng-repeat="$page in $tmvPages.getPages()" class="tmv-page-number-container"
+                ng-class="{'tmv-page-active': $page === $tmvPages.getActivePage()}"
+                >
+                <button class="tmv-pages-number"
+                    md-colors="$tmvPages.determineColors($page)"
+                    ng-disabled="$page === $tmvPages.getActivePage() || !$page._visited"
+                    ng-click="$tmvPages.gotoPage($index)"
+                    >
+                    <span class="tmv-pages-page-number">{{ $index+1 }}</span>
+                </button>
+                <div class="tmv-page-label md-caption" ng-if="$page.pageSchema.label">
+                    {{ $page.pageSchema.label | translate }}
+                </div>
+            </div>
+        </div>
+        <div class="tmv-pages-actions tmv-no-wrap" layout="row">
+            <md-button tmv-label="tx:Previous" class="md-primary md-icon-button" ng-disabled="$tmvPages.onFirstPage()"
+                tmv-icon="mdi-arrow-left"
+                ng-click="$tmvPages.gotoPreviousPage()"
+                >
+            </md-button>
+            <md-button tmv-label="tx:Next" class="md-primary md-icon-button" ng-disabled="$tmvPages.onLastPage()"
+                tmv-icon="mdi-arrow-right"
+                ng-click="$tmvPages.gotoNextPage()"
+                >
+            </md-button>
+        </div>
+    </div>
+</div>

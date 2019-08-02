@@ -1,0 +1,164 @@
+<!-- main app layout -->
+<md-content ng-hide="nbgenApp.$$browserSupported !== false" md-theme="dark">
+    <p class="browser-not-supported md-subhead ng-cloak" ng-hide="nbgenApp.$$browserSupported !== false" style="text-align: center; padding: 20px;">
+        We're sorry but you're browser is not supported. Please <md-button href="http://browsehappy.com/">upgrade your browser</md-button> to improve your experience.
+        <br/>
+        <i>Your Browser: <b>{{nbgenApp.$$userAgent.browser.family}}, {{nbgenApp.$$userAgent.browser.major}}, {{nbgenApp.$$userAgent.browser.minor}}</b></i>
+    </p>
+</md-content>
+<div layout="row" flex ng-if="nbgenApp.requiredResourcesLoaded === true" ng-hide="nbgenApp.$$browserSupported !== true">
+    <div layout="column">
+        <md-sidenav class="md-sidenav-left" md-component-id="left-sidenav" md-whiteframe="2" layout="column" md-is-locked-close="nbgenApp.$identityService.isAuthenticated() && nbgenApp.$mdMedia('gt-sm')" flex>
+            <!-- left-side navigator -->
+            <md-content flex="none" layout="column" layout-align="start start" class="no-scrolling md-hue-3">
+                <md-button class="md-icon-button md-no-focus" aria-label="Menu" ng-click="nbgenApp.toggleSidenav('left-sidenav')" style="position: absolute; top: 0; left: 0;">
+                    <md-icon md-font-icon="mdi-arrow-left" class="mdi"></md-icon>
+                </md-button>
+                <div class="text-center text-fullwidth">
+                    <div>&nbsp;</div>
+                    <img ng-src="{{nbgenApp.$config.applicationLogoSquare}}" style="width: 150px" />
+                    <div>&nbsp;</div>
+                </div>
+                <div class="md-caption text-center text-fullwidth text-emphasis" tmv-color="primary">
+                    <div>{{nbgenApp.$currentOrganization.companyName}}</div>
+                    <div>&nbsp;</div>
+                </div>
+                <div class="md-caption text-center text-fullwidth">
+                    <div>{{nbgenApp.$serverDateTime | date: 'short'}}</div>
+                    <div>&nbsp;</div>
+                </div>
+            </md-content>
+            <md-divider></md-divider>
+            <md-content layout="column" flex>
+                <!-- application menu -->
+                <nbgen-side-menu menu-schema="nbgenApp.nbgenAppMenu"
+                    filter-fn="nbgenApp.checkMenuItemAccess"
+                    sidenav-id="left-sidenav"
+                    ng-hide="nbgenApp.$state.current.name === 'nbgenRegister'"
+                    >
+                </nbgen-side-menu>
+            </md-content>
+            <md-toolbar flex="none" layout="row" layout-align="space-between center" class="nbgen-support-toolbar tmv-background-hue-3-color-scheme">
+                <span class="md-caption text-margin" translate="nbgenApp.labels.poweredBy"></span>
+                <span class="md-caption text-margin">v{{nbgenApp.$$currentAppVersion}}</span>
+            </md-toolbar>
+        </md-sidenav>
+    </div>
+    <div layout="column" flex>
+        <md-toolbar class="nbgen-main-toolbar" layout="column" flex="none">
+            <div layout="row" layout-align="start center" flex>
+                <!-- activate menu when screen is small -->
+                <md-button class="md-icon-button md-no-focus" aria-label="Menu" show-gt-sm ng-click="nbgenApp.toggleSidenav('left-sidenav')">
+                    <md-icon md-font-icon="mdi-menu" class="mdi"></md-icon>
+                </md-button>
+                <div layout="row" layout-align="space-between center" flex>
+                    <div layout="row" layout-align="start center" flex layout-xs="column" layout-align-xs="center start">
+                        <div id="nbgenAppLogoArea">
+                            <div layout="row" layout-align="start center">
+                                <img ng-src="{{nbgenApp.$config.applicationLogo}}" class="application-logo">
+                                <span>&nbsp;&nbsp;{{nbgenApp.$config.applicationName}}</span>
+                            </div>
+                        </div>
+                        <div id="nbgenOrganizationArea" class="text-ellipsis" hide-xs ng-show="nbgenApp.$currentOrganization">
+                            <span>{{nbgenApp.$currentOrganization.companyName}}</span>
+                        </div>
+                        <div id="nbgenTitleArea" class="text-ellipsis">
+                        </div>
+                        <div id="nbgenSearchArea" flex>
+                            <!-- search area -->
+                        </div>
+                    </div>
+                </div>
+                <div layout="row" layout-align="end center">
+                    <div class="md-caption" id="tmvDataInfo">
+                        <!-- additional data info -->
+                    </div>
+                    <div id="nbgenActionArea" layout="row" layout-align="end center">
+                        <!-- action area -->
+                    </div>
+                    <div id="nbgenAccountArea" layout="row" layout-align="end center">
+                        <!-- account area -->
+                        <md-button class="md-icon-button md-no-focus" aria-label="Login" ng-click="nbgenApp.gotoLogin()" ng-if="!nbgenApp.$identityService.isAuthenticated()" nbgen-icon="mdi-login" nbgen-label="tx:global.common.signIn">
+                        </md-button>
+                        <md-menu ng-if="nbgenApp.$identityService.isAuthenticated()" md-position-mode="target-right target">
+                            <md-button ng-click="$mdMenu.open($event)" class="md-icon-button md-no-focus tmv-no-style" aria-label="Account">
+                                <span ng-bind-html="nbgenApp.$authUiService.getUserProfileAvatar()"></span>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <div layout="row" layout-align="start center">
+                                        <span ng-bind-html="nbgenApp.$authUiService.getUserProfileAvatar()"></span>
+                                        <span>&nbsp;&nbsp;</span>
+                                        <span class="md-body-1">{{nbgenApp.$identityService.user().profile.name}}</span>
+                                    </div>
+                                </md-menu-item>
+                                <md-divider></md-divider>
+                                <md-menu-item ng-show="nbgenApp.$userFirstRole">
+                                    <md-button nbgen-icon="mdi-settings-box" nbgen-label="tx:global.menu.accountSettings" ng-click="nbgenApp.$authUiService.userSettings()">
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item ng-show="nbgenApp.$userFirstRole">
+                                    <md-button nbgen-icon="mdi-key-variant" nbgen-label="tx:global.menu.password" ng-click="nbgenApp.$authUiService.changePassword()" ng-disabled="!nbgenApp.canChangePassword()">
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button nbgen-icon="mdi-map" ng-click="nbgenApp.changeLanguage()">
+                                        <span translate="global.menu.language"></span>
+                                        <span>({{'language.' + nbgenApp.$currentLanguage | translate}})</span>
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button nbgen-icon="mdi-logout" nbgen-label="tx:global.menu.logout" ng-click="nbgenApp.performLogout()">
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                    <md-button class="md-icon-button md-no-focus" aria-label="Menu" show-gt-lg ng-click="nbgenApp.toggleSidenav('right-sidenav')">
+                        <md-icon md-font-icon="mdi-newspaper" class="mdi"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </md-toolbar>
+        <div layout="column" flex id="nbgenAppContent" class="nbgen-app-content" 
+            ng-style="nbgenApp.mainContentStyle()"
+            ng-class="nbgenApp.mainContentClass()"
+            >
+            <div id="nbgenFloatingButtonArea"></div>
+            <!-- remove the anim-in-out -->
+            <div ui-view="content" id="nbgenApplicationContent" flex class="tmv-my-fade" layout="column">
+                <!-- the main content will be put here -->
+            </div>
+        </div>
+    </div>
+    <div layout="column">
+        <md-sidenav class="md-sidenav-right" md-component-id="right-sidenav" md-whiteframe="2" layout="column" md-is-locked-close="nbgenApp.$identityService.isAuthenticated() && nbgenApp.$mdMedia('gt-lg')" flex>
+            <!-- right-side navigator -->
+            <md-toolbar flex="none" layout="column" layout-align="start center">
+                <md-button class="md-icon-button md-no-focus" aria-label="Misc" ng-click="nbgenApp.toggleSidenav('right-sidenav')" style="position: absolute; top: 0; right: 0;">
+                    <md-icon md-font-icon="mdi-chevron-right" class="mdi"></md-icon>
+                </md-button>
+                <p layout="column" layout-align="center center">
+                    <span class="md-subhead" translate="nbgenApp.labels.needHelp"></span>
+                    <nbgen-contacthd class="md-caption"></nbgen-contacthd>
+                </p>
+            </md-toolbar>
+            <div layout="column" flex>
+                <!-- announcement -->
+                <md-subheader class="md-no-sticky text-center">
+                    <span class="md-subhead" translate="nbgenApp.labels.announcement"></span>
+                </md-subheader>
+                <md-divider></md-divider>
+                <md-content layout="column" flex>
+                    <!-- announcement content -->
+                    <nbgen-announcement></nbgen-announcement>
+                </md-content>
+            </div>
+        </md-sidenav>
+    </div>
+</div>
+<md-content layout="row" flex ng-if="nbgenApp.requiredResourcesLoaded === false" ng-hide="nbgenApp.$$browserSupported !== true">
+    <md-subheader class="md-no-sticky md-warn">
+        <span class="md-subhead">Sorry! The app is unable to load required resources.</span>
+    </md-subheader>
+</md-content>

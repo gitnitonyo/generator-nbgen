@@ -1,0 +1,10 @@
+<div layout="row" layout-align="end center">
+    <md-button ng-click="$tmvCollection.performCancel()" class="md-primary md-no-focus">
+        {{'global.common.cancel' | translate}}
+    </md-button>
+    <md-button class="md-primary md-no-focus"
+        ng-click="$tmvCollection.saveUpload()"
+        ng-disabled="$tmvCollection.editForm.$invalid || $tmvCollection._isUploading">
+        {{'global.common.save' | translate}}
+    </md-button>
+</div>

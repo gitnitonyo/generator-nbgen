@@ -1,0 +1,9 @@
+menu: {
+    accounting: "Accounting"
+    chartOfAccounts: "Chart of Accounts"
+    budget: "Budget"
+    aip: "Annual Investment Program (AIP)"
+    officeAIPs: "Office AIPs"
+    sangunianAIPs: "Sangunian-Approved AIPs"
+    offices: "Offices"
+}

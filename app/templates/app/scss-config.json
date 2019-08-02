@@ -1,0 +1,7 @@
+{
+    "includePaths": [
+        "{}/node_modules/angular-material/",
+        "{}/node_modules/mdi/scss/",
+        "{}/node_modules/angular-ui-router-anim-in-out/scss"
+    ]
+}

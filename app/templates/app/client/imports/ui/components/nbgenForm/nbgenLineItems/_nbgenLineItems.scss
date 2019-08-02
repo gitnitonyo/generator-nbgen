@@ -1,0 +1,154 @@
+/**
+ * Component specific styles
+ */
+nbgen-line-items {
+    .nbgen-line-items-container-wrapper {
+        > md-input-container._for-errors {
+            margin: 0;
+            .md-input {
+                height: 2px;
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+        }
+    }
+    .nbgen-line-items-container {
+        @include nbgen-table();
+
+        padding-left: $tmv-gutter-width;
+        padding-right: $tmv-gutter-width;
+        .nbgen-line-items-content {
+            &:focus, &:active {
+                outline: none;
+            }
+        }
+        .nbgen-line-items-table {
+            overflow-x: auto;
+        }
+        // hide input message
+        md-input-container {
+            // .md-input-messages-animation {
+            //    display: none !important;
+            // }
+        }
+        .table.line-item-list {
+            min-width: 100%;
+            border-spacing: 0;
+            border-collapse: collapse;
+            .thead .th {
+                font-weight: normal;
+                // text-transform: uppercase;
+            }
+
+            .line-item-cell md-input-container {
+
+            }
+
+            .line-item-action-wrapper {
+
+            }
+
+            button.line-item-action {
+                margin: 0px !important;
+            }
+        }
+
+        .table.line-item-summary {
+            width: 100%;
+            .line-item-action-wrapper {
+                padding: 0;
+                margin: 0;
+                width: 75px;
+            }
+        }
+
+        .nbgen-line-items-table {
+            // md-input-container:not(.md-input-has-value) md-select[required]:not(.md-no-asterisk) .md-select-value span:first-child:after, md-input-container:not(.md-input-has-value) md-select.ng-required:not(.md-no-asterisk) .md-select-value span:first-child:after {
+            //    content: '';
+            // }
+            :not(.md-no-asterisk) .field-label.required:after {
+                content: ' *';
+                // vertical-align: top;
+                // line-height: 1.6;
+            }
+        }
+
+        .line-item-no {
+            color: rgba(0, 0, 0, 0.54);
+            &.line-item-cell {
+                font-size: 14px;
+            }
+        }
+
+
+        .nbgen-line-items-table._tmv-collapse {
+            @include nbgen-table-collapse();
+            .line-item-no {
+                > .line-item-no-label {
+                    padding-left: $tmv-gutter-width;
+                    padding-right: $tmv-gutter-width;
+                    font-weight: bold;
+                }
+            }
+
+            .table.line-item-summary {
+                .line-item-action-wrapper {
+                    width: 0px;
+                }
+            }
+        }
+
+        .nbgen-line-items-table:not(._tmv-collapse) {
+            .line-item-no {
+                width: 35px;
+                max-width: 35px;
+                &.line-item-cell {
+                    text-align: center;
+                }
+            }
+
+            .table.line-item-list {
+                .thead {
+                    .th {
+                        padding: 4px;
+                        &:not(.line-item-no) {
+                            padding-left: $tmv-gutter-width;
+                            padding-right: $tmv-gutter-width;
+                        }
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.24);
+                    }
+                }
+                .tbody {
+                    .td {
+                        padding: 0;
+                    }
+                    .tr:not(:last-child) .td {
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+                    }
+                }
+
+                .line-item-cell md-input-container {
+                    > label {
+                        display: none;
+                    }
+                    > md-select > .md-select-value.md-select-placeholder > span:first-child {
+                        opacity: 0;
+                    }
+                }
+
+                .line-item-action-wrapper {
+                    width: 65px;
+                    max-width: 65px;
+                    padding-left: 6px;
+                    padding-right: 6px;
+                }
+
+                button.line-item-action {
+                    padding: 0px !important;
+                    width: 30px !important;
+                    height: 30px !important;
+                }
+            }
+        }
+    }
+}

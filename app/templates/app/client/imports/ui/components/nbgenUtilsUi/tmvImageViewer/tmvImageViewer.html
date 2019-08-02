@@ -1,0 +1,31 @@
+<div class="viewer-wrapper">
+    <div class="image-container">
+    </div>
+    <div class="controls-container">
+        <div class="control-button-container">
+            <md-button class="control-button md-icon-button" tmv-icon="mdi mdi-plus" aria-label="Zoom In"
+                ng-click="tmvImageViewer.zoomIn()"></md-button>
+        </div>
+        <div class="control-button-container">
+            <md-button class="control-button md-icon-button" tmv-icon="mdi mdi-minus" aria-label="Zoom Out"
+                ng-click="tmvImageViewer.zoomOut()"></md-button>
+        </div>
+        <div class="control-button-container">
+            <md-button class="control-button md-icon-button" tmv-icon="mdi mdi-arrow-all" aria-label="Reset Zoom"
+                ng-click="tmvImageViewer.resetZoom()">
+            </md-button>
+        </div>
+        <div class="control-button-container"
+            ng-if="tmvImageViewer.isFullscreenSupported() && !tmvImageViewer.isInFullscreen()">
+            <md-button class="control-button md-icon-button" tmv-icon="mdi mdi-fullscreen" aria-label="Fullscreen"
+                ng-click="tmvImageViewer.fullscreen()">
+            </md-button>
+        </div>
+        <div class="control-button-container"
+            ng-if="tmvImageViewer.isFullscreenSupported() && tmvImageViewer.isInFullscreen()"">
+                    <md-button class=" control-button md-icon-button" tmv-icon="mdi mdi-fullscreen-exit"
+            aria-label="Exit Fullscreen" ng-click="tmvImageViewer.exitFullscreen()">
+            </md-button>
+        </div>
+    </div>
+</div>

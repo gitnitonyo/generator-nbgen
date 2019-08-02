@@ -1,0 +1,10 @@
+contactUs: {
+    // translation file
+    labels: {
+        title: "Contact us",
+        thankYou: "Thank you for contacting! We will get back to you as soon as possible.",
+    },
+    fromAddress: "From (email address)",
+    subject: "Subject",
+    content: "Content",
+}

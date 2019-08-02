@@ -1,0 +1,6 @@
+privacy: {
+    // translation file
+    labels: {
+        title: "Privacy Policy"
+    }
+}

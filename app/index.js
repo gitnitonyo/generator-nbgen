@@ -1,153 +1,70 @@
 'use strict';
 
-var util = require('util'),
-    yeoman = require('yeoman-generator'),
-    chalk = require('chalk'),
+var chalk = require('chalk'),
     _ = require('lodash'),
-    fs = require('fs-extra'),
+    _s = require('underscore.string'),
     path = require('path'),
-    scriptBase = require('../tmv-generator-base'),
-    CONSTANTS = require('../tmv-constants');
+    BaseGenerator = require('../tmv-generator-base'),
+    CONSTANTS = require('../tmv-constants')
 
-var TmvClientGenerator = yeoman.Base.extend({});
-
-util.inherits(TmvClientGenerator, scriptBase);
-
-module.exports = TmvClientGenerator.extend({
-    constructor: function () {
-        scriptBase.apply(this, arguments);
+class TmvClientGenerator extends BaseGenerator {
+    constructor(args, opts) {
+        super(args, opts);
         this.configOptions = _.assign({}, this.defaultConfigOptions(), this.config.getAll());
         _.assign(this, this.configOptions);
         this.webappDir = CONSTANTS.defaultWebappDir || 'src/webapp';
         this.path = path;
         this.CONSTANTS = CONSTANTS
         this.lodash = _;
-    },
-    initializing: function () {
+    }
+}
 
+module.exports = TmvClientGenerator
+
+_.assign(TmvClientGenerator.prototype, {
+    initializing: {
+        // check if meteor is installed
+        checkIfMeteor() {
+            if (this.abort) return;
+            var done = this.async();
+            this.isMeteorInstalled((code) => {
+                if (code !== 0) {
+                    this.abort = true;
+                }
+                done();
+            });
+        }
     },
+
     prompting: {
-        checkForNewVersion: function() {
+        checkForNewVersion() {
             if (this.abort) return;
             this.checkNewerVersion();
         },
-        askBasename: function() {
+
+        askBasename() {
             if (this.abort) return;
             this.askForBasename();
         }
     },
+
     configuring: {
-        setBaseApp: function () {
+        setBaseApp () {
             if (this.abort) return;
+            this.baseName = _.camelCase(this.baseName);
             this.angularAppName = this.angularAppName || (this.baseName + 'App');
-            this.title = _.startCase(this.baseName)
+            this.title = _s.humanize(this.baseName)
+            this.dasherizedName = _s.dasherize(this.baseName)
             this.config.set('title', this.title)
             this.config.set('angularAppName', this.angularAppName);
+            this.config.set('dasherizedName', this.dasherizedName)
         },
-
-        // check if meteor is installed
-        checkIfMeteor: function() {
-            if (this.abort) return;
-            var done = this.async();
-            this.isMeteorInstalled(function(code) {
-                if (code !== 0) {
-                    this.abort = true;
-                }
-                done();
-            }.bind(this));
-        },
-
-        createMeteorProject: function() {
-            if (this.abort) return;
-            var done = this.async();
-            this.log('Generating project...');
-            fs.mkdirsSync(CONSTANTS.meteorDir);
-            this.meteorExec(['create', '.'], function(code) {
-                if (code !== 0) {
-                    this.warning("Unable to generate meteor project");
-                    this.abort = true;
-                }
-                done();
-            }.bind(this))
-        },
-
-        removeMeteorPackages: function() {
-            if (this.abort) return;
-            var packagesToBeRemoved = [
-                'autopublish',
-                'insecure',
-                'blaze-html-templates',
-                'ecmascript',
-                'standard-minifier-css',    // use fourseven:scss
-            ];
-
-            var done = this.async();
-            this.meteorExec(['remove'].concat(packagesToBeRemoved), function(code) {
-                if (code !== 0) {
-                    this.warning('Error removing meteor packages');
-                    this.abort = true;
-                } else {
-                    done();
-                }
-            }.bind(this))
-        },
-
-        // add used packages
-        addMeteorPackages: function() {
-            if (this.abort) return;
-            var packagesToBeAdded = [
-                'pbastowski:angular-babel',
-                'check',
-                'email',
-                'http',
-                'accounts-password',
-                'accounts-facebook',
-                'accounts-twitter',
-                'service-configuration',
-                'accounts-google',
-                'urigo:static-templates',
-                'tmeasday:publish-counts',
-                'fourseven:scss',
-                'seba:minifiers-autoprefixer',
-                'alanning:roles',
-                'mizzao:timesync',
-                'mizzao:user-status',
-                'jcbernack:reactive-aggregate',
-            ];
-
-            var done = this.async();
-            this.log("Downloading packages... " + packagesToBeAdded);
-            this.meteorExec(['add'].concat(packagesToBeAdded), function(code) {
-                if (code !== 0) {
-                    this.warning('Error adding meteor packages');
-                    this.abort = true;
-                } else {
-                    done()
-                }
-            }.bind(this))
-        },
-
-        cleanupProjectDir: function() {
-            if (this.abort) return;
-            // remove directories and files which will be replaced
-            var filesToRemove = [
-                'package.json',
-                '.gitignore',
-                'client',
-                'server',
-                'private',
-                'public',
-                'imports',
-            ]
-
-            filesToRemove.forEach(function(file) {
-                fs.removeSync(path.join(CONSTANTS.meteorDir, file))
-            }.bind(this))
-        }
     },
+
     default: function () {
         if (this.abort) return;
     },
+
     writing: {
         // loads config
         loadConfigOptions() {
@@ -155,74 +72,95 @@ module.exports = TmvClientGenerator.extend({
             this.configOptions = _.assign(this.configOptions, this.config.getAll())
         },
 
-        writeClientFiles() {
+        // copy files
+        copyProjectFiles() {
             if (this.abort) return;
-            var dirsToBeCopied = [
-                'client',
-                'imports',
-                'private',
-                'public',
-                'server',
-            ]
-            var filesToBeCopied = [
-                '__package.json',
-                '__.gulpfile.js',
-                '__.editorconfig',
-                '__.gitignore',
-                '__.eslintrc.json',
-                '__.eslintignore',
+            const FILES_TO_COPY=[
+                '**',                // all files except files mentioned below
+                '!.DS_Store',
+                '!node_modules',
+                '!.meteor/local',
+                '!resources/android',
+                '!resources/ios',
+                '!.meteor/.id',         // this should be unique for each app
+                '!public/assets/i18n',  // generated i18n files
+                '!.git',                // exclude .git
+                '!.yo-rc.json',         // don't copy the yo config
             ]
 
-            this.log("Copying files...")
-
-            dirsToBeCopied.forEach(function(dir) {
-                this.copyTemplateDir(path.join(CONSTANTS.meteorDir, dir))
-            }.bind(this))
-
-            filesToBeCopied.forEach(function(filename) {
-                var src, dest
-                if (_.startsWith(filename, '__')) {
-                    src = path.join(CONSTANTS.meteorDir, filename)
-                    dest = path.join(CONSTANTS.meteorDir, filename.substr(2))
-                    this.template(src, dest, this)
-                } else {
-                    src = dest = path.join(CONSTANTS.meteorDir, filename)
-                    this.fs.copy(this.templatePath(src), this.destinationPath(dest));
-                }
-            }.bind(this))
+            this.copyFiles(this.templatePath('app'), this.destinationPath(), FILES_TO_COPY);
         },
+
+        // change the app name in package.json
+        changeAppnameInPackageJson() {
+            const file = this.destinationPath('package.json');
+            const pkg = this.fs.readJSON(file);
+            pkg.name = this.dasherizedName;
+            pkg.description = `Baseline code for ${this.baseName} app`
+            const pkgStr = JSON.stringify(pkg, null, 2);
+            this.fs.write(file, pkgStr);
+        },
+
+        // replace id and appname in mobile-config.js
+        changeAppInfoInMobileConfig() {
+            // strings to be replaced
+            let appIdStr = "id: 'com.nubevtech.nbgen-app'";
+            let appNameStr = "name: 'nbgen-app'";
+
+            let newAppIdStr = `id: 'com.nubevtech.${this.dasherizedName}'`;
+            let newAppNameStr = `name: '${this.dasherizedName}'`;
+
+            const file = this.destinationPath('mobile-config.js');
+            let contents = this.fs.read(file);
+            contents = contents.replace(appIdStr, newAppIdStr).replace(appNameStr, newAppIdStr);
+            this.fs.write(file, contents);
+        },
+
+        // replace name of the application
+        changeAppNameInConfig() {
+            const configFile = 'client/imports/ui/app/nbgenApp/nbgenAppConfig.js';
+            const strToReplace = `"nbGenAppBase"`
+            const newStr = `"${this.title}"`
+
+            const file = this.destinationPath(configFile);
+            let contents = this.fs.read(file);
+            contents = contents.replace(strToReplace, newStr);
+            this.fs.write(file, contents);
+        }
     },
+
     install: {
-        meteorUpdate: function() {
+        meteorUpdate() {
             if (this.abort) return;
             var done = this.async();
             this.log('Updating packages...')
-            this.meteorExec(['update', '--all-packages'], function(code) {
+            this.meteorExec(['update', '--all-packages'], (code) => {
                 if (code !== 0) {
                     this.warning("Error updating meteor")
                 }
                 done()
-            }.bind(this))
+            })
         },
-        meteorNpmInstall: function() {
+
+        meteorNpmInstall() {
             if (this.abort) return;
             var done = this.async();
             this.log('Downloading & Installing node packages...')
-            this.execCmd('meteor', ['npm', 'install'], {cwd: CONSTANTS.meteorDir}, function(code) {
+            this.execCmd('meteor', ['npm', 'install'], {cwd: CONSTANTS.meteorDir}, (code) => {
                 if (code !== 0) {
                     this.warning("Error installing node packages");
                     this.abort = true;
                 }
                 done();
-            }.bind(this))
+            })
         },
 
-        injectFiles: function() {
+        injectFiles() {
             if (this.abort) return;
             this.injectFiles();
         },
     },
-    end: function () {
+    end() {
         if (this.abort) return;
         this.config.set('appGenerated', true);
         this.log(
@@ -230,8 +168,8 @@ module.exports = TmvClientGenerator.extend({
             chalk.green("Please modify email settings in " + chalk.magenta("server/imports/api/email/fixtures.js") + " for email notifications to properly work.\n") +
             chalk.green(chalk.magenta('npm start') + ' to start the application.\n') +
             chalk.green("Initial credentials:\n") +
-            chalk.green("super-admin: " + chalk.magenta('superAdmin@nubevtech.com/superAdmin') + "\n") +
-            chalk.green("normal-user: " + chalk.magenta('normalUser@nubevtech.com/normalUser') + "\n")
+            chalk.green("super-admin: " + chalk.magenta('superAdmin@nubevtech.com/NubeVision$_') + "\n") +
+            chalk.green("normal-user: " + chalk.magenta('normalUser@nubevtech.com/normalUser$_') + "\n")
         );
     }
 });

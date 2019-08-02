@@ -1,0 +1,39 @@
+<md-input-container class="chip-picker-container"
+    ng-class="{'md-input-focused': chipPicker._pickerActive === true || chipPicker._pickerDialogActive === true, 'md-input-has-value': chipPicker.chipsValue.length > 0, 'md-input-invalid': (chipPicker.hasClicked === true || chipPicker.alwaysRed === 'true') && chipPicker.ngModelCtrl.$invalid, 'md-block': !chipPicker.inline, 'md-icon-left': chipPicker.leftIcon, 'md-icon-right': chipPicker.rightIcon }"
+    >
+    <label ng-if="chipPicker.noLabel !== 'true' && chipPicker.label" ng-class="{'md-required': chipPicker.isRequired()}">
+        {{chipPicker.label}} <nbgen-hint ng-if="chipPicker.hint" value="{{chipPicker.hint}}"></nbgen-hint>
+    </label>
+    <md-icon md-font-icon="{{chipPicker.leftIcon}}" ng-if="chipPicker.leftIcon"></md-icon>
+    <div class="md-input chip-picker-input"
+        ng-click="!chipPicker.readOnly() && chipPicker.pickClick($event)"
+        ng-focus="chipPicker._onFocus($event)"
+        ng-blur="chipPicker._onBlur($event)"
+        ng-class="{'ng-touched': chipPicker.hasClicked === true}"
+        ng-readonly="chipPicker.readOnly()"
+        tabindex="0"
+        >
+        <div class="chip-picker-content" layout="row" layout-wrap>
+            <div ng-repeat="chipItem in chipPicker.chipsValue" class="chip-picker-item" layout="row" layout-align="start center">
+                <div ng-bind-html="chipPicker.chipTemplate(chipItem)" class="chip-picker-template ellipsis"></div>
+                <div class="chip-picker-remove-button nbgen-disabled-color mdi mdi-close-circle" tabindex="-1"
+                    ng-if="!chipPicker.readOnly()"
+                    ng-click="chipPicker.removeItem($event, chipItem, $index)"
+                    >
+                </div>
+            </div>
+        </div>
+        <span class="mdi-menu-right mdi chip-picker-right-icon nbgen-label-color"></span>
+    </div>
+    <md-icon md-font-icon="{{chipPicker.rightIcon}}" ng-if="chipPicker.rightIcon" class="chip-picker-right-icon"></md-icon>
+    <div class="md-errors-spacer"></div>
+    <div ng-messages="chipPicker._errorObjects()" role="alert">
+        <div ng-message="required">{{'form.validation.required' | translate}}</div>
+        <div ng-message="infotext">
+            <div class="info-text-wrapper">
+                <nbgen-hint ng-if="chipPicker.hint" value="{{chipPicker.hint}}" hint-label="{{chipPicker.hintLabel}}"></nbgen-hint>
+                <span class="info-text" ng-if="chipPicker.infoText" translate="{{chipPicker.infoText}}"></span>
+            </div>
+        </div>
+    </div>
+</md-input-container>

@@ -1,0 +1,53 @@
+/**
+ * Component specific styles
+ */
+chip-picker {
+    > md-input-container.chip-picker-container {
+        > .md-input {
+            min-width: 200px;
+            min-height: 30px;
+            height: auto;
+            position: relative;
+            padding-right: 28px;
+            > .chip-picker-right-icon {
+                font-size: 24px;
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            .chip-picker-content {
+                margin-top: -2px;
+                .chip-picker-item {
+                    white-space: nowrap;
+                    padding: 0 10px;
+                    border-radius: 10px;
+                    margin-right: 5px;
+                    margin-bottom: 1px;
+                    .chip-picker-template {
+                    }
+                    > .chip-picker-remove-button {
+                        font-size: 22px;
+                        padding: 0 0px 0 5px;
+                        &:focus, &:active {
+                            outline: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.ng-invalid > md-input-container.chip-picker-container {
+        > .md-input {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+    &:not([readonly]):not([disabled]) > md-input-container.chip-picker-container > .md-input {
+        cursor: pointer;
+    }
+    [readonly], [disabled] {
+        .chip-picker-right-icon {
+            opacity: 0;     // don't display
+        }
+    }
+}

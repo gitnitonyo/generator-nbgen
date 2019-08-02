@@ -1,0 +1,38 @@
+<div class="tmv-form-group form-group-border" style="padding: 10px;">
+    <div layout="column" layout-align="center center" layout-gt-xs="row" layout-align-gt-xs="space-between center">
+        <div>
+            <md-checkbox ng-model="$tmvCollection.$currentItem.privacyPolicyAccepted"
+                aria-label="Privacy Policy Accepted" class="zero-margin-padding"
+                style="margin: 0 12px">
+                <span class="tmv-small-text">{{ 'registration.labels.privacyPolicyAccepted' | translate}}</span>
+            </md-checkbox>
+        </div>
+        <div>
+            <md-button
+                class="md-primary md-no-style tmv-href"
+                tmv-label="tx:registration.labels.privacyPolicy"
+                ng-click="$tmvCollection.showPrivacyPolicy()"
+                >
+            </md-button>
+        </div>
+    </div>
+    <div>&nbsp;</div>
+    <div layout="column" layout-align="center center" layout-gt-xs="row" layout-align-gt-xs="space-between center">
+        <div>
+            <md-checkbox ng-model="$tmvCollection.$currentItem.termsAndConditionsAccepted"
+                aria-label="Terms and Conditions Accepted" class="zero-margin-padding"
+                style="margin: 0 12px">
+                <span class="tmv-small-text">{{ 'registration.labels.termsAndConditionsAccepted' | translate}}</span>
+            </md-checkbox>
+        </div>
+        <div>
+            <md-button
+                class="md-primary md-no-style tmv-href"
+                tmv-label="tx:registration.labels.termsAndConditions"
+                ng-click="$tmvCollection.showTermsAndConditions()"
+                >
+            </md-button>
+        </div>
+    </div>
+</div>
+<div>&nbsp;</div>

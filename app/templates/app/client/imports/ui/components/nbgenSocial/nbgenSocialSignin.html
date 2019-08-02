@@ -1,0 +1,17 @@
+<div layout="column" ng-if="nbgenSocialSignin.loginServicesReady">
+    <md-button class="facebook expanded-button" aria-label="facebook"
+        ng-click="nbgenSocialSignin.performLogin('facebook')">
+        <md-icon md-font-icon="mdi-facebook mdi"></md-icon>
+        <span translate="global.login.facebook"></span>
+    </md-button>
+    <md-button class="google expanded-button" aria-label="google"
+        ng-click="nbgenSocialSignin.performLogin('google')">
+        <md-icon md-font-icon="mdi-google mdi"></md-icon>
+        <span translate="global.login.google"></span>
+    </md-button>
+    <md-button class="twitter expanded-button" aria-label="twitter"
+        ng-click="nbgenSocialSignin.performLogin('twitter')">
+        <md-icon md-font-icon="mdi-twitter mdi"></md-icon>
+        <span translate="global.login.twitter"></span>
+    </md-button>
+</div>

@@ -1,0 +1,21 @@
+registration: {
+    // translation file
+    labels: {
+        title: "Registration"
+        regPrompt:
+            '''
+            Before activating your account we need to get information required for fulfilling our services.
+            '''
+        reviewPrompt: "Please review information you have provided to check for accuracy before you SUBMIT. Thank you.",
+        privacyPolicy: "Read Privacy Policy",
+        termsAndConditions: "Read Terms and Conditions Of Use",
+        serviceProfessionalFeeAcceptance: "I accept the Service Professional Package and Fees",
+        privacyPolicyAccepted: "I accept the Privacy Policy",
+        termsAndConditionsAccepted: "I accept the Terms and Conditions of Use",
+        notesOnNew:
+            '''
+            Upon approval of your company, your account will have user administration capability
+            which allows you to register additional users under your company.
+            '''
+    }
+}

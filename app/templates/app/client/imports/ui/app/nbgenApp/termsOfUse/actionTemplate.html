@@ -1,0 +1,23 @@
+<div layout="row" layout-wrap layout-align="space-between center" class="text-padding">
+    <div style="padding: 10px 0;">
+        <md-checkbox ng-model="$tmvCollection.$currentItem.termsAndConditionsAccepted"
+            aria-label="Terms And Conditions Accepted" style="margin: 0"
+            >
+            {{ 'registration.labels.termsAndConditionsAccepted' | translate }}
+        </md-checkbox>
+    </div>
+    <div>
+        <md-button ng-if="$tmvCollection.cancelLabel" ng-click="$tmvCollection.cancelFn()"
+            class="md-primary md-no-focus">
+            {{'global.common.reject' | translate}}
+        </md-button>
+        <md-button ng-href="./assets/pdf/termsAndConditions.pdf" download class="md-primary md-no-focus">
+            {{'global.common.download' | translate}}
+        </md-button>
+        <md-button ng-if="$tmvCollection.okLabel && !$tmvCollection.readOnly" class="md-primary md-no-focus"
+            ng-click="$tmvCollection.okFn($tmvCollection.formModel)"
+            ng-disabled="!$tmvCollection.$currentItem.termsAndConditionsAccepted">
+            {{'global.common.accept' | translate}}
+        </md-button>
+    </div>
+</div>

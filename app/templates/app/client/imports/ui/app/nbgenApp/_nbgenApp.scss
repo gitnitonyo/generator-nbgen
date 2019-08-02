@@ -1,0 +1,163 @@
+
+// common styles; please use other scss files for application-specific styles
+
+$application-logo: './assets/images/application-logo.png';
+$application-bg: './assets/images/application-bg1.jpg';
+$application-bg1: './assets/images/application-bg1.jpg';
+$application-bg2: './assets/images/application-bg2.jpg';
+$application-bg3: './assets/images/application-bg3.jpg';
+
+nbgen-app {
+    @include nbgen-layout-row();
+
+    .nbgen-app-name {
+        line-height: 0.5;
+    }
+
+    .nbgen-application-logo {
+        content: url($application-logo);
+        height: 65px;
+        width: 192px;
+    }
+
+    .application-logo {
+        height: 30px;
+        margin: 4px 0 0;
+    }
+
+    .nbgen-main-toolbar {
+        min-height: 48px;
+        @media (max-width: $layout-breakpoint-xs) {
+            button.md-icon-button {
+                margin: 0 3px;
+            }
+        }
+        #tmvDataInfo {
+            margin: 0 3px;
+        }
+    }
+
+    .nbgen-support-toolbar {
+        min-height: 38px;
+    }
+
+    // md-sidenav {
+    //    @media (max-width: ($layout-breakpoint-md + $layout-breakpoint-lg) / 2) {
+    //        max-width: 270px;
+    //    }
+    // }
+
+    .app-logo {
+        height: 28px;
+        @media (min-width: $layout-breakpoint-xs) {
+            height: 35px;
+        }
+    }
+
+    #nbgenTitleArea {
+        padding: 0 10px;
+        // display: none;
+        @media (max-width: $layout-breakpoint-sm) {
+            font-size: 90%;
+        }
+        @media (max-width: $layout-breakpoint-xs) {
+            font-size: 75%;
+        }
+    }
+
+    #nbgenOrganizationArea {
+        padding: 0 10px;
+        opacity: 1;
+        margin-left: 0;
+        transition: opacity 0.3s, margin 0.3s, display 0.3s;
+        @media (max-width: $layout-breakpoint-sm) {
+            font-size: 90%;
+        }
+        @media (max-width: $layout-breakpoint-xs) {
+            font-size: 75%;
+        }
+        &::before {
+            content: ' - ';
+        }
+        &::after {
+            content: ' - ';
+        }
+    }
+
+    .nbgen-has-search {
+        #nbgenOrganizationArea {
+            opacity: 0;
+            margin-left: -200px;
+            display: none;
+        }
+    }
+
+    #nbgenApplicationContent {
+        position: relative;
+    }
+
+    #nbgenApplicationContent > .app-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    #nbgenAccountArea {
+        .nbgen-profile {
+            width: 32px !important;
+            height: 32px !important;
+            margin-left: 5px;
+        }
+    }
+
+    .nbgen-has-search {
+        #nbgenAppLogoArea, #nbgenTitleArea {
+            @media (max-width: $layout-breakpoint-xs) {
+                display: none;
+            }
+        }
+        #nbgenSearchArea {
+            width: 100%;
+        }
+    }
+
+    nbgen-contacthd {
+        a.email-href {
+            color: rgba(255, 255, 255, 0.76);
+        }
+    }
+
+    md-content.nbgen-app-content-wrapper {
+        /* make the uppermost md-content to be the only scrollable md-content */
+        md-content:not(.nbgen-app-content-ignore) {
+            overflow: visible;
+        }
+    }
+}
+
+.tmv-profile {
+    flex: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    box-sizing: content-box;
+    font-size: 24px !important;
+    line-height: 26px !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+[ui-view].tmv-my-fade {
+    // &.ng-enter, &.ng-leave {
+    //    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    // }
+
+    // &.ng-leave, &.ng-enter-active {
+    //    opacity: 1;
+    // }
+    // &.ng-leave-active, &.ng-enter {
+    //    opacity: 0;
+    // }
+}

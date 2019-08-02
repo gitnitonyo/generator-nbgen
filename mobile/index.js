@@ -2,42 +2,38 @@
  * Template for creating new sub generator
  */
 
-var util = require('util'),
-    yeoman = require('yeoman-generator'),
-    _ = require('lodash'),
+var _ = require('lodash'),
     _s = require('underscore.string'),
     chalk = require('chalk'),
-    scriptBase = require('../tmv-generator-base'),
+    BaseGenerator = require('../tmv-generator-base'),
     CONSTANTS = require('../tmv-constants');         // eslint-disable-line
 
-var TmvGenerator = yeoman.Base.extend({})
-
-util.inherits(TmvGenerator, scriptBase)
-
-module.exports = TmvGenerator.extend({
-    constructor: function() {
-        scriptBase.apply(this, arguments);
+class TmvGenerator extends BaseGenerator {
+    constructor(args, opts) {
+        super(args, opts);
 
         this._lodash = _;       // make lodash functions available on templates
         this._s = _s;
-    },
+    }
+}
 
-    initializing: function() {
+module.exports = TmvGenerator;
+
+_.assign(TmvGenerator.prototype, {
+    initializing() {
         // initialization routine
     },
 
     prompting: {
         // functions for prompting parameters to be used in generation of codes
-        checkForNewVersion: function() {
+        checkForNewVersion() {
             if (this.abort) return;
             this.checkNewerVersion();
         },
     },
 
-    configuring: function() {
+    configuring() {
         if (this.abort) return;
-
-        // save configuration into this.config
 
         // read config into configOptions for availability into the template
         this.configOptions = _.assign({}, this.defaultConfigOptions(), this.config.getAll());
@@ -61,17 +57,17 @@ module.exports = TmvGenerator.extend({
 
             var done = this.async();
             this.log('Adding android platform...')
-            this.meteorExec(['add-platform', 'android'], function(code) {
+            this.meteorExec(['add-platform', 'android'], (code) => {
                 if (code !== 0) {
                     this.warning("Error adding android platform");
                     this.abort = true;
                 }
                 done()
-            }.bind(this))
+            })
         },
     },
 
-    end: function() {
+    end() {
         // provide post generation messages
         if (!this.abort) {
             this.config.set('mobileGenerated', true);

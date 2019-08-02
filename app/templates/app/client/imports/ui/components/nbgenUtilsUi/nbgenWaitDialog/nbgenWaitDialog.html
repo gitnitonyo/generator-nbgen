@@ -1,0 +1,17 @@
+<div id="nbgen-wait-dialog-wrapper" ng-show="nbgenWaitDialog.isActive" class="fade-anim">
+    <div id="nbgen-wait-dialog">
+        <div class="nbgen-progress">
+            <!--
+            <md-progress-circular md-mode="indeterminate" class="md-accent" ng-disabled="!nbgenWaitDialog.isActive">
+            </md-progress-circular>
+            -->
+            <div class="loader"></div>
+        </div>
+        <div ng-show="nbgenWaitDialog.waitMessage">
+            <div>&nbsp;</div>
+            <div class="nbgen-wait-message text-emphasis md-caption md-whiteframe-2dp">
+                <span translate="{{nbgenWaitDialog.waitMessage}}"></span>
+            </div>
+        </div>
+    </div>
+</div>

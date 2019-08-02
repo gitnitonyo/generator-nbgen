@@ -1,0 +1,63 @@
+<div layout="column" class="full-absolute">
+    <md-content flex class="transparent">
+        <div class="main-top-container" layout="column">
+            <div class="promo-container" md-colors="{color: 'grey-50'}" layout="column">
+                <div class="tagline-container" layout="row" layout-wrap>
+                    <div class="tagline-wrapper">
+                        <div class="tagline">
+                            <span translate="nbgenMain.labels.slogan1"></span>
+                            <div class="sub-tagline">
+                                <span translate="nbgenMain.labels.slogan2"></span>
+                            </div>
+                        </div>
+                        <div class="action-section">
+                            <div ng-if="!nbgenMain.isAuthenticated()">
+                                <div class="signin-section">
+                                    <span translate="global.login.haveAnAccount"></span>
+                                    <span>&nbsp;</span>
+                                    <md-button class="md-raised home-button" md-theme="dark" tmv-label="tx:global.common.signIn"
+                                        ng-click="nbgenMain.nbgenApp.gotoLogin()"
+                                        >
+                                    </md-button>
+                                </div>
+                                <div layout="column">
+                                    <md-button class="md-raised home-button" md-theme="dark" tmv-label="tx:global.common.signUp"
+                                        ng-click="nbgenMain.nbgenApp.gotoSignup()"
+                                        >
+                                    </md-button>
+                                </div>
+                            </div>
+                            <div ng-if="nbgenMain.isAuthenticated()">
+                                <!-- 
+                                    Placeholder to put if user is already authenticated.
+                                    Dashboard routines can be put here
+                                -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>&nbsp;</div>
+                <!--
+                    Security seal can be put here
+                -->
+            </div>
+        </div>
+        <!-- <div nbgen-template="nbgenMain.miscTemplate" class="extra-info-section"></div>
+        <div class="welcome-section-wrapper">
+            <div class="welcome-section tmv-compressed-view">
+                <div translate="nbgenMain.labels.mainMessage"></div>
+            </div>
+        </div> -->
+    </md-content>
+    <md-toolbar flex="none" layout="column" layout-align="center center" class="md-caption nbgen-support-toolbar tmv-reverse-shadow"
+        md-colors="{backgroundColor: 'background-hue-3'}"
+        >
+        <div>{{nbgenMain.nbgenApp.$config.applicationName}} &copy; 2019</div>
+        <div layout="row" layout-align="center center" layout-wrap>
+            <md-button ui-sref="aboutUs" class="nbgen-href"><span class="md-caption" translate="global.menu.aboutUs">About</span></md-button>&nbsp;|&nbsp;
+            <md-button ui-sref="privacy" class="nbgen-href"><span class="md-caption" translate="global.menu.privacy">Privacy Policy</span></md-button>&nbsp;|&nbsp;
+            <md-button ui-sref="termsOfUse" class="nbgen-href"><span class="md-caption" translate="global.menu.termsOfUse">Terms of Use</span></md-button>&nbsp;|&nbsp;
+            <md-button ui-sref="contactUs" class="nbgen-href"><span class="md-caption" translate="global.menu.contactUs">Contact Us</span></md-button>
+        </div>
+    </md-toolbar>
+</div>

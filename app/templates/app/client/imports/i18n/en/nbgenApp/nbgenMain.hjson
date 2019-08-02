@@ -1,0 +1,25 @@
+nbgenMain:
+{
+    labels:
+    {
+        slogan1: "Slogan 1."
+        slogan2: "Slogan 2."
+        mainMessage:
+            '''
+            <p>
+                Replace with proper home page content... to be filled
+            </p>
+            <p>
+
+            </p>
+            <p>
+
+            </p>
+            '''
+    }
+    signIn: "Existing User",
+    signUp: "New User",
+    promptAlreadyHaveAnAccount: "Already have an account?",
+    signupButton: "Sign up now!",
+    signinButton: "Sign in.",
+}

@@ -1,0 +1,11 @@
+{
+    "email": {
+        "fromEmail": "dont-reply@eNGAS.com.ph",
+        "siteName": "NubeVision nbGenAppBase",
+        "verifyEmailSubject": "Please Verify Email Address on nbGenAppBase service"
+    },
+    "public": {
+        "serviceName": "nbGenAppBase",
+        "env": "development"
+    }
+}

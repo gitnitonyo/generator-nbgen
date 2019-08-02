@@ -1,0 +1,13 @@
+<div class="full-absoute">
+    <nbgen-db-list
+        collection="$formCtrl.collection"
+        subscription="{{$formCtrl.subscription}}"
+        nbgen-layout="$formCtrl.layout"
+        hide-action="$formCtrl.hideAction(item)"
+        on-click="$formCtrl.itemSelected($event, item, index)"
+        misc-data="$formCtrl.miscData"
+        filter-fn="$formCtrl.dataFilter($formCtrl)"
+        context="$formCtrl"
+    >
+    </nbgen-db-list>
+</div>

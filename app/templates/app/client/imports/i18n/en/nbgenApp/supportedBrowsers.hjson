@@ -1,0 +1,7 @@
+{
+    supportedBrowsers: {
+        labels: {
+            mainText: "{{applicationName}} is best viewed on the following browsers:"
+        }
+    }
+}

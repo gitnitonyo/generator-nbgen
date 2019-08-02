@@ -1,0 +1,49 @@
+<md-content class="full-absolute nbgen-background-image"
+    style="background-image: url('{{dbStatistics.nbgenApp.$config.applicationBgs[0]}}')"
+    >
+    <md-content class="tmv-mobile-width">
+        <md-list>
+            <!-- <md-list-item>
+                <div>Database Name</div>
+                <div class="md-secondary">
+                    {{dbStatistics.dbStats.db}}
+                </div>
+                <md-divider></md-divider>
+            </md-list-item> -->
+            <md-list-item>
+                <div>No. of Collections</div>
+                <div class="md-secondary">
+                    {{dbStatistics.dbStats.collections | number}}
+                </div>
+                <md-divider></md-divider>
+            </md-list-item>
+            <md-list-item>
+                <div>Data Size</div>
+                <div class="md-secondary">
+                    {{dbStatistics.dbStats.dataSize / 1024 | number: 0}} KB
+                </div>
+                <md-divider></md-divider>
+            </md-list-item>
+            <md-list-item>
+                <div>No. of Indices</div>
+                <div class="md-secondary">
+                    {{dbStatistics.dbStats.indexes | number}}
+                </div>
+                <md-divider></md-divider>
+            </md-list-item>
+            <md-list-item>
+                <div>Index Size</div>
+                <div class="md-secondary">
+                    {{dbStatistics.dbStats.indexSize / 1024 | number: 0}} KB
+                </div>
+                <md-divider></md-divider>
+            </md-list-item>
+            <md-list-item>
+                <div>Total Size</div>
+                <div class="md-secondary">
+                    {{(dbStatistics.dbStats.dataSize + dbStatistics.dbStats.indexSize) / 1024 | number: 0}} KB
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</md-content>

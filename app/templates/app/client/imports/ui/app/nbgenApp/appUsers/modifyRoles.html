@@ -1,0 +1,5 @@
+<div class="modify-roles-container text-padding">
+    <md-switch ng-repeat="role in vm.formModel.roles" ng-model="role.selected">
+        {{ 'appRoles.' + role._id | translate }}
+    </md-switch>
+</div>

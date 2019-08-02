@@ -1,0 +1,6 @@
+termsOfUse: {
+    // translation file
+    labels: {
+        title: "Terms of use"
+    }
+}

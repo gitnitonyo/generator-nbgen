@@ -1,0 +1,35 @@
+<md-input-container class="md-input-has-value tmv-time-picker-container md-block md-icon-left"
+    ng-class="{'md-input-invalid': $tmvTimePicker.ngModelCtrl.$invalid && $tmvTimePicker._hasBeenTouched}"
+    >
+    <label ng-class="{'md-required': $tmvTimePicker._isRequired(), 'tmv-no-label': !$tmvTimePicker.label}" class="force-float">
+        <span translate="{{$tmvTimePicker.label}}"></span>
+    </label>
+    <button class="md-no-style tmv-icon"
+        ng-disabled="$tmvTimePicker.readOnly()"
+        ng-click="$tmvTimePicker.openTimePicker($event)"
+        >
+        <md-icon md-font-icon="mdi-clock mdi" class="clock-icon"></md-icon>
+    </button>
+    <div class="md-input tmv-time-picker-input" tabindex="0"
+        ng-focus="$tmvTimePicker._onFocus()" ng-blur="$tmvTimePicker._onBlur()"
+        ng-readonly="$tmvTimePicker.readOnly()"
+        >
+        <md-time-picker
+            ng-model="$tmvTimePicker.ngModel"
+            message="$tmvTimePicker._mdTimeMessage"
+            read-only="$tmvTimePicker._mdTimeReadOnly"
+            mandatory="$tmvTimePicker._mdTimeRequired"
+            >
+        </md-time-picker>
+    </div>
+    <div class="md-errors-spacer"></div>
+    <div ng-messages="$tmvTimePicker._errorObjects()" role="alert">
+        <div ng-message="required">{{'form.validation.uploadRequired' | translate}}</div>
+        <div ng-message="infotext">
+            <div class="info-text-wrapper">
+                <nbgen-hint ng-if="$tmvTimePicker.hint" value="{{$tmvTimePicker.hint}}" hint-label="{{$tmvTimePicker.hintLabel}}"></nbgen-hint>
+                <span class="info-text" ng-if="$tmvTimePicker.infoText" translate="{{$tmvTimePicker.infoText}}"></span>
+            </div>
+        </div>
+    </div>
+</md-input-container>

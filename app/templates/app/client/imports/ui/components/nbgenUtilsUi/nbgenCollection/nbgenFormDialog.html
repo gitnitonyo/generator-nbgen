@@ -1,0 +1,22 @@
+<md-dialog class="nbgen-form-dialog" aria-label="Details" ng-cloak>
+    <form name="$tmvCollection.editForm" novalidate="" class="form-in-dialog" layout="column">
+        <md-toolbar class="md-primary" flex="none" layout="row" layout-align="start center">
+            <div class="nbgen-dialog-toolbar-title">
+                Details
+            </div>
+            <span flex>
+            </span>
+            <md-button class="md-icon-button" aria-label="Close" ng-click="$tmvCollection.$mdDialog.cancel()">
+                <md-icon md-font-icon="mdi-close mdi"></md-icon>
+            </md-button>
+        </md-toolbar>
+        <md-content class="nbgen-dialog-content" flex>
+            <div nbgen-template="$tmvCollection.detailsFormTemplate"></div>
+        </md-content>
+        <md-divider></md-divider>
+        <div flex="none" layout="row" layout-align="end center" class="nbgen-dialog-actions">
+            <md-button tmv-label="tx:global.common.cancel" ng-click="$tmvCollection.$mdDialog.cancel()">
+            </md-button>
+        </div>
+    </form>
+</md-dialog>

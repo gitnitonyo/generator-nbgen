@@ -1,0 +1,6 @@
+aboutUs: {
+    // translation file
+    labels: {
+        title: "About us"
+    }
+}

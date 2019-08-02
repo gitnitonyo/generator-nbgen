@@ -1,0 +1,17 @@
+<div class="text-padding">
+    <h3 class="text-center" translate="supportedBrowsers.labels.mainText"
+        translate-values="{applicationName: $tmvCollection.$nbgenAppConfig.applicationName}"
+    ></h3>
+    <md-grid-list
+        md-row-height="1:1" md-cols="2" md-cols-sm="4" md-cols-gt-sm="5"
+        >
+        <md-grid-tile ng-repeat="browserInfo in $tmvCollection.supportedBrowsers">
+            <div layout="column" class="text-center">
+                <i class="{{browserInfo.icon}} mdi" style="font-size: 60px"></i>
+                <span class="md-caption">{{browserInfo.name}}</span>
+                <span class="md-caption"><b>{{browserInfo.minVersion}}+</b></span>
+            </div>
+        </md-grid-tile>
+    </md-grid-list>
+    <p>&nbsp;</p>
+</div>

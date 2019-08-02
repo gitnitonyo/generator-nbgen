@@ -1,0 +1,16 @@
+// i18n translation file
+appUsers: {
+    home: {
+        title: "App Users"
+        titleDetails: "App User Details"
+        createNew: "Create a new App User"
+        deleteConfirmation: "Are you sure you want to delete this App User?"
+        insertSuccess: "App User successfully created."
+        updateSuccess: "App User successfully updated."
+        removeSuccess: "App User successfully removed."
+    }
+    // translation for fields
+    labels: {
+        // define other labels here
+    }
+}

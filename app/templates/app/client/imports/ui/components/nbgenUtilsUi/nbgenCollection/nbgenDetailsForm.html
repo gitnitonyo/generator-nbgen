@@ -1,0 +1,21 @@
+<div class="nbgen-collection-form-content window-maximize" layout="column">
+    <div class="preform-template md-body-2 tmv-background-color-bg md-subhead" ng-show="$tmvCollection.options.preFormTemplate"
+        nbgen-template="$tmvCollection.options.preFormTemplate"
+        flex="none" layout="column" layout-align="center start" layout-gt-xs="row" layout-align-gt-xs="start center" ng-cloak>
+    </div>
+    <md-divider ng-show="$tmvCollection.options.preFormTemplate"></md-divider>
+    <md-content class="nbgen-tmv-form" flex>
+        <div class="tmv-collection-form-content-wrapper">
+            <tmv-form
+                form-schema="$tmvCollection.formSchema"
+                form-model="$tmvCollection.$currentItem"
+                read-only="$tmvCollection.viewMode == 'view'"
+                >
+            </tmv-form>
+        </div>
+        <div ng-show="$tmvCollection.options.postFormTemplate"
+            nbgen-template="$tmvCollection.options.postFormTemplate"
+            >
+        </div>
+    </md-content>
+</div>

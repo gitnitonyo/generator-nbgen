@@ -1,0 +1,118 @@
+// i18n translation file
+users: {
+    home: {
+        title: "Users"
+        titleDetails: "User Details"
+        createNew: "Create a new User"
+        deleteConfirmation: "Are you sure you want to delete this User?"
+        insertSuccess: "User successfully created."
+        updateSuccess: "User successfully updated."
+        removeSuccess: "User successfully removed."
+        accountUpdateSuccess: "Account info successfully updated."
+        activateUser: "Activate User",
+        deactivateUser: "Deactivate User",
+        deactivateUserPrompt: "Are you sure you want to deactivate this user?",
+        deactivateUserSuccess: "User has been successfully deactivated.",
+        activateUserPrompt: "Are you sure you want to activate this user?",
+        activateUserSuccess: "User has been successfully activated.",
+        userIsDeactivated: "User is currently deactivated.",
+        reconsider: "Reconsider",
+    }
+    // translation for fields
+    label: {
+        contacts: "Contacts"
+        address: "Address"
+        lastLoginDetails: "Last Login Details"
+        approval: {
+            "true": "Approve",
+            "false": "Reject",
+            "comments": "Comments",
+            actionResult: {
+                "true": "User account has been approved.",
+                "false": "User account has been rejected."
+            }
+        },
+        deactivated: "Deactivated",
+        selectTypeOfUser: "Select Type of User",
+        roles: "Roles",
+        modifyRoles: "Modify Roles",
+        setRoles: "Set Roles",
+    },
+    createUser: {
+        dialogTitle: "Create User",
+        userRole: {
+            label: "User Role",
+            helpdesk: "Helpdesk",
+            userAdmin: "User Admin",
+        },
+        email: "Email",
+        profile: {
+            name: "Name",
+        }
+        password: "Password",
+        reenterPassword: "Reenter Password",
+        custom: {
+            passwordsDontMatch: "Provided passwords don't match.",
+        },
+        userRoles: {
+            label: "User Roles",
+            helpdesk: "Helpdesk",
+            userAdmin: "User Administrator",
+        }
+    },
+    email: "Email",
+    profile: {
+        name: "Name"
+        contacts: {
+            phone: "Phone",
+            mobile: "Mobile"
+        },
+        nric: "NRIC",
+        businessPermit: "Business Permit",
+        gstFlag: "GST?",
+        gstRegistrationNumber: "Registration No. (12 digits)",
+        address: {
+            street: "Street",
+            city: "City",
+            province: "Province"
+            zipCode: "Zip Code"
+            country: "Country"
+            postalCode: "Postal Code"
+        },
+        typeOfUser: "Type of User",
+        accountPicture: "Account Picture",
+        receivePromo: "Receiving Promo",
+        qualifications: {
+            label: "Qualifications",
+            yearsOfExperience: "Years of Experience",
+            attachments: "Attachments"
+        },
+        service: {
+            label: "Service",
+            types: "Types",
+            postalCodesToService: "Postal Codes To Service"
+        },
+        reconsiderComments: "Reconsideration Notes",
+        logo: "Logo",
+        paymentTermsAndConditions: "Payment Terms and Conditions",
+        additionalInformation: {
+            attachments: "Attachments",
+        }
+    }
+    notesOnNew: "** Email notification will be sent to this user to activate his/her account."
+    pickUserRoles: {
+        label: {
+            currentRoles: "Current assigned roles:"
+            modifyRoles: "Modify Roles"
+            pickRoles: "Please pick up at least 1 role"
+
+        }
+    },
+    typeOfUserDesc: {
+        "customer": "Customer",
+        "service-prof": "Service Professional"
+    },
+    "$$approveAction": "Approve",
+    "$$rejectAction": "Reject",
+    "$roles": "Assigned Roles",
+}

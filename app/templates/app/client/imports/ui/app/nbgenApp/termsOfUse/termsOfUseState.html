@@ -1,0 +1,23 @@
+<div class="full-absolute" layout="column">
+    <!-- html content for the state -->
+    <md-toolbar flex="none" class="md-accent tmv-toolbar groupHeader" id="tmv-collection-toolbar">
+        <div layout="row" layout-align="start center">
+            <div class="toolbar-back">
+                <md-button tmv-icon="mdi-arrow-left" tmv-label="tx:global.common.back"
+                    ng-click="$ctrl.goBack()" class="md-icon-button">
+                </md-button>
+            </div>
+            <div class="toolbar-title">
+                <span translate="termsOfUse.labels.title"></span>
+            </div>
+            <span flex></span>
+            <nbgen-toolbar-actions flex="none">
+            </nbgen-toolbar-actions>
+        </div>
+    </md-toolbar>
+    <md-content flex class="tmv-card-view">
+        <div class="tmv-compressed-view">
+            <terms-of-use></terms-of-use>
+        </div>
+    </md-content>
+</div>

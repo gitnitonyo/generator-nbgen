@@ -1,0 +1,35 @@
+<div class="full-absolute" layout="column">
+    <div ng-if="nbgenDbList.subscription">
+        <md-input-container md-no-float="" class="search-box" layout="row" layout-align="start center">
+            <div style="padding-right: 5px; width: 30px;" class="nbgen-exlusive-content-center">
+                <md-icon ng-if="nbgenDbList.isSubscriptionReady()" md-font-icon="mdi-magnify" class="mdi"></md-icon>
+                <div ng-if="!nbgenDbList.isSubscriptionReady()">
+                    <md-progress-circular md-mode="indeterminate" md-diameter="20">
+                    </md-progress-circular>
+                </div>
+            </div>
+            <input type="text" placeholder="{{'global.common.search' | translate}}"
+                   ng-model="nbgenDbList.searchText" autocomplete="off"
+                   autocorrect="off" flex md-autofocus>
+        </md-input-container>
+    </div>
+    <div flex layout="column" class="window-maximize">
+        <div layout="row" layout-align="center center" layout-padding
+            ng-show="nbgenDbList.$collectionCount === 0" flex="none">
+            <span translate="global.common.noData" md-colors="{color: 'warn'}"></span>
+        </div>
+        <div flex class="db-list-container">
+            <tmv-list
+                index-at="nbgenDbList.indexAt(index)"
+                item-count="nbgenDbList.itemCount()"
+                tmv-layout="nbgenDbList.layout"
+                search-text="nbgenDbList.searchText"
+                hide-action="nbgenDbList.hideAction({item: item})"
+                on-click="nbgenDbList.onClick({event: event, item: item, index: index})"
+                misc-data="nbgenDbList.miscData"
+                context="nbgenDbList.contextStr"
+            >
+            </tmv-list>
+        </div>
+    </div>
+</div>

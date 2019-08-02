@@ -1,0 +1,16 @@
+appRoles: {
+    "super-admin": "Super Administrator"
+    "user-admin": "User Administrator"
+
+    "helpdesk": "Customer Service Representative",
+    "normal-user": "Normal User",
+
+    /** Sample Roles **/
+    // "csr-supervisor": "CSR Supervisor",
+    // "csr-manager": "CSR Manager",
+    // "exec-management": "Executive Management",
+    // "clearance-agent": "Clearance Agent",
+    // "clearance-agent-manager": "Clearance Agent Manager",
+    // "cashier": "Cashier",
+    // "finance-manager": "Finance Manager",
+}

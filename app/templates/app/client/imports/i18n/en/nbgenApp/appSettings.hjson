@@ -1,0 +1,22 @@
+appSettings: {
+    // translation file
+    labels: {
+        title: "App settings"
+        emailSchedule: "Email Schedule"
+        contacts: "Contacts"
+    },
+    gstValue: "GST Percentage",
+    timeZone: "Time Zone",
+    emailSchedule: {
+        notifyNumberParam: "Schedule Notification Parameter",
+        notifyTimeParam: "Notification Time Parameter (send notification x time before schedule start)",
+        checkScheduleParam: "Check Schedule Parameter (check for upcoming schedule every x number of minutes)"
+    },
+    contacts: {
+        label: "Contacts",
+        helpdeskEmail: "Helpdesk Email",
+        landLine: "Landline",
+        mobile: "Mobile",
+    }
+
+}

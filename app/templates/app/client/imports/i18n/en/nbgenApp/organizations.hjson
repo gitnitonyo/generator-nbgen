@@ -1,0 +1,48 @@
+// i18n translation file
+organizations: {
+    home: {
+        title: "Oranizations"
+        titleDetails: "Organization Details"
+        createNew: "Create a new Organization"
+        deleteConfirmation: "Are you sure you want to delete this item?"
+        insertSuccess: "Organization successfully created."
+        updateSuccess: "Organization successfully updated."
+        removeSuccess: "Organization successfully removed."
+    }
+    // translation for fields
+    labels: {
+        // define other labels here
+        address: "Address",
+        contact: "Contact Person",
+        notesOnNew:
+            '''
+            The contact person specified here will be the initial user of the organization company and will serve as the user administrator.
+            An email notification will be sent to him/her to activate his/her account. Once activated he/she can create
+            additional users under this company.
+            '''
+        activate: "Activate",
+        deactivate: "Deactivate",
+        approve: "Approve",
+        activatePrompt: "Are your sure to activate this Organization?",
+        deactivatePrompt: "Are your sure to deactivate this Organization?",
+        comments: "Comments",
+    }
+    _id: "Company TIN (NNNNNNNNNNNN)",
+    name: "Name",
+    companyName: "Company Name",
+    companyTypes: "Type of Company",
+    address: {
+        streetAddress: "Street Address",
+        cityTown: "City/Town",
+        province: "Province/Region",
+        country: "Country",
+        postalCode: "Postal Code",
+    },
+    contact: {
+        name: "Name",
+        designation: "Designation",
+        email: "Email",
+        phone: "Landline",
+        mobile: "Mobile"
+    }
+}

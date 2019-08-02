@@ -1,0 +1,107 @@
+<div class="full-absolute tmv-collection-list" layout="column">
+    <!-- add button -->
+    <tmv-put on-fab only-children ng-if="!$tmvCollection.hideAdd()">
+        <md-button class="md-fab md-fab-bottom-right" tmv-icon="mdi-plus"
+                   tmv-label="{{$tmvCollection.$labels.addButton || 'global.common.add' | translate}}"
+                   ng-click="$tmvCollection.addClick($event)" tooltip-direction="top">
+        </md-button>
+    </tmv-put>
+    <tmv-put location="tmvDataInfo" ng-if="!$tmvCollection.isInForm() && $tmvCollection.displaySearch()">
+        <div class="side-margin text-center">
+            <span class="text-emphasis">{{$tmvCollection.$collectionCount}}</span><br>
+            <span>item(s)</span>
+        </div>
+    </tmv-put>
+    <tmv-put on-search layout="row" flex ng-if="!$tmvCollection.isInForm() && $tmvCollection.displaySearch()">
+        <md-input-container md-no-float="" class="search-box md-block" flex>
+            <md-icon md-font-icon="mdi-magnify" class="mdi"></md-icon>
+            <input type="text" placeholder="{{($tmvCollection.options.labels.searchLabel || 'global.common.search') | translate}}"
+                   ng-model="$tmvCollection.searchText" autocomplete="off"
+                   autocorrect="off">
+        </md-input-container>
+    </tmv-put>
+    <md-toolbar flex="none" class="md-accent tmv-toolbar groupHeader" id="tmv-collection-toolbar"
+        ng-if="!$tmvCollection.hideListActionToolbar || !$tmvCollection.hideListActionToolbar()"
+        layout="column" layout-align="center">
+        <div ng-if="$tmvCollection.options.actionToolbarListView"
+            nbgen-template="$tmvCollection.options.actionToolbarListView"
+            layout="column">
+        </div>
+        <div ng-if="!$tmvCollection.options.actionToolbarListView" layout="row" layout-align="start center">
+            <div class="toolbar-back">
+                <md-button tmv-icon="mdi-arrow-left" tmv-label="tx:global.common.back"
+                    ng-click="$tmvCollection.$state.go('home')" class="md-icon-button">
+                </md-button>
+            </div>
+            <div class="toolbar-title">
+                <span ng-bind-html="$tmvCollection.titleDisplay()"></span>
+            </div>
+            <span flex></span>
+            <div flex="none" nbgen-template="$tmvCollection.actionsTemplate">
+
+            </div>
+        </div>
+    </md-toolbar>
+    <div class="tmv-collection-list-content-wrapper" flex layout="column">
+        <!-- loading -->
+        <div class="tmv-collection-loading fade-anim" ng-show="$tmvCollection.$showLoading === true || $tmvCollection.$subscriptionReady === false">
+            <span translate="global.common.loading"></span>
+        </div>
+        <!-- if no content -->
+        <div class="full-absolute"
+            ng-show="$tmvCollection.$collectionCount === 0 && $tmvCollection.$subscriptionReady === true">
+            <span class="centered delayed-display" translate="global.common.noData" md-colors="{color: 'warn'}"></span>
+        </div>
+        <div ng-if="$tmvCollection.options.preListTemplate" flex="none"
+            nbgen-template="$tmvCollection.options.preListTemplate">
+        </div>
+        <md-content class="tmv-collection-list-content" flex>
+            <div class="full-absolute" layout="column">
+                <div ng-if="$tmvCollection.isTabular()" style="width: 100%">
+                    <div class="tmv-list-table-header" layout="row" style="width: 100%">
+                        <div ng-repeat="field in $tmvCollection.layout.fields" class="tmv-list-table-column" flex="{{field.flexStyle + ''}}">
+                            <a class="tmv-list-sort-link" href='#' ng-disabled="!field.sortable"
+                                nbgen-noclick="" ng-click="$tmvCollection.performSort(field)">
+                                <span ng-class="field.cssClass"
+                                    class="md-body-2"
+                                    translate="{{field.fieldLabel || field.fieldName | translate}}"></span>
+                                <span ng-hide="!field.sortable" class="window-relative sort-icons">
+                                    <i class="mdi-menu-up mdi window-absolute up" ng-class="{'tmv-primary-color': $tmvCollection.sortingField === field.fieldName && $tmvCollection.sortingDirection === -1}"></i>
+                                    <i class="mdi-menu-down mdi window-absolute down" ng-class="{'tmv-primary-color': $tmvCollection.sortingField === field.fieldName && $tmvCollection.sortingDirection === 1}"></i>
+                                    <!-- <i ng-class="{'mdi-menu-up': $tmvCollection.sortingField === field.fieldName && $tmvCollection.sortingDirection === -1, 'mdi-menu-down': $tmvCollection.sortingField === field.fieldName && $tmvCollection.sortingDirection === 1}" class="mdi"></i> -->
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <md-divider></md-divider>
+                </div>
+                <div flex style="position: relative;">
+                    <tmv-list
+                        index-at="$tmvCollection.indexAt(index)"
+                        item-count="$tmvCollection.itemCount()"
+                        tmv-layout="$tmvCollection.layout"
+                        search-text="$tmvCollection.searchText"
+                        on-click="$tmvCollection.itemClick(event, item, index)"
+                        on-edit="$tmvCollection.editClick(event, item, index)"
+                        on-delete="$tmvCollection.deleteClick(event, item)"
+                        hide-edit="$tmvCollection.hideEdit(item)"
+                        hide-delete="$tmvCollection.hideDelete(item)"
+                        hide-action="$tmvCollection.hideAction(item)"
+                        edit-disabled="$tmvCollection.editDisabled(item)"
+                        delete-disabled="$tmvCollection.deleteDisabled(item)"
+                        initials="$tmvCollection.getInitials"
+                        delete-label="$tmvCollection.options.labels.deleteLabel"
+                        edit-label="$tmvCollection.options.labels.editLabel"
+                        on-item="$tmvCollection.onItem(item)"
+                        context="$tmvCollection"
+                        tabular="{{$tmvCollection.isTabular()}}"
+                        >
+                    </tmv-list>
+                </div>
+            </div>
+        </md-content>
+        <div ng-if="$tmvCollection.options.postListTemplate" flex="none"
+            nbgen-template="$tmvCollection.options.postListTemplate">
+        </div>
+    </div>
+</div>

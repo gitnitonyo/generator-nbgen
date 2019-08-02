@@ -1,0 +1,17 @@
+<md-input-container class="tmv-date-picker-container md-block" ng-form="$tmvDatePicker._form">
+    <label ng-class="{'tmv-no-label': !$tmvDatePicker.label}">
+        <span translate="{{$tmvDatePicker.label}}"></span>
+    </label>
+    <md-datepicker ng-model="$tmvDatePicker.ngModel" name="{{$tmvDatePicker.name}}"
+        md-min-date="$tmvDatePicker.minDate" md-max-date="$tmvDatePicker.maxDate"
+        ng-required="$tmvDatePicker.ngRequired()"
+        ng-readonly="$tmvDataPicker.readOnly()"
+        >
+    </md-datepicker>
+    <div ng-messages="$tmvDatePicker._form[$tmvDatePicker.name].$error" role="alert">
+        <div ng-message="valid">The entered value is not a date!</div>
+        <div ng-message="required">This date is required!</div>
+        <div ng-message="mindate">Date is too early!</div>
+        <div ng-message="maxdate">Date is too late!</div>
+    </div>
+</md-input-container>

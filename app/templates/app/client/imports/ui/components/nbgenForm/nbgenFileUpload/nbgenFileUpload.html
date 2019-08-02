@@ -1,0 +1,61 @@
+<md-input-container class="nbgen-file-upload-container md-block"
+    ng-class="{'md-input-invalid': nbgenFileUpload.ngModelCtrl.$invalid && (nbgenFileUpload._hasBeenTouched || nbgenFileUpload.alwaysRed === 'true'), 'md-input-has-value': nbgenFileUpload._files.length > 0}"
+    >
+    <label ng-class="{'md-required': nbgenFileUpload._isRequired(), 'tmv-no-label': !nbgenFileUpload.label}" class="force-float">
+        <span translate="{{nbgenFileUpload.label}}"></span>
+    </label>
+    <div class="nbgen-file-upload-content md-input" tabindex="0"
+        ng-focus="nbgenFileUpload._onFocus()" ng-blur="nbgenFileUpload._onBlur()"
+        ng-readonly="nbgenFileUpload.readOnly()"
+        >
+        <div class="nbgen-files">
+            <div layout="row" layout-wrap>
+                <div class="preview-container" ng-repeat="_fileItem in nbgenFileUpload._files"
+                    ng-click="nbgenFileUpload.viewFileItem(_fileItem)">
+                    <div class="file-preview file-image" ng-if="_fileItem._file.type.startsWith('image')"
+                        style="background: url('{{nbgenFileUpload._getUrl(_fileItem, true)}}') no-repeat center/contain">
+                    </div>
+                    <div class="file-preview" layout="column" layout-align="center center"
+                        ng-if="!_fileItem._file.type.startsWith('image')"
+                        >
+                        <md-icon md-font-icon="mdi-file-video" class="mdi" ng-if="_fileItem._file.type.startsWith('video')"></md-icon>
+                        <md-icon md-font-icon="mdi-file-music" class="mdi" ng-if="_fileItem._file.type.startsWith('audio')"></md-icon>
+                        <md-icon md-font-icon="mdi-file-pdf" class="mdi" ng-if="_fileItem._file.type === 'application/pdf'"></md-icon>
+                    </div>
+                    <div class="action-footer" layout="row" layout-align="start center">
+                        <div class="ellipsis md-caption file-description">
+                            <span>{{ _fileItem.formData[0].fileDescription }}</span>
+                        </div>
+                        <span flex></span>
+                        <span flex="none">
+                            <md-button class="md-icon-button" tmv-icon="mdi-close-circle" tmv-label="Remove"
+                                ng-click="nbgenFileUpload.removeFileItem(_fileItem, $event)"
+                                ng-hide="nbgenFileUpload.readOnly() === true || nbgenFileUpload.noRemove() === true"
+                            >
+                            </md-button>
+                        </span>
+                    </div>
+                </div>
+                <div class="preview-container" ng-if="!nbgenFileUpload.readOnly() && nbgenFileUpload.noAdd() !== true">
+                    <md-button class="md-no-focus upload-btn md-primary md-raised tmv-no-shadow"
+                        ng-disabled="nbgenFileUpload._files.length >= nbgenFileUpload.limit"
+                        ng-click="nbgenFileUpload.uploadFileClick()"
+                        tmv-label="tx:global.common.upload"
+                        tmv-icon="mdi-cloud-upload"
+                        >
+                    </md-button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="md-errors-spacer"></div>
+    <div ng-messages="nbgenFileUpload._errorObjects()" role="alert">
+        <div ng-message="required">{{'form.validation.uploadRequired' | translate}}</div>
+        <div ng-message="infotext">
+            <div class="info-text-wrapper">
+                <nbgen-hint ng-if="nbgenFileUpload.hint" value="{{nbgenFileUpload.hint}}" hint-label="{{nbgenFileUpload.hintLabel}}"></nbgen-hint>
+                <span class="info-text" ng-if="nbgenFileUpload.infoText" translate="{{nbgenFileUpload.infoText}}"></span>
+            </div>
+        </div>
+    </div>
+</md-input-container>

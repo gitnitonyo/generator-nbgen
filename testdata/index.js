@@ -1,24 +1,19 @@
 'use strict';
 
-var util = require('util'),
-    yeoman = require('yeoman-generator'),
-    _ = require('lodash'),
+var _ = require('lodash'),
     pluralize = require('pluralize'),
     prompts = require('./prompts'),
     chalk = require('chalk'),
     moment = require('moment'),
     faker = require('faker'),
     path = require('path'),
-    scriptBase = require('../tmv-generator-base'),
+    BaseGenerator = require('../tmv-generator-base'),
     CONSTANTS = require('../tmv-constants');
 
-var TmvTestDataGenerator = yeoman.Base.extend({});
+class TmvTestDataGenerator extends BaseGenerator {
+    constructor(args, opts) {
+        super(args, opts);
 
-util.inherits(TmvTestDataGenerator, scriptBase);
-
-module.exports = TmvTestDataGenerator.extend({
-    constructor: function () {
-        scriptBase.apply(this, arguments);
         this.configOptions = _.assign({}, this.defaultConfigOptions(), this.config.getAll());
         _.assign(this, this.configOptions);
 
@@ -28,8 +23,15 @@ module.exports = TmvTestDataGenerator.extend({
             required: true,
             description: 'Entity name'
         });
-    },
-    initializing: function () {
+
+        this.name = this.options.name;
+    }
+}
+
+module.exports = TmvTestDataGenerator;
+
+_.assign(TmvTestDataGenerator.prototype, {
+    initializing() {
         this.webappDir = CONSTANTS.defaultWebappDir;
         this.serverDir = CONSTANTS.defaultServerDir;
         this.mobileSourceDir = CONSTANTS.defaultMobileDir;
@@ -46,27 +48,29 @@ module.exports = TmvTestDataGenerator.extend({
         this.testDataConfig = { };
         this.testDataConfig.fields = { };
     },
+
     prompting: {
-        checkForNewVersion: function() {
+        checkForNewVersion() {
             this.checkNewerVersion();
         },
-        askForTestDetails: function () {
+        askForTestDetails () {
             if (this.abort) return;
             prompts.askForTestDataDetails.call(this);
         },
-        askHowMany: function() {
+        askHowMany() {
             if (this.abort) return;
             if (!this.testDataConfig.fields) return;
             prompts.askHowMany.call(this);
         }
     },
-    configuring: function () {
+
+    configuring() {
         if (this.abort) return;
         this.testDataCollection = [ ];
         var recordNo, possibleValues;
         for (recordNo = 0; recordNo < this.numberOfRecords; recordNo ++) {
             var testData = {}, selected, min, max, precision;
-            _.forOwn(this.testDataConfig.fields, function (fieldSchema, fieldName) {
+            _.forOwn(this.testDataConfig.fields, (fieldSchema, fieldName) => {
                 var testInfo = fieldSchema;
                 // handle test data for string
                 if (testInfo.fieldType == 'String') {
@@ -184,20 +188,24 @@ module.exports = TmvTestDataGenerator.extend({
                     else
                         testData[fieldName] = faker.random.number({min: 0, max: 1}) == 0 ? false : true;
                 }
-            }.bind(this));
+            });
+
             this.testDataCollection.push(testData);
         }
     },
-    default: function () {
+
+    default() {
         if (this.abort) return;
 
     },
-    writing: function () {
+
+    writing() {
         if (this.abort) return;
         this.targetFile = path.join(CONSTANTS.meteorDir, 'private/dataload/' + this.collectionName + '.json');
         this.fs.write(this.targetFile, JSON.stringify(this.testDataCollection, null, 2));
     },
-    end: function () {
+
+    end() {
         if (!this.abort) {
             this.log(chalk.green('Test data successfully generated in ' + this.targetFile));
         }

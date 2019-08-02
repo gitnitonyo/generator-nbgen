@@ -1,0 +1,64 @@
+// styling for virtual repeat container
+tmv-list {
+    .tmv-repeat-collection {
+        md-list-item .md-avatar, md-list-item .md-list-item-inner .md-avatar {
+            position: relative;
+            line-height: 1;
+            overflow: hidden;
+            > .avatar-container {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                > i.mdi {
+                    font-size: 24px;
+                }
+            }
+        }
+        md-list-item .tmv-list-actions {
+            margin-right: -12px;
+            text-align: right;
+        }
+
+        md-list-item:not(.md-3-line):not(.md-2-line) {
+            .md-list-item-inner {
+                min-height: 56px !important;
+            }
+        }
+        md-list-item {
+            .md-list-item-inner {
+
+            }
+        }
+        .tmv-list-tabular-container {
+            .table > .tbody > .tr > .td {
+                height: 30px;
+                &:not(:last-child) {
+                    border-right: 1px solid;
+                }
+            }
+
+        }
+
+
+        .tmv-list-table-column {
+            white-space: normal;
+            line-height: 1;
+            padding: 0 5px;
+            &.tmv-list-action-buttons {
+                button {
+                    margin: 0;
+                    padding: 5px;
+                }
+            }
+        }
+    }
+}
+
+// provides specific styles for the collection
+.tmv-data-list .md-avatar img.md-avatar {
+    margin-left: 16px;
+    padding-top: 3px;
+    border-radius: 50%;
+    box-sizing: content-box;
+}

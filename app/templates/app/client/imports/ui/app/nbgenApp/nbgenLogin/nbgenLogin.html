@@ -1,0 +1,55 @@
+<md-content class="full-absolute transparent">
+    <div class="tmv-mobile-view tmv-background-color-bg">
+        <md-toolbar class="md-accent nbgen-main-toolbar" style="height: 48px">
+            <div class="md-toolbar-tools">
+                <span class="md-title" translate="nbgenLogin.labels.title"></span>
+            </div>
+        </md-toolbar>
+        <form name="nbgenLogin.editForm" novalidate="" class="tmv-vertical-padding">
+            <div ng-if="nbgenLogin.$state.current.data && nbgenLogin.$state.current.data.returnToState"
+                class="md-body text-center">
+                {{'global.login.loginToContinue' | translate}}
+            </div>
+            <tmv-form form-schema="nbgenLogin.$config.form" form-model="nbgenLogin.formModel"></tmv-form>
+            <div>&nbsp;</div>
+            <md-divider></md-divider>
+            <div>&nbsp;</div>
+            <div layout="row" layout-align="start end" class="text-padding">
+                <div>
+                    <div>
+                        <md-button tmv-label="tx:global.common.forgotPassword" class="md-primary md-no-style tmv-href"
+                            ng-click="nbgenLogin.forgotPassword()"
+                            flex-order-xs="-1"
+                            >
+                        </md-button>
+                    </div>
+                    <div>
+                        <md-button class="md-primary md-no-style tmv-href" tmv-label="tx:global.common.signUp"
+                            ng-click="nbgenLogin.nbgenApp.gotoSignup()"
+                            >
+                        </md-button>
+                    </div>
+                </div>
+                <span flex></span>
+                <span layout="column">
+                    <md-button class="md-primary md-raised" type="submit" ng-disabled="nbgenLogin.editForm.$invalid"
+                        ng-click="nbgenLogin.performLogin()" tmv-label="tx:global.common.signIn"
+                        >
+                    </md-button>
+                </span>
+            </div>
+        </form>
+        <div>&nbsp;</div>
+        <!--
+        <md-divider></md-divider>
+        <div>&nbsp;</div>
+        <div class="text-center">
+            <div class="md-caption"><span translate="global.login.loginUsing"></span></div>
+            <div>
+                <nbgen-social-signin-alt></nbgen-social-signin-alt>
+            </div>
+        </div>
+        <p>&nbsp;</p>
+        -->
+    </div>
+</md-content>

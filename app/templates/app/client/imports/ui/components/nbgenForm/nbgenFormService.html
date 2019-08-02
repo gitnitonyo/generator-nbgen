@@ -1,0 +1,47 @@
+<div class="tmv-form-service-container full-absolute" ng-class="$tmvCollection.cssClass" ng-style="$tmvCollection.cssStyle" layout="column">
+    <md-toolbar flex="none" class="md-accent tmv-toolbar groupHeader">
+        <div ng-if="$tmvCollection.$options.actionToolbarFormView"
+            nbgen-template="$tmvCollection.$options.actionToolbarFormView"
+            layout="column">
+        </div>
+        <div ng-if="!$tmvCollection.$options.actionToolbarFormView" layout="row" layout-align="start center">
+            <div class="toolbar-back">
+                <md-button tmv-icon="mdi-close" tmv-label="tx:global.common.cancel"
+                    ng-click="$tmvCollection._doCancel()" class="md-icon-button">
+                </md-button>
+            </div>
+            <div class="toolbar-title">
+                <span ng-bind-html="$tmvCollection.titleDisplay()"></span>
+            </div>
+            <span flex></span>
+            <div flex="none" nbgen-template="$tmvCollection.actionsTemplate">
+
+            </div>
+        </div>
+    </md-toolbar>
+    <div ng-if="$tmvCollection.$options.preFormTemplate"
+        class="preform-template"
+        nbgen-template="$tmvCollection.$options.preFormTemplate"
+        flex="none"
+        >
+    </div>
+    <md-content flex ng-class="{'tmv-card-view': $tmvCollection.formSchema.cardView !== false, 'tmv-compressed-view-wrapper': !$tmvCollection.fullWidthView}">
+        <form name="$tmvCollection.editForm" novalidate=""  class="tmv-collection-form-content-wrapper">
+            <div class="tmv-collection-form-schema">
+                <tmv-form
+                    form-schema="$tmvCollection.formSchema"
+                    form-model="$tmvCollection.$currentItem"
+                    read-only="$tmvCollection.viewMode == 'view'"
+                    translate-prefix="{{$tmvCollection.translatePrefix}}"
+                    >
+                </tmv-form>
+            </div>
+        </form>
+    </md-content>
+    <div ng-if="$tmvCollection.$options.postFormTemplate"
+        nbgen-template="$tmvCollection.$options.postFormTemplate"
+        class="postform-template"
+        flex="none"
+        >
+    </div>
+</div>

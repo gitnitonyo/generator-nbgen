@@ -1,0 +1,35 @@
+.tmv-date-picker-container {
+    .md-icon-button + .md-datepicker-input-container {
+        margin-left: 40px;
+    }
+
+    .md-datepicker-button {
+        margin-left: -8px;
+    }
+
+    &._md-datepicker-floating-label._md-datepicker-has-calendar-icon > label:not(.md-no-float):not(.md-container-ignore) {
+        right: auto;
+    }
+
+    input.md-datepicker-input.md-input {
+        font-size: 16px;
+    }
+
+    > label {
+        left: 50px !important;
+    }
+
+    md-datepicker {
+        display: block;
+        .md-datepicker-input-container {
+            display: block;
+            input.md-input {
+                max-width: 100%;
+            }
+        }
+    }
+
+    > [ng-messages] > [ng-message] {
+        margin-left: 40px;
+    }
+}

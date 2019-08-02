@@ -1,0 +1,16 @@
+<div layout="column" class="inline-viewer-container">
+    <div flex class="inline-viewer-wrapper">
+        <nbgen-viewer file="inlineViewer.fileItem"></nbgen-viewer>
+    </div>
+    <md-toolbar class="tmv-toolbar groupHeader" layout="row" layout-align="center center"
+        ng-hide="inlineViewer.isInFullscreen()">
+        <md-button ng-click="inlineViewer.gotoFullscreen()" ng-show="!inlineViewer.$isCordova && inlineViewer.isFullscreenSupported() && !inlineViewer.isInFullscreen()">
+            <md-icon md-font-icon="mdi-fullscreen mdi"></md-icon>
+            Fullscreen
+        </md-button>
+        <md-button ng-click="inlineViewer.closeInlineViewer()">
+            <md-icon md-font-icon="mdi-close-box-outline mdi"></md-icon>
+            Close Viewer
+        </md-button>
+    </md-toolbar>
+</div>

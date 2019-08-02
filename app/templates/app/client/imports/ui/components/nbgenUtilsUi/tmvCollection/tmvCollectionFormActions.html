@@ -1,0 +1,12 @@
+<nbgen-toolbar-actions>
+    <!-- put action buttons here -->
+    <md-button
+        class="tmv-collection-original"
+        ng-hide="$tmvCollection.viewMode === 'view' || $tmvCollection.hideFormSaveAction($tmvCollection.$currentItem)"
+        tmv-label="{{$tmvCollection.$labels.saveButton || 'global.common.save' | translate}}"
+        tmv-icon="mdi-content-save"
+        ng-click="$tmvCollection.saveDetails()"
+        ng-disabled="$tmvCollection.saveDisabled()"
+        >
+    </md-button>
+</nbgen-toolbar-actions>

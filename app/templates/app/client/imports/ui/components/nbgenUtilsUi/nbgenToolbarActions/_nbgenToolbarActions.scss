@@ -1,0 +1,64 @@
+/**
+ * Component specific styles
+ */
+nbgen-toolbar-actions {
+    .ta-full-expanded {
+        > button {
+            min-width: auto;
+            margin-left: 4px;
+            margin-right: 4px;
+            // display: flex;
+            // flex-direction: row;
+            // align-items: center;
+            // align-content: center;
+            // justify-content: flex-start;
+            > md-icon {
+                margin: 0;
+            }
+        }
+        > md-select {
+            max-width: 280px;
+        }
+    }
+}
+
+.ta-drop-menu {
+    md-menu-item {
+        md-checkbox {
+            margin-left: 16px;
+            .md-label {
+                padding-top: 15px;
+            }
+        }
+    }
+}
+
+.tmv-toolbar-actions-menu {
+    width: 280px;
+    min-height: 48px;
+    max-height: 256px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    > md-checkbox,
+    > md-select {
+        margin-left: 16px;
+        margin-right: 16px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    > .md-button {
+        margin: 0;
+        text-align: left;
+        text-transform: none;
+        padding-left: 16px;
+        padding-right: 16px;
+        min-height: 48px;
+        > md-icon {
+            margin-right: 16px;
+        }
+    }
+    > md-divider {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}

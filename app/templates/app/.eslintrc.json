@@ -1,0 +1,33 @@
+{
+    "env": {
+        "node": true,
+        "browser": true,
+        "es6": true
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "allowImportExportEverywhere": true,
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "globals": {
+        "exampleGlobalVariable": true
+    },
+    "plugins": [],
+    "extends": [
+        "eslint:recommended"
+    ],
+    "rules": {
+        // "indent": [
+        //    2, 4,
+        //    { "SwitchCase": 1 }
+        // ],
+        "no-var": "error",
+        "no-console": 0,
+        "no-useless-escape": 0,
+        "no-prototype-builtins": 0
+    }
+}

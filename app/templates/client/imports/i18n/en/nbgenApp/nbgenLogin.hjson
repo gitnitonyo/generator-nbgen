@@ -1,7 +1,0 @@
-nbgenLogin: {
-    labels: {
-        title: "Enter credentials"
-    }
-    userEmail: "Email"
-    password: "Password"
-}

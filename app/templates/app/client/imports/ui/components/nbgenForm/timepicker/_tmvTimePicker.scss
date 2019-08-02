@@ -1,0 +1,56 @@
+.tmv-time-picker-container {
+    /**
+     * override for the md-time-picker styles to make it work with nbgenComponents
+     */
+    md-time-picker {
+        ng-form {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        }
+        ng-form > button {
+            margin-left: 4px !important;
+            margin-right: 4px !important;
+            padding-top: 10px !important;
+            padding-bottom: 6px !important;
+        }
+        md-input-container:not(.md-block) {
+            margin: 0;
+            padding: 0;
+            input {
+                min-width: 0;
+                height: auto;
+            }
+            .md-input:not(:focus) {
+                border-bottom-color: transparent;
+            }
+        }
+        .time-colon {
+            top: 1px;
+        }
+
+        .md-up-arrow, .md-down-arrow {
+            top: 1px;
+        }
+
+        md-meridiem md-select .md-select-value {
+            padding: 0;
+            min-height: 0;
+            border-bottom-color: transparent;
+        }
+
+        md-meridiem md-select span.md-select-icon {
+            visibility: hidden;
+        }
+    }
+
+    &.md-input-focused {
+        md-select:not([disabled]) .md-select-value {
+            padding-bottom: 0;
+            border-bottom-width: 2px;
+            border-bottom-style: solid;
+        }
+    }
+
+    > .md-input {
+        border-color: transparent !important;
+    }
+}

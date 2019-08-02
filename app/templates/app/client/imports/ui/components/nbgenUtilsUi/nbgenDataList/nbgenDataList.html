@@ -1,0 +1,102 @@
+<md-virtual-repeat-container class="tmv-repeat-collection full-absolute">
+    <md-list class="tmv-data-list full-absolute" ng-if="$tmvList.tabular !== 'true'">
+        <md-list-item md-virtual-repeat="item in $tmvList.$items"
+                      md-on-demand aria-label="{{item.ariaLabel}}"
+                      md-item-size="$tmvList.lineHeight"
+                      ng-click="$tmvList._tmvClick($event, item, $index)"
+                      ng-init="$tmvList.onItem({item: item})"
+                      ng-class="$tmvList.lineClass + ' ' + (item ? 'has-item' : 'has-no-item')"
+                      ng-show="item"
+                      class="tmv-data-list-item"
+                      md-no-ink
+                      >
+            <!-- avatar/image here -->
+            <div ng-if="item && $tmvList.layout.displayAvatar !== false"
+                 class="md-avatar" ng-style="$tmvList._pickRandomStyle($index)">
+                <span ng-bind-html="$tmvList.initials(item, $index)" class="avatar-container"></span>
+            </div>
+            <div class="md-list-item-text text-ellipsis" layout="row" layout-align="space-between center" flex>
+                <div layout="column" flex ng-if="item" >
+                    <div layout="row" layout-align="space-between center" flex>
+                        <span class="ellipsis tmv-data-list-h1 tmv-data-list-fld0 md-body-2 text-emphasis"
+                              ng-class="$tmvList.handleClass($tmvList.layout.fields[0], item)"
+                              ng-style="$tmvList.handleStyle($tmvList.layout.fields[0], item)"
+                              ng-bind-html="$tmvList.getFieldText(0, item)">
+                        </span>
+                        <span class="ellipsis tmv-data-list-h2 tmv-data-list-fld1 md-caption text-right text-emphasis"
+                              ng-class="$tmvList.handleClass($tmvList.layout.fields[1], item)"
+                              ng-style="$tmvList.handleStyle($tmvList.layout.fields[1], item)"
+                              ng-bind-html="$tmvList.getFieldText(1, item)">
+                        </span>
+                    </div>
+                    <div layout="row" layout-align="space-between center" flex>
+                        <div layout="column" flex>
+                            <div layout="row" layout-align="space-between center" flex
+                                 >
+                                <span class="ellipsis tmv-data-list-h3 tmv-data-list-fld2 md-body-1"
+                                      ng-class="$tmvList.handleClass($tmvList.layout.fields[2], item)"
+                                      ng-style="$tmvList.handleStyle($tmvList.layout.fields[2], item)"
+                                      ng-bind-html="$tmvList.getFieldText(2, item)">
+                                </span>
+                                <span class="ellipsis tmv-data-list-h4 tmv-data-list-fld3 md-body-1 text-right"
+                                      ng-class="$tmvList.handleClass($tmvList.layout.fields[3], item)"
+                                      ng-style="$tmvList.handleStyle($tmvList.layout.fields[3], item)"
+                                      ng-bind-html="$tmvList.getFieldText(3, item)">
+                                </span>
+                            </div>
+                            <div layout="row" layout-align="space-between center" flex
+                                 >
+                                <span class="ellipsis tmv-data-list-h3 tmv-data-list-fld4 md-body-1"
+                                      ng-class="$tmvList.handleClass($tmvList.layout.fields[4], item)"
+                                      ng-style="$tmvList.handleStyle($tmvList.layout.fields[4], item)"
+                                      ng-bind-html="$tmvList.getFieldText(4, item)">
+                                </span>
+                                <span class="ellipsis tmv-data-list-h4 tmv-data-list-fld5 md-body-1 text-right"
+                                      ng-class="$tmvList.handleClass($tmvList.layout.fields[5], item)"
+                                      ng-style="$tmvList.handleStyle($tmvList.layout.fields[5], item)"
+                                      ng-bind-html="$tmvList.getFieldText(5, item)">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div flex="none" class="tmv-list-actions" ng-if="item && !$tmvList._hideAction(item)">
+                <div ng-if="$tmvList.layout.actionTemplate" nbgen-template="$tmvList.layout.actionTemplate" layout="column" layout-align="center"></div>
+                <md-menu md-position-mode="target-right target" ng-if="!$tmvList.layout.actionTemplate">
+                    <md-button class="md-icon-button" ng-click="$mdMenu.open()"
+                        tmv-icon="mdi-dots-vertical" aria-label="more">
+                    </md-button>
+                    <md-menu-content width="4" nbgen-template="$tmvList.layout.actionListTemplate">
+                    </md-menu-content>
+                </md-menu>
+            </div>
+            <md-divider ng-show="item"></md-divider>
+        </md-list-item>
+    </md-list>
+    <md-list class="tmv-data-list full-absolute" ng-if="$tmvList.tabular === 'true'">
+        <md-list-item md-virtual-repeat="item in $tmvList.$items"
+                      md-on-demand aria-label="{{item.ariaLabel}}"
+                      ng-click="$tmvList._tmvClick($event, item, $index)"
+                      ng-init="$tmvList.onItem({item: item})"
+                      ng-show="item"
+                      class="tmv-data-list-item"
+                      md-no-ink
+                      >
+                <div layout="row" style="width: 100%" layout-align="start center">
+                    <div ng-repeat="field in $tmvList.layout.fields" class="tmv-list-table-column" flex="{{field.flexStyle}}">
+                        <span class="md-body-1" ng-class="field.cssClass" ng-style="field.cssStyle"
+                            ng-class="$tmvList.handleClass(field, item)"
+                            ng-style="$tmvList.handleStyle(field, item)"
+                            ng-bind-html="$tmvList.getFieldText($index, item)">
+                        </span>
+                    </div>
+                    <div class="tmv-list-table-column tmv-list-action-buttons">
+                        <div nbgen-template="$tmvList.layout.actionListTemplate">
+                        </div>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+        </md-list-item>
+    </md-list>
+</md-virtual-repeat-container>

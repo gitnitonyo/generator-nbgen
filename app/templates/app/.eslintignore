@@ -1,0 +1,3 @@
+client/imports/ui/components/misc/*
+client/imports/ui/components/nbgenComponents/*
+.gulpfile.js

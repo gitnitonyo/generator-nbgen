@@ -1,0 +1,1045 @@
+@mixin input-read-only-indicator() {
+    background-position: 0 bottom;
+    background-size: 4px 1px;
+    background-repeat: repeat-x;
+    margin-bottom: -1px;
+    border-bottom-color: transparent !important;
+    border-bottom-width: 1px !important;
+    background-image: linear-gradient(90deg,rgba(0,0,0,0.38) 0,rgba(0,0,0,0.38) 33%,transparent 0);
+}
+
+.tmv-form-layout-container {
+    width: 100%;
+
+    // override styles for md stepper
+    md-step-body {
+        // padding-top: $tmv-gutter-width;
+        // padding-bottom: $tmv-gutter-width;
+        overflow: visible;      // don't scroll body for now
+    }
+    md-step-actions {
+        @include text-padding();
+        padding-top: $tmv-gutter-width / 2;
+        padding-bottom: $tmv-gutter-width / 2;
+        border-top: 1px solid rgba(0, 0, 0, 0.24);
+    }
+    .md-steppers-header.md-steppers-horizontal {
+        box-shadow: 0 1px rgba(0, 0, 0, 0.24);
+        > button.md-stepper-indicator {
+            padding-top: $tmv-gutter-width;
+            padding-bottom: $tmv-gutter-width;
+            min-height: auto;
+        }
+    }
+
+    .md-steppers-header {
+        .md-stepper-indicator-wrapper {
+            background-color: rgb(250, 250, 250);
+        }
+    }
+
+    .md-steppers-header-region > md-steppers-header .md-stepper-number {
+        &:before, &:after {
+            background-color: rgb(250, 250, 250);
+        }
+    }
+
+    .md-steppers-vertical {
+        .md-steppers-content {
+            .md-stepper {
+                padding: 8px 8px 8px 0;
+                .md-steppers-scope {
+                    padding-left: 4px;
+                }
+            }
+        }
+    }
+    .tmv-form-layout-container {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .tmv-form-group {
+        padding-left: 0;
+        padding-right: 0;
+        .tmv-form-group {
+            &.form-group-border {
+                // margin-left: 2px;
+                // margin-right: 2px;
+            }
+        }
+    }
+
+    .tmv-form-group-outer {
+        @media (min-width: $layout-breakpoint-xs) {
+            margin-left: $tmv-gutter-width;
+            margin-right: $tmv-gutter-width;
+        }
+        margin-left: $tmv-gutter-width / 2;
+        margin-right: $tmv-gutter-width / 2;
+        .tmv-form-group-outer {
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+
+    .tmv-template-container, .tmv-field-container:not(.tmv-field-radio):not(.tmv-field-checkbox) {
+        .md-input[readonly]:not([mdc-datetime-picker]):not(.tmv-time-picker-input),
+        .md-input[disabled],
+        .md-input.tmv-input-static,
+        .md-input[mdc-datetime-picker][mdc-read-only=true] {
+            @include input-read-only-indicator();
+            ~ [ng-messages] {
+                opacity: 0;         // hide messages
+            }
+        }
+    }
+
+    &[readonly] {
+        .tmv-form-group-label {
+            nbgen-hint {
+                display: none;
+            }
+        }
+
+        .tmv-form-layout-container:not([readonly]) {
+            .tmv-form-group-label {
+                nbgen-hint {
+                    display: inline;
+                }
+            }
+        }
+    }
+
+    /* to indicate that the field is uneditable */
+    /*
+    &:not(.tmv-readonly-ignore) :not(.tmv-form-layout-container) {
+        &[readonly], [readonly] {
+            .tmv-field-container:not(.tmv-field-radio):not(.tmv-field-checkbox) {
+                .md-input {
+                    @include input-read-only-indicator();
+                    .md-input ~ [ng-messages] {
+                        opacity: 0;     // hide messages
+                    }
+                }
+            }
+        }
+
+        .tmv-field-container:not(.tmv-field-radio):not(.tmv-field-checkbox) {
+            .md-input[readonly]:not([mdc-datetime-picker]),
+            .md-input[disabled],
+            .md-input.tmv-input-static,
+            .md-input[mdc-datetime-picker][mdc-read-only=true] {
+                @include input-read-only-indicator();
+                ~ [ng-messages] {
+                    opacity: 0;         // hide messages
+                }
+            }
+        }
+
+        &[readonly] {
+            .tmv-form-group-label {
+                nbgen-hint {
+                    display: none;
+                }
+            }
+        }
+    }
+    */
+}
+
+
+.tmv-form-group {
+    > * {
+        &.tmv-static, .tmv-static {
+            padding-left: $tmv-gutter-width;
+            padding-right: $tmv-gutter-width;
+            padding-bottom: 6px;
+            padding-top: 2px;
+        }
+        &.tmv-template-container, .tmv-template-container {
+            position: relative;
+            min-height: 1px;
+            padding-left: 0px;
+            padding-right: 0px;
+            float: left;
+            .tmv-template, .nbgen-file-container {
+                padding-left: $tmv-gutter-width;
+                padding-right: $tmv-gutter-width;
+                padding-bottom: 6px;
+                padding-top: 2px;
+            }
+        }
+        &.tmv-field-container {
+            // min-height: $tmv-field-container-min-height;
+            position: relative;
+            min-height: 1px;
+            padding-left: 0px;
+            padding-right: 0px;
+            display: block;
+            float: left;
+        }
+        .tmv-input-date-container {
+            position: relative;
+            > label {
+                position: absolute;
+                transform: scale(0.75);
+                left: 30px;
+                margin-top: -5px;
+            }
+            md-datepicker {
+                > button {
+                    padding: 0px;
+                    height: 24px;
+                    width: 24px;
+                    position: absolute;
+                    margin-top: 12px;
+                    margin-left: 9px;
+                }
+                > .md-datepicker-input-container {
+                    margin-top: 17px;
+                    margin-left: 46px;
+                }
+            }
+        }
+        md-input-container {
+            margin: 10px 0 0;
+            padding-left: $tmv-gutter-width;
+            padding-right: $tmv-gutter-width;
+            &.block-center:not(.md-block) {
+                // position: absolute;
+                // left: 50%;
+                // transform: translateX(-50%);
+            }
+            .md-input.placeholder-normal::placeholder {
+                font-weight: normal;
+            }
+            label {
+                left: $tmv-gutter-width;
+                &.force-float {
+                    transform: translate3d(0, 6px, 0) scale(0.75);
+                }
+            }
+            > .tmv-icon {
+                position: absolute;
+                top: 8px;
+                left: 2px;
+                right: auto;
+            }
+            > md-icon, > .tmv-icon {
+                left: $tmv-gutter-width;
+            }
+            &:not(.md-dark-theme) > md-icon {
+                opacity: 0.70;
+            }
+            &.md-icon-left {
+                padding-left: $tmv-gutter-width + $tmv-icon-padding;
+                label {
+                    left: $tmv-gutter-width + $tmv-icon-padding;
+                }
+                &.md-input-invalid > md-icon:first-of-type {
+                    color: rgb(221,44,0)
+                }
+            }
+            &.md-icon-right {
+                padding-right: $tmv-gutter-width + $tmv-icon-padding;
+                > md-icon:last-of-type {
+                    right: $tmv-gutter-width;
+                    left: auto;
+                }
+            }
+            > md-checkbox {
+                padding-top: $tmv-radio-top;
+                // padding-bottom: $tmv-radio-bottom;
+            }
+            > md-checkbox ._md-container {
+                transform: translateY(-40%);
+                left: 4px;
+            }
+             > .md-input[readonly]:not([mdc-datetime-picker]),
+            > .md-input[disabled],
+            > .md-input[mdc-datetime-picker][mdc-read-only=true] {
+                // make readonly same style as disabled for consistency with other controls
+                /*
+                background-position: bottom -1px left 0;
+                background-size: 4px 1px;
+                background-repeat: repeat-x;
+                border-bottom-color: transparent;
+                color: rgba(0,0,0,0.65);
+                background-image: linear-gradient(to right, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.38) 33%, transparent 0%);
+                background-image: -ms-linear-gradient(left, transparent 0%, rgba(0,0,0,0.38) 100%);
+                */
+            }
+            > textarea {
+                &[rows="3"],
+                &[rows="4"] {
+                    height: 98px;
+                }
+
+                // + .md-input-messages-animation {
+                //    top: auto;
+                //    bottom: 9px;
+                // }
+            }
+            > .md-input[type="number"] {
+                // text-align: right;
+            }
+            > md-select[disabled] .md-select-value {
+
+            }
+
+            > md-switch {
+                margin: 0;
+            }
+        }
+    }
+    &.no-error-indicator {
+        &.tmv-field-container {
+            min-height: initial;
+            md-input-container {
+                > .md-errors-spacer {
+                    min-height: 15px;
+                }
+            }
+        }
+    }
+
+    .hint {
+        font-size: 12px;
+        line-height: 14px;
+        color: grey;
+    }
+}
+
+.tmv-form-layout-container[readonly] md-input-container {
+    > label:first-child {
+        // transform: translate3d(0, 6px, 0) scale(0.75);
+        // transition: transform cubic-bezier(0.25, 0.8, 0.25, 1) 0.4s, width cubic-bezier(0.25, 0.8, 0.25, 1) 0.4s, -webkit-transform cubic-bezier(0.25, 0.8, 0.25, 1) 0.4s;
+    }
+}
+
+.tmv-form-group-label {
+    // text-transform: uppercase;
+    // padding: 0 $tmv-gutter-width+2 0;
+    @include secondary-font();
+    // @include nbgen-ellipsis();
+    font-size: 14px;
+    // font-weight: 500;
+    letter-spacing: 0.010em;
+    line-height: 1.3;
+    // text-transform: uppercase;
+    padding-bottom: 5px;
+}
+
+.tmv-form-group.form-group-border {
+    .tmv-form-group-label {
+        text-transform: none;
+        padding-bottom: 5px;
+    }
+}
+
+/* indent content contains within a group within a group */
+.tmv-form-group.form-group-border .tmv-form-group-label {
+    ~ .tmv-form-group .tmv-form-group-outer {
+        padding-left: $tmv-gutter-width * 0.75;
+        padding-right: $tmv-gutter-width * 0.75;
+    }
+}
+
+.tmv-form-group-outer {
+    @include clearfix();
+}
+
+.tmv-field-height {
+    min-height: $tmv-field-container-min-height;
+}
+
+.tmv-static-container {
+    position: relative;
+    min-height: 68px;
+    > .tmv-static {
+        display: block;
+        position: relative;
+        margin: 10px 0 0;
+        padding: 0 $tmv-gutter-width 0 $tmv-gutter-width;
+        > .tmv-static-label {
+            position: absolute;
+            font-size: 75%;
+            top: -12px;
+            left: 12px;
+        }
+        > .tmv-static-content {
+            width: 100%;
+            border-width: 0 0 1px 0;
+            border-style: solid;
+            padding: 2px 2px 0px 2px;
+            line-height: 26px;
+            min-height: 26px;
+
+            // background-position: bottom -1px left 0;
+            // background-size: 4px 1px;
+            // background-repeat: repeat-x;
+            // border-bottom-color: transparent;
+            // background-image: linear-gradient(to right, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.38) 33%, transparent 0%);
+        }
+    }
+    .tmv-field-static {
+        // padding-top: 18px !important;
+        position: absolute;
+        bottom: 24px;
+    }
+}
+
+.tmv-field-static {
+    .md-input.tmv-input-static {
+        @include nbgen-ellipsis();
+    }
+}
+
+.no-vertical-padding {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.no-horizontal-padding {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+// change color for disabled
+.tmv-field-set {
+    border: 0;
+    margin: 0;
+    // padding-bottom: $tmv-gutter-width;
+    // padding-top: $tmv-gutter-width;
+}
+
+// .tmv-field-set {
+//    padding-left: $tmv-gutter-width / 2;
+//    padding-right: $tmv-gutter-width / 2;
+// }
+
+md-tabs.tmv-tabs-container {
+    > md-tabs-wrapper > md-tabs-canvas > md-pagination-wrapper > md-tab-item > md-icon + span::before {
+        content: ' ';
+    }
+
+    &.tmv-tabs-stretch {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .tmv-tabs-content {
+        margin-top: 10px;
+        > :last-child {
+            margin-bottom: 20px;
+        }
+    }
+
+    md-tab-content {
+        transition-duration: 0.2s;
+        .tmv-tabs-content {
+            overflow-x: hidden;
+        }
+    }
+
+    &:not(.tmv-tabs-stretch):not(.md-dynamic-height) {
+
+    }
+}
+
+.nbgen-dialog {
+    md-content.md-dialog-form-content {
+        overflow-x: hidden;
+    }
+    md-tabs.tmv-tabs-container {
+        md-tab-content {
+            transition-duration: 0.2s;
+            .tmv-tabs-content {
+                overflow-x: hidden;
+            }
+        }
+    }
+}
+
+.tmv-form {
+    padding: $tmv-form-vertical-space 0;
+}
+fieldset.tmv-form-container {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    .tmv-form-group-label-empty {
+        padding: 15px $tmv-gutter-width/2;
+    }
+    min-width: auto;
+}
+.tmv-error-container {
+    .tmv-error-container-sub {
+        .tmv-error-message-text {
+            // display: inline-block;
+            margin: 10px 20px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: none;
+            height: 0;
+            overflow: hidden;
+            /* Set our transitions up. */
+            -webkit-transition: height 0.8s;
+            -moz-transition: height 0.8s;
+            transition: height 0.8s;
+            &.open {
+                height: auto;
+                display: block;
+            }
+        }
+    }
+}
+
+.tmv-hide-small-height {
+    @media (max-height: $tmv-minimum-height) {
+        display: none;
+    }
+}
+
+@mixin info-message-animation() {
+    margin-top: 0 !important;
+    transition: all 0.2s !important;
+    &.ng-enter, &.ng-leave.ng-leave-active {
+        opacity: 0 !important;
+    }
+    &.ng-leave, &.ng-enter.ng-enter-active {
+        opacity: 1 !important;
+    }
+}
+
+/* fix on animation of message */
+md-input-container {
+    .md-input-messages-animation {
+        // position: absolute;
+        // bottom: 10px;
+        // min-height: 26px;
+        // max-height: 26px;
+        &:not(.ng-animate) {
+            overflow: visible;
+        }
+        .md-input-message-animation {
+            position: absolute;
+            padding-top: 1px;
+            @include info-message-animation();
+        }
+    }
+    .md-errors-spacer {
+        min-height: 26px;
+        > .md-char-counter {
+            padding-top: 2px;
+        }
+    }
+    &.md-input-invalid .md-input-messages-animation > .md-input-message-animation,
+    &.md-input-focused .md-input-messages-animation > .md-input-message-animation,
+    > .md-input.ng-touched + .md-errors-spacer + .md-input-messages-animation > .md-input-message-animation,
+    > md-select.ng-touched + .md-errors-spacer + .md-input-messages-animation > .md-input-message-animation {
+        opacity: 1;
+        margin-top: 0;
+    }
+
+    > .tmv-error-display-off ~ .md-input-messages-animation > .md-input-message-animation,
+    &.tmv-error-display-off  .md-input-messages-animation > .md-input-message-animation {
+        opacity: 0;
+    }
+
+    // don't display reuiqred message
+    &:not(.md-no-asterisk) {
+        .md-required ~ .md-input-messages-animation > .md-input-message-animation[ng-message=required] {
+            // opacity: 0;
+        }
+    }
+    &:not(.md-no-asterisk) {
+        .md-required.tmv-no-label:before {
+            content: 'Required';
+        }
+        .md-required.tmv-no-label {
+            ~ md-select > .md-select-value.md-select-placeholder span:first-child:before {
+                content: 'Required';
+            }
+        }
+    }
+
+    .info-text-wrapper {
+        color: rgba(0, 0, 0, 0.54);
+        .nbgen-hint .md-button {
+            padding: 0;
+            margin: 0;
+        }
+    }
+
+    > div.md-input-messages-animation.md-auto-hide.ng-active > div[ng-message=infotext] {
+        opacity: 1;
+        margin-top: 0;
+        @include info-message-animation();
+    }
+
+    /*
+    [ng-messages].ng-active ~ .info-text-wrapper {
+        display: none;
+    }
+
+    &.md-input-invalid {
+        > .info-text-wrapper {
+            display: none;
+        }
+    }
+    &.md-input-focused > .md-input.ng-invalid {
+        ~ .info-text-wrapper {
+            display: none;
+        }
+    }
+    */
+}
+
+// hide char counter if readonly or disabled
+[readonly], [disabled] {
+    .md-errors-spacer {
+        > .md-char-counter {
+            display: none;
+        }
+    }
+}
+
+[required] {
+    &:not(.md-no-asterisk) {
+        .md-required ~ .md-input-messages-animation > .md-input-message-animation[ng-message=required] {
+            // opacity: 0;
+        }
+    }
+    &:not(.md-no-asterisk) {
+        .md-required.tmv-no-label:before {
+            content: 'Required'
+        }
+    }
+}
+
+.tmv-field-container-align {
+    min-height: $tmv-field-container-min-height;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    align-content: stretch;
+    justify-content: flex-end;
+    padding: 0 $tmv-gutter-width 28px $tmv-gutter-width;
+    .tmv-template {
+        padding: 0 !important;
+        width: 100%;
+    }
+}
+
+.tmv-field-filler {
+    width: 100%;
+    min-height: 0;
+}
+
+.tmv-form-group {
+    position: relative;
+    &.form-group-border, 
+    &.flat-group-border {
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 5px;
+        // margin: 0 $tmv-gutter-width $tmv-gutter-width + 8px;
+        margin-bottom: $tmv-gutter-width;
+        padding-top: $tmv-gutter-width * 2;
+        padding-bottom: $tmv-gutter-width;
+        @media (max-width: $layout-breakpoint-xs) {
+            // margin-left: $tmv-gutter-width / 2;
+            // margin-right: $tmv-gutter-width / 2;
+        }
+        &.nbgen-file-upload-content {
+            padding-top: 0;
+        }
+    }
+    &.flat-group-border {
+        margin: 0 $tmv-gutter-width $tmv-gutter-width + 8px;
+    }
+    > div:not(:last-child) > .form-group-border-bottom {
+        border-bottom: 1px solid;
+        margin-bottom: $tmv-gutter-width;
+    }
+}
+
+.tmv-form-group.form-group-border {
+    .tmv-form-group-label {
+        padding-left: $tmv-gutter-width;
+    }
+}
+
+.tmv-form-group.form-group-boder .tmv-form-group.form-group-border {
+    // disregard the effect on inner-form group border
+    border-width: 0;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+}
+
+// card view css
+.tmv-card-view {
+    background-color: rgb(224, 224, 224);
+    @media (max-width: $layout-breakpoint-xs) {
+        .md-steppers-header {
+            .md-stepper-indicator-wrapper {
+                background-color: rgb(224, 224, 224);
+            }
+        }
+        .md-steppers-vertical .md-steppers-scope {
+            border-left: 1px solid rgba(0, 0, 0, 0.12);
+        }
+    }
+    md-content.nbgen-tmv-form {
+        background-color: rgb(224, 224, 224);
+    }
+    .tmv-form-group {
+        &.form-group-border {
+            border-width: 0;
+            border-radius: 2px;
+            box-sizing: border-box;
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+            background-color: rgb(250, 250, 250);
+        }
+    }
+    md-tabs-wrapper {
+        border-width: 0;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+        background-color: rgb(250, 250, 250);
+    }
+
+    md-tabs[md-border-bottom]:not(.md-dynamic-height) md-tabs-content-wrapper {
+        top: 51px;
+    }
+}
+
+@mixin required-before {
+    &:not(.md-no-asterisk):before {
+        font-size: 12px;
+        text-align: left;
+        margin-left: $tmv-gutter-width;
+        content: "* Required";
+        color: rgba(0, 0, 0, 0.84);
+        display: block;
+        padding-top: $tmv-gutter-width;
+        padding-bottom: $tmv-gutter-width;
+    }
+}
+
+@mixin no-required-before {
+    &:not(.md-no-asterisk):before {
+        content: '';
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.tmv-compressed-view-wrapper {
+    .tmv-form-layout-container {
+        &.tmv-has-tabs {
+            .tmv-tabs-content {
+                @include nbgen-compressed-view();
+                // @include required-before();
+                .tmv-form-layout-container {
+                    margin: 0 !important;
+                    min-width: 0 !important;
+                    max-width: none !important;
+                    @include no-required-before();
+                }
+            }
+        }
+        &.tmv-has-steppers {
+            .tmv-stepper-body-container {
+                @include nbgen-compressed-view();
+                // @include required-before();
+                .tmv-form-layout-container {
+                    margin: 0 !important;
+                    min-width: 0 !important;
+                    max-width: none !important;
+                    @include no-required-before();
+                }
+            }
+        }
+        &:not(.tmv-has-tabs):not(.tmv-has-steppers) {
+            @include nbgen-compressed-view();
+            // @include required-before();
+            .tmv-form-layout-container {
+                margin: 0 !important;
+                min-width: 0 !important;
+                max-width: none !important;
+                @include no-required-before();
+            }
+        }
+    }
+}
+
+.tmv-form-layout-container[readonly] {
+    &.tmv-has-tabs {
+        .tmv-tabs-content {
+            @include no-required-before();
+        }
+    }
+    &.tmv-has-steppers {
+        .tmv-stepper-body-container {
+            @include no-required-before();
+        }
+    }
+    &:not(.tmv-has-tabs):not(.tmv-has-steppers) {
+        @include no-required-before();
+    }
+}
+
+
+.tmv-form-layout-container.tmv-bottom-border {
+    .tmv-form-group.form-group-border {
+        border-width: 0;
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 0;
+        box-shadow: 0 1px rgba(0, 0, 0, 0.24);
+    }
+}
+
+label.field-label, label.hint {
+    font-size: 12.5px;
+}
+span.field-label, span.hint {
+    font-size: 12px;
+}
+
+md-input-container {
+    > label:first-child:not(.md-no-float):not(.md-container-ignore) {
+        z-index: auto;
+    }
+}
+
+// for styling hint
+.tmv-field-container {
+    /*
+    .hint {
+        position: absolute;
+        left: 10px;
+        right: auto;
+        top: 35px;
+        // Copy styles from ng-messages
+        font-size: 12px;
+        line-height: 14px;
+        transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+        // Set our own color
+        &.ng-hide,
+        &.ng-enter,
+        &.ng-leave.ng-leave-active {
+            margin-top: -15px;
+            opacity: 0;
+        }
+        &.ng-leave,
+        &.ng-enter.ng-enter-active {
+            opacity: 1;
+        }
+    }
+    .md-input-focused > .md-input-messages-animation.ng-active ~ .hint {
+        margin-top: -15px;
+        opacity: 0;
+    }
+    */
+}
+
+.tmv-form-group-label ~ .hint {
+    /*
+    font-size: 12px;
+    line-height: 14px;
+    margin-left: 14px;
+    */
+}
+
+/*
+input[mdc-datetime-picker].ng-invalid,
+md-radio-group.ng-invalid {
+    color: rgb(221,44,0) !important;
+    .md-off, .md-on {
+        border-color: rgb(221,44,0) !important;
+    }
+}
+
+input[mdc-datetime-picker].ng-invalid {
+    padding-bottom: 1px;
+    border-width: 0 0 1px 0;
+}
+*/
+
+/* radio buttons */
+md-input-container > .tmv-radio-group-container {
+    &.md-input {
+        min-height: 26px;
+        height: auto;
+        border-bottom-color: transparent;
+    }
+    > md-radio-group:not(.layout-gt-xs-row) {
+        > md-radio-button {
+            margin-bottom: 5px;
+        }
+    }
+}
+
+/* checkbox */
+md-input-container > .tmv-checkbox-container {
+    &.md-input {
+        min-height: 26px;
+        height: auto;
+        border-bottom-color: transparent;
+    }
+    > md-checkbox, > md-switch {
+        margin: 0;
+        &.tmv-true .md-label > :last-child:after {
+            content: ' *';
+        }
+    }
+}
+
+.tmv-field-container.tmv-field-checkbox {
+    &:not(:last-of-type) .md-errors-spacer {
+        min-height: 0;
+    }
+}
+
+.tmv-form-group-label-section {
+    margin: 0 $tmv-gutter-width;
+}
+
+md-input-container:not(.md-block) > .md-input {
+    min-width: 200px;
+}
+
+.tmv-has-invalid {
+    .md-errors-spacer {
+        float: right;
+        min-height: 24px;
+        min-width: 1px;
+    }
+    &:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+
+input[mdc-datetime-picker]:not([mdc-read-only=true]),
+input[mdc-datetime-picker]:not([mdc-read-only]) {
+    cursor: pointer;
+}
+
+.tmv-form-service-container {
+    z-index: 30;     // higher than normal so it can overlay other elements
+}
+
+// card view settings
+.tmv-card-view {
+    .tmv-form-layout-container {
+        &.tmv-has-steppers {
+            .md-steppers {
+                .md-steppers-header-region {
+                    background-color: rgb(250, 250, 250);
+                    md-steppers-header .md-stepper-number {
+                        &:before, &:after {
+                            background-color: rgb(250, 250, 250);
+                        }
+                    }
+                }
+                .md-steppers-content {
+                    md-step-actions {
+                        border: 0;
+                        @include nbgen-compressed-view();
+                        .tmv-stepper-actions-container {
+                            background-color: rgb(250, 250, 250);
+                            @include card-view();
+                            padding-top: $tmv-gutter-width;
+                            padding-bottom: $tmv-gutter-width;
+                            padding-left: $tmv-gutter-width;
+                            padding-right: $tmv-gutter-width;
+                        }
+                    }
+                }
+            }
+        }
+
+        .tmv-pages-container {
+            background-color: rgb(250, 250, 250);
+            margin-top: $tmv-gutter-width;
+            margin-bottom: $tmv-gutter-width * 2;
+            @include card-view();
+        }
+    }
+    .tmv-compressed-view {
+        @include card-view();
+        background-color: rgb(250, 250, 250);
+        padding: $tmv-gutter-width;
+    }
+}
+
+/**
+ * animate
+ */
+.tmv-form-layout-container {
+    .tmv-field-container {
+        position: relative;
+        &.ng-enter-prepare {
+            opacity: 0;
+            height: 0;
+        }
+        /*
+        &.ng-enter, &.ng-leave.ng-leave-active {
+            margin-top: -100px;
+            opacity: 0;
+        }
+        &.ng-enter.ng-enter-active, &.ng-leave {
+            margin-top: 0;
+            opacity: 1;
+        }
+        */
+    }
+    .tmv-form-group-outer {
+        &.ng-enter-prepare {
+            opacity: 0;
+            overflow: hidden;
+            height: 0;
+        }
+        /*
+        &.ng-leave {
+            transition: none;
+            overflow: hidden;
+        }
+        &.ng-enter {
+            transition: all 0.2s;
+            overflow: hidden;
+        }
+        &.ng-enter, &.ng-leave.ng-leave-active {
+            opacity: 0;
+            transform: scale(0);
+        }
+        &.ng-enter.ng-enter-active, &.ng-leave {
+            opacity: 1;
+            transform: scale(1);
+        }
+        */
+    }
+}
+
+md-input-container {
+    .nbgen-password-show, [nbgen-password-show] {
+        padding-right: 36px;
+        ~ .md-button.nbgen-password-show-button {
+            position: absolute;
+            right: 4px;
+            top: 0;
+        }
+    }
+}
+

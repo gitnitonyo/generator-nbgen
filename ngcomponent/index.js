@@ -2,22 +2,16 @@
  * Generates angular component with state and controller
  */
 
-var util = require('util'),
-    yeoman = require('yeoman-generator'),
-    path = require('path'),
+var path = require('path'),
     _ = require('lodash'),
     chalk = require('chalk'),
     _s = require('underscore.string'),
-    scriptBase = require('../tmv-generator-base'),
+    BaseGenerator = require('../tmv-generator-base'),
     CONSTANTS = require('../tmv-constants');         // eslint-disable-line
 
-var TmvGenerator = yeoman.Base.extend({})
-
-util.inherits(TmvGenerator, scriptBase)
-
-module.exports = TmvGenerator.extend({
-    constructor: function() {
-        scriptBase.apply(this, arguments);
+class TmvGenerator extends BaseGenerator {
+    constructor(args, opts) {
+        super(args, opts);
 
         // This makes `name` a required argument.
         this.argument('name', {
@@ -28,9 +22,14 @@ module.exports = TmvGenerator.extend({
 
         this._lodash = _;       // make lodash functions available on templates
         this._s = _s;
-    },
+        this.name = this.options.name;
+    }
+}
 
-    initializing: function() {
+module.exports = TmvGenerator
+
+_.assign(TmvGenerator.prototype, {
+    initializing() {
         // initialization routine
         this.componentName = _s.camelize(this.name, true)
         this.controllerName = _s.capitalize(this.componentName) + 'Ctrl'
@@ -44,23 +43,24 @@ module.exports = TmvGenerator.extend({
 
     prompting: {
         // functions for prompting parameters to be used in generation of codes
-        checkForNewVersion: function() {
+        checkForNewVersion() {
             if (this.abort) return;
             this.checkNewerVersion();
         },
+
         // ask if want to add menu entry
-        askToGenerateState: function() {
+        askToGenerateState() {
             if (this.abort) return;
             this.askForConfirmation('generateState', 'Generate Router UI state?', true);
         },
 
-        askToAddMenuEntry: function() {
+        askToAddMenuEntry() {
             if (this.abort || !this.generateState) return;
             this.askForConfirmation('addMenuEntry', 'Add menu entry?', true);
         }
     },
 
-    configuring: function() {
+    configuring() {
         if (this.abort) return;
 
         // save configuration into this.config
@@ -70,7 +70,7 @@ module.exports = TmvGenerator.extend({
         _.assign(this, this.configOptions);     // make config available on top level object
     },
 
-    default: function() {
+    default() {
         if (this.abort) return;
 
         // any routine which will be executed before writing
@@ -78,7 +78,7 @@ module.exports = TmvGenerator.extend({
 
     writing: {
         // list of functions for executing template or copying files into the project folder
-        writeTemplateFiles: function() {
+        writeTemplateFiles() {
             if (this.abort) return;
             var destdir = path.join(CONSTANTS.uiAppDir, this.componentName);
             this.clientDest = destdir;
@@ -97,7 +97,7 @@ module.exports = TmvGenerator.extend({
             }
         },
 
-        injectMenuEntry: function() {
+        injectMenuEntry() {
             if (this.abort) return;
             if (!this.addMenuEntry) return;
             var menuItemTemplate = [
@@ -128,13 +128,13 @@ module.exports = TmvGenerator.extend({
 
     install: {
         // perform any post installation routine here
-        injectFiles: function() {
+        injectFiles() {
             if (this.abort) return;
             this.injectFiles();
         },
     },
 
-    end: function() {
+    end() {
         if (this.abort) return;
         // provide post generation messages
         this.log(chalk.green("\nAngular component successfully generated.\n"));

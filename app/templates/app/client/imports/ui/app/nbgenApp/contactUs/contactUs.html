@@ -1,0 +1,42 @@
+<div class="text-padding">
+    <!-- template for the <contact-us></contact-us> -->
+    <p>
+        You may contact us via the following options:
+        <ol>
+            <li>
+                You can call our Helpdesk on the following numbers:
+                <div>Landline: {{contactUs.nbgenApp.$applicationParameters.contacts.landLine}}</div>
+                <div>Mobile: {{contactUs.nbgenApp.$applicationParameters.contacts.mobile}}</div>
+                <div>&nbsp;</div>
+            </li>
+            <li>
+                Send us an email on
+                <a ng-href="mailto:{{contactUs.nbgenApp.$applicationParameters.contacts.helpdeskEmail}}">
+                    {{contactUs.nbgenApp.$applicationParameters.contacts.helpdeskEmail}}
+                </a>
+                <div>&nbsp;</div>
+            </li>
+            <li>
+                Send us the message via the form below.
+            </li>
+        </ol>
+    </p>
+</div>
+<md-divider></md-divider>
+<div>&nbsp;</div>
+<form name="contactUs.editForm" novalidate="">
+    <tmv-form
+        form-schema="contactUs.$config.uiLayout"
+        form-model="contactUs.formModel"
+    >
+    </tmv-form>
+    <div>
+        <md-divider></md-divider>
+        <md-button tmv-label="tx:global.common.submit"
+            class="md-primary md-raised"
+            ng-disabled="contactUs.editForm.$pristine || contactUs.editForm.$invalid"
+            ng-click="contactUs.submitMessage()"
+        >
+        </md-button>
+    </div>
+</form>

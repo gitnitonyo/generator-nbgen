@@ -1,0 +1,127 @@
+<div class="nbgen-line-items-container-wrapper">
+    <md-input-container class="nbgen-line-items-input-container md-block _for-label"
+        ng-class="{'md-input-invalid': nbgenLineItems.ngModelCtrl.$invalid && (nbgenLineItems._hasBeenTouched || nbgenLineItems.alwaysRed === 'true'), 'md-input-has-value': nbgenLineItems.lineItemData.length > 0 && !nbgenLineItems.isEmpty(nbgenLineItems.lineItemData[0])}"
+        >
+        <label ng-if="nbgenLineItems.label" ng-bind-html="nbgenLineItems.label" class="force-float"
+            ng-class="{'md-required': nbgenLineItems._isRequired()}"
+            >
+        </label>
+        <div ng-messages="nbgenLineItems.ngModelCtrl.$error" role="alert" style="display: none;">
+            <div ng-message="required">{{'form.validation.itemsRequired' | translate}}</div>
+        </div>
+    </md-input-container>
+    <div class="nbgen-line-items-container">
+        <div class="nbgen-line-items-content" tabindex="0"
+            ng-focus="nbgenLineItems._onFocus()" ng-blur="nbgenLineItems._onBlur()"
+            >
+            <div class="nbgen-line-items-table" ng-class="{'_tmv-collapse': nbgenLineItems._shouldCollapse()}">
+                <div class="table line-item-list">
+                    <div class="thead">
+                    <div class="tr line-item-header">
+                        <span ng-if="nbgenLineItems.noItemNo !== 'true'" class="th line-item-no">
+                            <span class="field-label">{{'global.common.number' | translate}}</span>
+                        </span>
+                        <span ng-repeat="$lineItemSchema in nbgenLineItems.lineSchema"
+                            ng-class="$lineItemSchema.headerClass"
+                            ng-style="$lineItemSchema.headerStyle" class="ellipsis th">
+                            <span class="field-label" ng-class="{'required': nbgenLineItems._isLineItemRequired($lineItemSchema)}">
+                                {{nbgenLineItems.translatePrefix + nbgenLineItems.name + '.' + $lineItemSchema.fieldName | translate}}
+                            </span>
+                        </span>
+                        <span ng-if="!nbgenLineItems._hasNoAction()" class="th line-item-action-wrapper">
+                            <span class="field-label">{{'global.common.action' | translate}}</span>
+                        </span>
+                    </div>
+                    </div>
+                    <div class="tbody">
+                        <div  ng-repeat="$lineItem in nbgenLineItems.lineItemData" ng-form="lineItemForm" class="tr line-item">
+                            <span ng-if="nbgenLineItems.noItemNo !== 'true'" class="td line-item-no line-item-cell">
+                                <div class="line-item-no-label md-caption">
+                                    <span ng-show="nbgenLineItems._shouldCollapse()">
+                                        {{'global.common.number' | translate}}
+                                    </span>
+                                    <span>
+                                    {{$index+1 | number: 0}}
+                                    </span>
+                                </div>
+                            </span>
+                            <span ng-repeat="$lineItemSchema in nbgenLineItems.lineSchema" class="td line-item-cell"
+                                ng-class="$lineItemSchema.cellClass"
+                                ng-style="$lineItemSchema.cellStyle"
+                                >
+                                <div class="row">
+                                    <tmv-input form-model="$lineItem" schema="$lineItemSchema"
+                                        translate-prefix="{{nbgenLineItems.translatePrefix}}"
+                                        read-only="nbgenLineItems.readOnly({$item: $lineItem})"
+                                        >
+                                    </tmv-input>
+                                </div>
+                            </span>
+                            <span ng-if="!nbgenLineItems._hasNoAction($lineItem)" class="td line-item-action-wrapper tmv-no-wrap">
+                                <div layout="row" layout-align="start center">
+                                    <div>
+                                        <md-button
+                                            class="line-item-action md-no-focus"
+                                            aria-label="Add"
+                                            ng-disabled="nbgenLineItems.isEmpty($lineItem) || lineItemForm.$invalid"
+                                            ng-click="nbgenLineItems.addItem($index)"
+                                            ng-class="{'md-icon-button': !nbgenLineItems._shouldCollapse()}"
+                                            >
+                                            <md-icon md-font-icon="mdi-plus-box mdi"></md-icon>
+                                            <span ng-show="nbgenLineItems._shouldCollapse()" translate="global.common.add"></span>
+                                        </md-button>
+                                        <md-button
+                                            class="line-item-action md-no-focus"
+                                            aria-label="Remove"
+                                            ng-click="nbgenLineItems.removeItem($index)"
+                                            ng-class="{'md-icon-button': !nbgenLineItems._shouldCollapse()}"
+                                            >
+                                            <md-icon md-font-icon="mdi-minus-box mdi"></md-icon>
+                                            <span ng-show="nbgenLineItems._shouldCollapse()" translate="global.common.remove"></span>
+                                        </md-button>
+                                    </div>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="nbgenLineItems.hasFooter === 'true'">
+                    <md-divider ></md-divider>
+                    <div>&nbsp;</div>
+                </div>
+                <div class="table line-item-summary" ng-if="nbgenLineItems.hasFooter === 'true'">
+                    <div class="tr">
+                        <span class="td line-item-footer">
+                            <div layout-gt-xs="row" layout="column" layout-align-gt-xs="space-between center">
+                                <div class="line-item-footer"
+                                    ng-repeat="$lineItemSchema in nbgenLineItems.lineSchema"
+                                    ng-class="$lineItemSchema.footerClass"
+                                    ng-style="$lineItemSchema.footerStyle"
+                                    nbgen-bind-html="nbgenLineItems.footer({$lineItemSchema: $lineItemSchema, $lineItemData: nbgenLineItems.lineItemData, $ngModel: nbgenLineItems.ngModelCtrl, $lineItemsCtrl: nbgenLineItems})"
+                                    >
+                                </div>
+                            </div>
+                        </span>
+                        <span class="td line-item-footer line-item-action-wrapper" ng-if="!nbgenLineItems._hasNoAction()">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <md-input-container class="nbgen-line-items-input-container _for-errors md-block"
+        ng-class="{'md-input-invalid': nbgenLineItems.ngModelCtrl.$invalid && (nbgenLineItems._hasBeenTouched || nbgenLineItems.alwaysRed === 'true'), 'md-input-has-value': nbgenLineItems.lineItemData.length > 0 && !nbgenLineItems.isEmpty(nbgenLineItems.lineItemData[0])}"
+        >
+        <div class="md-input" ng-readonly="nbgenLineItems.readOnly()"></div>
+        <div class="md-errors-spacer"></div>
+        <div ng-messages="nbgenLineItems._errorObjects()" role="alert">
+            <div ng-message="required">{{'form.validation.itemsRequired' | translate}}</div>
+            <div ng-message="infotext">
+                <div class="info-text-wrapper">
+                    <nbgen-hint ng-if="nbgenLineItems.hint" value="{{nbgenLineItems.hint}}" hint-label="{{nbgenLineItems.hintLabel}}"></nbgen-hint>
+                    <span class="info-text" ng-if="nbgenLineItems.infoText" translate="{{nbgenLineItems.infoText}}"></span>
+                </div>
+            </div>
+        </div>
+    </md-input-container>
+</div>

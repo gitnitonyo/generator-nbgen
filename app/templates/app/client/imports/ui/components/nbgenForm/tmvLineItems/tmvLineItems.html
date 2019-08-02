@@ -1,0 +1,85 @@
+<md-input-container class="tmv-line-items-container md-block"
+    ng-class="{'md-input-invalid': tmvLineItems.ngModelCtrl.$invalid && (tmvLineItems._hasBeenTouched || tmvLineItems.alwaysRed === 'true'), 'md-input-has-value': tmvLineItems.lineItemData.length > 0 }">
+    <label ng-bind-html="tmvLineItems.label" class="force-float"
+        ng-class="{'md-required': tmvLineItems._isRequired(), 'tmv-no-label': !tmvLineItems.label}">
+    </label>
+    <div class="tmv-line-items-table-wrapper md-input" tabindex="0"
+        ng-focus="tmvLineItems._onFocus()" ng-blur="tmvLineItems._onBlur()"
+        ng-readonly="tmvLineItems.readOnly()"
+        >
+        <div class="tmv-line-items-table nbgen-table-container md-body-1">
+            <div class="table line-items-list">
+                <div class="thead">
+                    <div class="tr line-items-header">
+                        <span ng-if="tmvLineItems.noItemNo !== 'true'" class="td line-item-no">
+                            <span class="field-label">{{'global.common.number' | translate}}</span>
+                        </span>
+                        <span ng-repeat="$lineItemSchema in tmvLineItems.lineLayout"
+                            ng-class="$lineItemSchema.headerClass"
+                            ng-style="$lineItemSchema.headerStyle" class="td">
+                            <span class="field-label">{{tmvLineItems.translatePrefix + tmvLineItems.name + '.' + $lineItemSchema.fieldName | translate}}</span>
+                        </span>
+                        <span ng-if="!tmvLineItems.allowAddOnly && !tmvLineItems._hasNoAction($lineItem)" class="td line-item-action-wrapper">
+
+                        </span>
+                    </div>
+                </div>
+                <div class="tbody">
+                    <div ng-if="tmvLineItems.lineItemData && tmvLineItems.lineItemData.length > 0"
+                        ng-repeat="$lineItem in tmvLineItems.lineItemData"
+                        class="tr line-item"
+                        ng-click="tmvLineItems.editItem($index, $lineItem, tmvLineItems.isViewMode())"
+                        >
+                        <span ng-if="tmvLineItems.noItemNo !== 'true'" class="td line-item-no line-item-cell">
+                            <div class="line-item-no-label">
+                                <span>{{$index+1 | number: 0}}</span>
+                            </div>
+                        </span>
+                        <span ng-repeat="$lineItemSchema in tmvLineItems.lineLayout" class="td line-item-cell"
+                            ng-class="$lineItemSchema.cellClass"
+                            ng-style="$lineItemSchema.cellStyle"
+                            >
+                            <div ng-class="$lineItemSchema.cssClass" ng-style="$lineItemSchema.cssStyle"
+                                ng-bind-html="tmvLineItems._renderCell($lineItem, $lineItemSchema)">
+                            </div>
+                        </span>
+                        <span ng-if="!tmvLineItems.allowAddOnly && !tmvLineItems._hasNoAction($lineItem)" class="td line-item-action-wrapper">
+                            <div class="line-item-actions">
+                                <md-menu md-position-mode="target-right target">
+                                    <md-button class="md-icon-button" ng-click="tmvLineItems._openActionMenu($mdMenu, $event)"
+                                        tmv-icon="mdi-dots-vertical" aria-label="more">
+                                    </md-button>
+                                    <md-menu-content width="4" nbgen-template="tmvLineItems.actionTemplate">
+
+                                    </md-menu-content>
+                                </md-menu>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="!tmvLineItems._hasNoAction($lineItem)">
+            <md-divider></md-divider>
+            <div style="padding-top: 12px; padding-bottom: 12px;">
+                <md-button class="md-no-focus md-primary primary-action md-raised tmv-no-shadow"
+                    ng-disabled="tmvLineItems.addDisabled($lineItem)"
+                    tmv-label="tx:global.common.add"
+                    tmv-icon="mdi-plus"
+                    ng-click="tmvLineItems.addItem(undefined, $event)"
+                >
+                </md-button>
+            </div>
+        </div>
+    </div>
+    <div class="md-errors-spacer"></div>
+    <div ng-messages="tmvLineItems._errorObjects()" role="alert">
+        <div ng-message="required">{{'form.validation.itemsRequired' | translate}}</div>
+        <div ng-message="infotext">
+            <div class="info-text-wrapper">
+                <nbgen-hint ng-if="tmvLineItems.hint" value="{{tmvLineItems.hint}}" hint-label="{{tmvLineItems.hintLabel}}"></nbgen-hint>
+                <span class="info-text" ng-if="tmvLineItems.infoText" translate="{{tmvLineItems.infoText}}"></span>
+            </div>
+        </div>
+    </div>
+</md-input-container>

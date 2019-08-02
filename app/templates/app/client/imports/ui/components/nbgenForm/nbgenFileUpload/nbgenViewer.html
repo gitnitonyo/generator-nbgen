@@ -1,0 +1,30 @@
+<div class="nbgen-viewer-content tmv-background-hue-3-color-bg">
+    <video id="nbgen-video-viewer" class="video-js vjs-default-skin"
+        ng-if="vm.type.startsWith('video')" controls
+        autoplay preload="auto" data-setup='{}'>
+        <source ng-src="{{vm.getUrl()}}" type="{{vm.type}}">
+        <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser
+            that
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+    </video>
+    <audio controls autoplay preload="auto"
+        ng-if="vm.type.startsWith('audio')"
+        >
+        <source src="{{vm.getUrl()}}" type="{{vm.type}}">
+        <p>
+            To listen to this audio please enable JavaScript, and consider upgrading to a web
+            browser that
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+    </audio>
+    <div ng-if="vm.type.startsWith('image')" class="nbgen-image-content" nbgen-image-viewer="{{vm.getUrl()}}">
+    </div>
+    <iframe  ng-src="{{vm.getUrl()}}"
+        ng-if="vm.type === 'application/pdf' && vm.pdfJs === 'true'">
+    </iframe>
+    <object data="{{vm.getUrl()}}" type="application/pdf"
+        ng-if="vm.type === 'application/pdf' && vm.pdfJs !== 'true'">
+    </object>
+</div>

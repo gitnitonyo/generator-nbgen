@@ -1,7 +1,8 @@
 ######################
 # Project Specific
 ######################
-bin/tmv-copy-components.js
+helper
+tmv-template.js
 
 ######################
 # Node

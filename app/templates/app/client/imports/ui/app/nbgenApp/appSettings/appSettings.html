@@ -1,0 +1,21 @@
+<div class="tmv-vertical-padding">
+    <!-- template for the <app-settings></app-settings> -->
+    <form name="appSettings.editForm" novalidate="">
+        <tmv-put location="tmv-toolbar-actions">
+            <nbgen-toolbar-actions>
+                <md-button
+                    ng-disabled="appSettings.editForm.$invalid || appSettings.editForm.$pristine"
+                    tmv-label="tx:global.common.save"
+                    tmv-icon="mdi-content-save"
+                    ng-click="appSettings.saveClick($event)"
+                    >
+                </md-button>
+            </nbgen-toolbar-actions>
+        </tmv-put>
+        <tmv-form
+            form-schema="appSettings.$config.form"
+            form-model="appSettings.applicationInfo"
+            >
+        </tmv-form>
+    </form>
+</div>

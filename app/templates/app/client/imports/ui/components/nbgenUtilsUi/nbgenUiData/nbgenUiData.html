@@ -1,0 +1,47 @@
+<md-content role="dialog" aria-label="{{vm.dlgTitle}}"
+    ng-style="vm.cssStyle" layout="column" class="nbgen-dialog-container"
+    >
+    <md-toolbar ng-if="vm.getDialogTitle() && vm.primaryTitle !== false" layout="row" layout-align="start center">
+        <div ng-bind-html="vm.getDialogTitle()" class="text-padding-10 md-title"></div>
+        <span flex></span>
+        <div>
+            <md-button class="md-icon-button" nbgen-icon="mdi-close"
+                aria-label="Close" ng-click="vm.cancelFn()">
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="vm.editForm" novalidate="" flex layout="column">
+        <md-content ng-if="!vm.template" flex layout="column" class="md-dialog-form-content">
+            <h2 class="md-title" ng-if="vm.getDialogTitle() && vm.primaryTitle == false">
+                <span ng-bind-html="vm.getDialogTitle()"></span>
+            </h2>
+            <div>
+                <tmv-form ng-if="vm.formSchema" form-schema="vm.formSchema"
+                    form-model="vm.formModel"
+                    read-only="vm.viewMode == 'view'">
+                </tmv-form>
+            </div>
+        </md-content>
+        <md-content ng-if="vm.template" class="md-dialog-content" flex layout="column">
+            <h2 class="md-title" ng-if="vm.primaryTitle == false && vm.dlgTitle">
+                <span ng-if="!vm.dlgTitleInterpolated" translate="{{vm.dlgTitle}}"></span>
+                <span ng-if="vm.dlgTitleInterpolated" ng-bind-html="vm.dlgTitle"></span>
+            </h2>
+            <div flex nbgen-template="vm.template" layout="column" class="tmv-dialog-template"></div>
+        </md-content>
+        <div ng-if="!vm.actionDisabled && !vm.actionTemplate" flex="none" class="nbgen-dialog-action-section nbgen-border-color">
+            <div layout="row" layout-align="end center" class="text-padding-10">
+                <md-button ng-if="vm.cancelLabel" ng-click="vm.cancelFn()" class="md-no-focus md-primary">
+                    {{vm.cancelLabel | translate}}
+                </md-button>
+                <md-button ng-if="vm.okLabel && !vm.readOnly" class="md-no-focus md-primary" type="submit"
+                    ng-click="vm.okFn(vm.formModel)" ng-disabled="(!vm.template && (vm.editForm.$invalid)) || (vm.isFormInvalid && vm.isFormInvalid())">
+                    {{vm.okLabel | translate}}
+                </md-button>
+            </div>
+        </div>
+        <div ng-if="!vm.actionDisabled && vm.actionTemplate" layout="column" layout-align="center"
+            flex="none" nbgen-template="vm.actionTemplate" class="nbgen-dialog-action-template nbgen-border-color">
+        </div>
+    </form>
+</md-content>

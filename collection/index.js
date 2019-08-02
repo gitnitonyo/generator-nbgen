@@ -1,24 +1,18 @@
 'use strict';
 
-var util = require('util'),
-    yeoman = require('yeoman-generator'),
-    _ = require('lodash'),
+var _ = require('lodash'),
     _s = require('underscore.string'),
     pluralize = require('pluralize'),
     prompts = require('./prompts'),
     path = require('path'),
     chalk = require('chalk'),
     stringifyObject = require('stringify-object'),
-    scriptBase = require('../tmv-generator-base'),
-    CONSTANTS = require('../tmv-constants');
+    BaseGenerator = require('../tmv-generator-base'),
+    CONSTANTS = require('../tmv-constants')
 
-var TmvCollectionGenerator = yeoman.Base.extend({});
-
-util.inherits(TmvCollectionGenerator, scriptBase);
-
-module.exports = TmvCollectionGenerator.extend({
-    constructor: function () {
-        scriptBase.apply(this, arguments);
+class TmvCollectionGenerator extends BaseGenerator {
+    constructor(args, opts) {
+        super(args, opts);
 
         this.configOptions = _.assign({}, this.defaultConfigOptions(), this.config.getAll());
         _.assign(this, this.configOptions);
@@ -32,8 +26,14 @@ module.exports = TmvCollectionGenerator.extend({
 
         this._s = _s;
         this._lodash = _;
-    },
-    initializing: function () {
+        this.name = this.options.name;
+    }
+}
+
+module.exports = TmvCollectionGenerator;
+
+_.assign(TmvCollectionGenerator.prototype, {
+    initializing () {
         if (this.abort) return;
         this.collectionName = _.camelCase(this.name);
         this.collections = this.collections || { };
@@ -58,45 +58,53 @@ module.exports = TmvCollectionGenerator.extend({
 
         this.iconClass = this.options.iconClass || 'mdi-package'
     },
+    
     prompting: {
-        // checkForNewVersion: function() {
-        //    if (this.abort) return;
-        //    this.checkNewerVersion();
-        // },
-        askIfServer: function() {
+        checkForNewVersion: function() {
+           if (this.abort) return;
+           this.checkNewerVersion();
+        },
+
+        askIfServer() {
             if (this.abort) return;
             this.askForConfirmation('regenerateServer', 'Do you want to regenerate server files?', false)
         },
+
         // would add audit log capability
-        askIfAudit: function() {
+        askIfAudit() {
             if (this.abort) return;
             if (this.regenerateServer !== false) {
                 this.askForConfirmation('generateAuditLog', 'Do you want to include audit logs on collection operation?', true);
             }
         },
-        askIfPublic: function() {
+
+        askIfPublic() {
             if (this.abort) return;
             if (this.regenerateServer !== false) {
                 this.askForConfirmation('isPublic', 'Will the documents be publicly available?', false)
             }
         },
-        askToGenerateUI: function() {
+
+        askToGenerateUI() {
             if (this.abort) return;
             this.askForConfirmation('generateUI', `Generate UI for ${this.collection.name}?`,
                 !(this.collection.options && this.collection.options.generateUI))
         },
-        askForFields: function() {
+        
+        askForFields() {
             if (this.abort) return;
             if (this.generateUI) {
                 prompts.askForFields.call(this);
             }
         },
-        askIfMenuEntry: function() {
+
+        askIfMenuEntry() {
             if (this.abort) return;
             if (this.generateUI) {
                 this.askForConfirmation('addMenuEntry', 'Add menu entry?', false)
             }
         },
+
         askIfGenerateToolbar: function() {
             if (this.abort) return;
             if (this.generateUI) {
@@ -104,7 +112,8 @@ module.exports = TmvCollectionGenerator.extend({
             }
         }
     },
-    configuring: function () {
+
+    configuring() {
         if (this.abort) return;
         this.collection.options.serverGenerated = true
         this.collection.options.generateUI = this.generateUI || this.collection.options.generateUI
@@ -113,11 +122,13 @@ module.exports = TmvCollectionGenerator.extend({
         this.collections[this.collectionName] = this.collection;
         this.config.set('collections', this.collections);
     },
-    default: function () {
 
+    default() {
+        if (this.abort) return;
     },
+
     writing: {
-        writeServerFiles: function() {
+        writeServerFiles() {
             if (this.abort) return;
             if (this.regenerateServer === false) return;     // no server regeneration
 
@@ -132,9 +143,9 @@ module.exports = TmvCollectionGenerator.extend({
             this.serverDest = path.join(CONSTANTS.defaultServerDir, 'imports/api', this.collectionName)
             this.template('server/__collection.js', path.join(this.serverDest, 'index.js'))
 
-            files.forEach(function(filename) {
+            files.forEach((filename) => {
                 this.template(`server/__${filename}`, path.join(this.serverDest, filename))
-            }.bind(this))
+            })
 
             this.serverIsGenerated = true;
 
@@ -149,7 +160,7 @@ module.exports = TmvCollectionGenerator.extend({
             */
         },
 
-        determineFieldInputType: function() {
+        determineFieldInputType() {
             if (this.abort) return;
             if (!this.generateUI) return;
 
@@ -168,7 +179,7 @@ module.exports = TmvCollectionGenerator.extend({
             })
         },
 
-        generateListLayout: function() {
+        generateListLayout() {
             if (this.abort) return;
             if (!this.generateUI) return;
 
@@ -190,7 +201,7 @@ module.exports = TmvCollectionGenerator.extend({
                 .replace(/\n/g, '\n' + Array(9).join(' '));
         },
 
-        generateFormLayout: function() {
+        generateFormLayout() {
             if (this.abort) return;
             if (!this.generateUI) return;
 
@@ -209,7 +220,7 @@ module.exports = TmvCollectionGenerator.extend({
                 .replace(/\n/g, '\n' + Array(17).join(' '));
         },
 
-        writeClientFiles: function() {
+        writeClientFiles() {
             if (this.abort) return;
             if (!this.generateUI) return;
 
@@ -248,7 +259,7 @@ module.exports = TmvCollectionGenerator.extend({
             this.clientIsGenerated = true;
         },
 
-        injectMenuEntry: function() {
+        injectMenuEntry() {
             if (this.abort) return;
             if (!this.addMenuEntry) return;
             var menuItemTemplate = [
@@ -276,13 +287,15 @@ module.exports = TmvCollectionGenerator.extend({
             })
         },
     },
+
     install: {
-        injectFiles: function() {
+        injectFiles() {
             if (this.abort) return;
             this.injectFiles();
         },
     },
-    end: function () {
+
+    end() {
         if (this.abort) return;
         this.log(chalk.green("\nCodes for managing Collection successfully generated.\n"));
         if (this.collectionTargetDir) {

@@ -1,0 +1,27 @@
+<md-menu-item>
+    <md-button
+        class="line-item-action"
+        tmv-icon="mdi-note-plus" tmv-label="tx:global.common.add"
+        ng-click="tmvLineItems.addItem($index, $event)"
+        ng-disabled="tmvLineItems.addDisabled({$index: $index, $event: $event})"
+        >
+    </md-button>
+</md-menu-item>
+<md-menu-item>
+    <md-button
+        class="line-item-action"
+        tmv-icon="mdi-pen" tmv-label="tx:global.common.edit"
+        ng-click="tmvLineItems.editItem($index, $lineItem)"
+        ng-disabled="$lineItem === undefined || tmvLineItems.editDisabled({$index: $index, $lineItem: $lineItem, $event: $event})"
+        >
+    </md-button>
+</md-menu-item>
+<md-menu-item>
+    <md-button
+        class="line-item-action"
+        tmv-icon="mdi-delete" tmv-label="tx:global.common.remove"
+        ng-disabled="$lineItem === undefined || tmvLineItems.removeDisabled({$index: $index, $lineItem: $lineItem, $event: $event})"
+        ng-click="tmvLineItems.removeItem($index, $lineItem)"
+        >
+    </md-button>
+</md-menu-item>
