@@ -154,7 +154,7 @@ yo nbgen:ngcomponent componentName
 
 *documentation to be provided later*
 
-### Provising APIs
+### Provisioning APIs
 
 *documentation to be provided later*
 
