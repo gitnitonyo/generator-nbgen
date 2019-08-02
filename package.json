@@ -46,12 +46,6 @@
     "npm": ">=2.14.2"
   },
   "files": [
-    "app",
-    "collection",
-    "mobile",
-    "ngcomponent",
-    "testdata",
-    "tmv-constants.js",
-    "tmv-generator-base.js"
+    "generators"
   ]
 }

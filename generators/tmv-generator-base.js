@@ -7,7 +7,7 @@ var Generator = require('yeoman-generator'),
     path = require('path'),
     fg = require('fast-glob'),
     CONSTANTS = require('./tmv-constants'),
-    packagejs = require('./package.json'),
+    packagejs = require('../package.json'),
     semver = require('semver'),
     shelljs = require('shelljs');
 
