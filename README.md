@@ -90,7 +90,7 @@ You may also want to change the favicons located in `public/assets/icons` folder
 
 ### Built-in Routes
 
-There are state routes that came with the generated baseline codes. You may customize these according to your application needs.
+There are client-side routes that came with the generated baseline codes. You may customize these according to your application needs.
 
 * **nbgenMain** - The home screen located in `client/imports/ui/app/nbgenApp/nbgenMain/` directory.
 * **nbgenLogin** - Contains the login facility. Located in `client/imports/ui/app/nbgenApp/nbgenLogin/` directory.
@@ -100,13 +100,31 @@ There are state routes that came with the generated baseline codes. You may cust
 
 ### Mongo DB Collection Maintenance
 
-To generate set of codes for maintening a MongoDB collection, complete with front-end and back-end codes:
+To generate set of codes for maintaining a MongoDB collection, complete with front-end and back-end codes:
 
 ```sh
 yo nbgen:collection collectionName
 ```
 
 You must provide the name of the mongo collection to create (e.g. `yo nbgen:collection Customers`)
+
+Generated codes:
+
+- Front end mainly located in `client/imports/ui/app/collectionName` folder
+  - `collection.js` - declaration of minimongo collection which can be imported to access from other parts of the code.
+  - `_collection.scss` - may be modified to change css styles of the component
+  - `actionToolbarListView.html` - to include other UI components on the top toolbar shown when viewing the collection list
+  - `actionToolbarFormView.html` - to include other UI components on the top toolbar shown when viewing or editing a specific document from the collection.
+  - `config.js` - this is where you mostly put codes to customize the behaviour of the component. There are several options you can put in here to modify or override the default operations of the collection maintenance which will be explained on a separate section below.
+  - `setup.js` - this is where the component and its options are setup. For instance if you want to limit the access to of the client-side route to a set of roles, you will modify the alloweRoles variable declared in this file.
+  - `i18n.hjson` - this is located in client/imports/i18n/en
+  - An entry into the menu will be injected into `client/imports/ui/app/nbgenApp/nbgenAppMenu.js`
+- Back end mainly located in `server/imports/api/collectionName` folder
+  - `index.js` - declaration of mongo collection
+  - `fixture.js` - where you put initialization routines
+  - `publish.js` - control the publication of the collection to the client including filtering of exposed information based on user's group or role
+  - `permissions.js` - provides mechanism to control who can perform *create*, *update* and *delete* operations.
+  - `methods.js` - where to declare and define remote API methods, specific to the application requirements.
 
 ### Angular Component
 
@@ -115,6 +133,13 @@ To generate code templates for creating an angular component
 ```sh
 yo nbgen:ngcomponent componentName
 ```
+
+Generated codes will be located in client/imports/ui/app/componentName.
+
+- `_component.scss` - may contain styles specific to the component
+- `component.html` - the UI template used by the component
+- `config.js` - any pertinent data which may be used by the component
+- `ctrl.js` - the actual implenentation of the component
 
 *documentation on other sub-generators to follow*.
 
