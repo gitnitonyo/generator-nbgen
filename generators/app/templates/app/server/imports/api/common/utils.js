@@ -1,7 +1,7 @@
-import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
-import { check } from 'meteor/check';
-import { Random } from 'meteor/random';
+import { Meteor } from '../common';
+import { Mongo } from '../common';
+import { check } from '../common';
+import { Random } from '../common';
 import { getActiveGroup, COLLECTION_GROUP_FIELD, GLOBAL_GROUP } from '/imports/common/app.roles.js';
 import _ from 'underscore';
 import _s from 'underscore.string';

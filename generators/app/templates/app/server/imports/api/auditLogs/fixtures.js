@@ -1,7 +1,7 @@
 /**
  * Contains data initialization routines for AuditLogs collection
  */
-import {Meteor} from 'meteor/meteor'
+import {Meteor} from '../common'
 import {AuditLogs} from './collection.js'
 
 import {COLLECTION_GROUP_FIELD, GLOBAL_GROUP} from '/imports/common/app.roles.js'

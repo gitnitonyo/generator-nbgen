@@ -1,5 +1,5 @@
-import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
+import { Meteor } from '../common';
+import { Mongo } from '../common';
 import { COLLECTION_GROUP_FIELD } from '/imports/common/app.roles.js';
 
 const collectioName = 'uploadedFiles';

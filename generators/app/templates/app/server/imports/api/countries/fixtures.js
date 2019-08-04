@@ -1,7 +1,7 @@
 /**
  * Contains data initialization routines for Countries collection
  */
-import {Meteor} from 'meteor/meteor'
+import {Meteor} from '../common'
 import {Countries} from './collection.js'
 
 /* global Assets */

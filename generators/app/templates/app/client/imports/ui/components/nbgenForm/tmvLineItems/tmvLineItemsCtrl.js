@@ -79,7 +79,9 @@ class TmvLineItemsCtrl {
         const modelValue = [ ];
         if (_.isArray(lineItemData)) {
             _.each(lineItemData, v => {
-                modelValue.push(angular.copy(v));
+                if (v !== null && v !== undefined) {
+                    modelValue.push(angular.copy(v));
+                }
             })
         }
 

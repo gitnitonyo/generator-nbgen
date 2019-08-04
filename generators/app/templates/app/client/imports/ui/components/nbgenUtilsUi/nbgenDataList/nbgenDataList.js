@@ -93,20 +93,32 @@ class TmvList {
         let field = this.layout.fields[fieldNumber];
         let ngIf = true;
         if (field.ngIf) {
-            ngIf = this.$parse(field.ngIf)(this._context, {item: item, $item: item});
+            if (_.isFunction(field.ngIf)) {
+                ngIf = field.ngIf.call(this._context, item);
+            } else {
+                ngIf = this.$parse(field.ngIf)(this._context, {item: item, $item: item});
+            }
         }
         if (field.fieldName && ngIf) {
-            if (angular.isString(field.value)) {
+            if (field.value) {
                 // result will be interpolated
-                result = this.$interpolate(field.value)(_.extend({}, this._exported, {$item: item}, item));
+                if (_.isFunction(field.value)) {
+                    result = field.value.call(this._context, item);
+                } else if (_.isString(field.value)) {
+                    result = this.$interpolate(field.value)(_.extend({}, this._exported, {$item: item}, item));
+                }
             } else if (_.isString(field.fieldDisplay)) {
                 // use the context of the layout
                 result = this.$interpolate(field.fieldDisplay)({$tmvCollection: this.layout.context, $item: item});
-            } else if (angular.isString(field.computedValue)) {
-                if (field.computedValue.startsWith('expr:')) {
-                    result = this.$interpolate(field.computedValue.substr(5))(_.extend({$context: this._context}, item))
-                } else {
-                    result = this.$parse(field.computedValue)(this._context, {item: item})
+            } else if (field.computedValue) {
+                if (_.isFunction(field.computedValue)) {
+                    result = field.computedValue.call(this._context, item);
+                } else if (_.isString(field.computedValue)) {
+                    if (field.computedValue.startsWith('expr:')) {
+                        result = this.$interpolate(field.computedValue.substr(5))(_.extend({$context: this._context}, item))
+                    } else {
+                        result = this.$parse(field.computedValue)(this._context, {item: item})
+                    }
                 }
             } else {
                 result = this.$parse(field.fieldName)(item);
@@ -116,6 +128,10 @@ class TmvList {
     }
 
     __getIcon(item, icon) {
+        if (_.isFunction(icon)) {
+            return icon.call(this._context, item);
+        }
+
         if (icon && icon.startsWith('fn:')) {
             icon = icon.substr(3)
             return this.$parse(icon)(this._context, {item: item})
@@ -143,11 +159,11 @@ class TmvList {
                 result = dom.html();
             }
         }
-        if (field && angular.isString(field.leftIcon)) {
+        if (field && field.leftIcon) {
             const icon = this.__getIcon(item, field.leftIcon)
             result = '<i class="' + icon + '"></i>&nbsp;' + result
         }
-        if (field && angular.isString(field.rightIcon)) {
+        if (field && field.rightIcon) {
             const icon = this.__getIcon(item, field.rightIcon)
             result = result + '&nbsp;<i class="' + icon + '"></i>'
         }
@@ -178,18 +194,34 @@ class TmvList {
     }
 
     handleClass(fieldSchema, item) {
-        if (!fieldSchema || !_.isString(fieldSchema.cssClass)) return;
-        if (fieldSchema.cssClass.startsWith('expr:')) {
-            return this.$parse(fieldSchema.cssClass.substr(5))(this._context, {item: item});
+        if (!fieldSchema) return;
+        
+        if (fieldSchema && fieldSchema.cssClass) {
+            if (_.isFunction(fieldSchema.cssClass)) {
+                fieldSchema.cssClass.call(this._context, item);
+            } else if (_.isString(fieldSchema.cssClass)) {
+                if (fieldSchema.cssClass.startsWith('expr:')) {
+                    return this.$parse(fieldSchema.cssClass.substr(5))(this._context, {item: item});
+                }
+            }
         }
+
         return fieldSchema.cssClass;
     }
 
     handleStyle(fieldSchema, item) {
-        if (!fieldSchema || !_.isString(fieldSchema.cssStyle)) return;
-        if (fieldSchema.cssStyle.startsWith('expr:')) {
-            return this.$parse(fieldSchema.cssStyle.substr(5))(this._context, {item: item});
+        if (!fieldSchema) return;
+
+        if (fieldSchema && fieldSchema.cssStyle) {
+            if (_.isFunction(fieldSchema.cssStyle)) {
+                fieldSchema.cssStyle.call(this._context, item);
+            } else if (_.isString(fieldSchema.cssClass)) {
+                if (fieldSchema.cssStyle.startsWith('expr:')) {
+                    return this.$parse(fieldSchema.cssStyle.substr(5))(this._context, {item: item});
+                }
+            }
         }
+                
         return fieldSchema.cssStyle;
     }
 }

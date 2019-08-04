@@ -3,11 +3,11 @@
  */
 
 /* globals Assets */
-import { Meteor } from 'meteor/meteor'
-import { Accounts } from 'meteor/accounts-base'
-import { check } from 'meteor/check'
+import { Meteor } from '../common'
+import { Accounts } from '../common'
+import { check } from '../common'
 import { appRoles, getActiveGroup, COLLECTION_GROUP_FIELD, USER_GROUP_FIELD } from '/imports/common/app.roles.js';
-import { Roles } from 'meteor/alanning:roles';
+import { Roles } from '../common';
 
 import { Organizations } from '../organizations/collection.js';
 

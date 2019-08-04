@@ -1,7 +1,7 @@
-import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
-import { Accounts } from 'meteor/accounts-base';
-import { Roles } from 'meteor/alanning:roles';
+import { Meteor } from '../common';
+import { check } from '../common';
+import { Accounts } from '../common';
+import { Roles } from '../common';
 
 import { Organizations } from './collection.js';
 import { appRoles, USER_GROUP_FIELD, COLLECTION_GROUP_FIELD } from '/imports/common/app.roles.js';

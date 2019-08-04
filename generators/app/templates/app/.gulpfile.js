@@ -17,7 +17,7 @@ var starttag = '// inject:imports:{{ext}}',
 var jsClientImportsFile = 'client/imports/imports.js';
 var jsServerImportsFile = 'server/imports/imports.js';
 var scssImportsFile = 'client/imports/scss/_imports.scss';
-var scssCommonImportsFile = 'client/imports/ui/components/scss/_imports.scss';
+var scssCommonImportsFile = 'client/imports/scss/_components.scss';
 
 var filePatterns = {
     jsImports: {
@@ -52,7 +52,7 @@ var filePatterns = {
             cwd: 'client/imports'
         },
         srcMatches: ['ui/components/**/*.scss', '!ui/components/scss/**/*.scss'],
-        dest: 'client/imports/ui/components/scss',
+        dest: 'client/imports/scss',
     },
     i18nTransform: {
         options: {

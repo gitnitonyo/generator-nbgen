@@ -2,7 +2,7 @@
  * Defines remotely accessible methods pertinent to NbHistories collection
  */
 import _ from 'underscore';
-import { Meteor } from 'meteor/meteor';
+import { Meteor } from '../common';
 import { NbHistories } from '.';
 import { getActiveGroup, COLLECTION_GROUP_FIELD } from '/imports/common/app.roles.js';
 import { escapeRegExp } from '../common/utils.js';
@@ -49,7 +49,7 @@ function saveHistory(fieldId, historyStr) {
     // check if there's an exact match
     let exactMatch = NbHistories.findOne(_.extend({}, selector, {historyStr: historyStr}));
     if (!exactMatch) {
-        let sortOptions: {entryDate: 1};
+        let sortOptions = {entryDate: 1};
 
         let cursor = NbHistories.find(selector);
         let count = cursor.count();

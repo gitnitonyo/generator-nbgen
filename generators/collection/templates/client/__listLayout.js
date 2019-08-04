@@ -1,0 +1,49 @@
+export const listLayout = {
+    // optionally provide a template for list actions
+    // eg: include a drop down filter
+    // actionsTemplate: '',
+
+    // uncomment to provide a sort to be used into the collection
+    // initialSort: { },     // you may define initial sort here
+
+    // uncomment and define a function  which would return a template displayed on avatar circle
+    // avatarField: "$tmvController.fn",
+
+    // a flag whether to display an avatar circle
+    // displayAvater: false, // to disable display of avatar circle
+
+    // a boolean of a function to hide specified actions
+    // hideDelete: true,
+    // hideEdit: true,
+    // hideAction: true,    // will hide totally the actions
+    // hideAdd: true,
+
+    // uncomment to set the list to tabular mode
+    // tabular: true,
+
+    // uncomment to enable scroll shrink on the main application toolbar
+    // enableScrollShrink: true,
+
+    // list of fields up to 6 items
+    // fieldName: "fieldName"   // name of field
+    // value: "{{}}"    // interpolate string to be displayed as value
+    // computedValue: "fn" // function whose returns serves as template for this field passed item as parameter
+    // searchField: true    // if field is searchable, can be array of searchable fields
+
+    fields: <%- listLayoutString %>,
+
+    // if you want to include local variables accessible as properties of $tmvCollection controller
+    locals: {
+
+    },
+
+    // all functions defined in this section will be bound to the $tmvCollection controller
+    functions: {
+        // functions defined where will be bound to the $tmvCollection controller
+
+        // this is executed when controller has been initialized
+        $init() {
+
+        }
+    }
+}

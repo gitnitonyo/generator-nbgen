@@ -1,7 +1,7 @@
 /**
  * Contains data initialization routines for NbHistories collection
  */
-import { Meteor } from 'meteor/meteor';
+import { Meteor } from '../common';
 import { NbHistories } from '.';
 
 import { COLLECTION_GROUP_FIELD, GLOBAL_GROUP } from '/imports/common/app.roles.js';

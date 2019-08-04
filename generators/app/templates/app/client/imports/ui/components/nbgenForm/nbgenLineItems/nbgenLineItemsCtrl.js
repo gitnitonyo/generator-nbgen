@@ -52,7 +52,9 @@ class NbgenLineItemsCtrl {
 
         if (_.isArray(modelValue)) {
             _.each(modelValue, v => {
-                lineItemData.push(angular.copy(v));
+                if (v !== null && v !== undefined) {
+                    lineItemData.push(angular.copy(v));
+                }
             })
         } else {
             if (this.readOnly()) {
@@ -122,6 +124,9 @@ class NbgenLineItemsCtrl {
                 this.$currentInternalValue = angular.copy(lineItemData);
                 this.lineItemData = lineItemData;
             }
+            if (!this.readOnly() && _.isEmpty(this.lineItemData)) {
+                this.lineItemData = [{}];
+            }
         }
 
         // are there changes in the internal value
@@ -130,8 +135,8 @@ class NbgenLineItemsCtrl {
             let modelValue = this._convertToExternal();
             if (!_.isEqual(modelValue, this.ngModelCtrl.$modelValue)) {
                 if (_.isArray(modelValue) && modelValue.length === 0) {
-                    this.$currentModelValue = null;
-                    this.ngModelCtrl.$setViewValue(null);
+                    this.$currentModelValue = undefined;
+                    this.ngModelCtrl.$setViewValue(undefined);
                 } else {
                     this.$currentModelValue = angular.copy(modelValue);
                     this.ngModelCtrl.$setViewValue(modelValue);

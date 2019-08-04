@@ -1,7 +1,7 @@
 /**
  * Declares the AuditLogs Mongo collection here.
  */
-import {Mongo} from 'meteor/mongo'
+import {Mongo} from '../common'
 
 const collectionName = 'auditLogs'
 

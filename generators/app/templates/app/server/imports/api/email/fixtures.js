@@ -1,5 +1,5 @@
-import {Meteor} from 'meteor/meteor'
-import {Accounts} from 'meteor/accounts-base'
+import {Meteor} from '../common'
+import {Accounts} from '../common'
 
 // initialize email settings
 if (!Meteor.settings.email) {

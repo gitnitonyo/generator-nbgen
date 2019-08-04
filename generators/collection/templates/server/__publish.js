@@ -2,11 +2,11 @@
  * Controls published information for <%= collection.name %> collection
  */
 import { <%= collection.name %> } from '.';
-import { publishCollection } from '/server/imports/api/common/publish.js'
-import { COLLECTION_PUBLIC_FIELD, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD } from '/imports/common/app.roles.js'
-import { getActiveGroup } from '/imports/common/app.roles.js';
-import { appRoles } from '/imports/common/app.roles.js';    // eslint-disable-line
-import { Roles } from 'meteor/alanning:roles';
+import { publishCollection } from '../common/publish.js'
+import { COLLECTION_PUBLIC_FIELD, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD } from '../../../../imports/common/app.roles.js'
+import { getActiveGroup } from '../../../../imports/common/app.roles.js';
+import { appRoles } from '../../../../imports/common/app.roles.js';    // eslint-disable-line
+import { Roles } from '../common';
 
 const publishName = '<%= collectionName %>';
 const collection = <%= collection.name %>;

@@ -2,7 +2,7 @@
  * Contains data initialization routines for Organizations collection
  */
 // import _ from 'underscore';
-import { Meteor } from 'meteor/meteor'
+import { Meteor } from '../common'
 import { Organizations } from './collection.js';
 // import { Users } from '../users/collection.js';
 // import { Announcements } from '../announcements/collection.js';

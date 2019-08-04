@@ -1,6 +1,6 @@
 /* globals Assets */
-import {Meteor} from 'meteor/meteor'
-import {Email} from 'meteor/email'
+import {Meteor} from '../common'
+import {Email} from '../common'
 
 import { getUserEmail } from '../users/methods.js';
 

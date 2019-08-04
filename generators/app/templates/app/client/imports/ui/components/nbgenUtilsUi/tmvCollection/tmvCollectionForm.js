@@ -439,34 +439,52 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
         return dirtyFields;
     }
 
+    __constructUpdateInstruction(delta, prefix='', setterObj, unsetterObj, item) {
+        if (_.isObject(delta) && delta._t === 'a') {
+            // it's an array, save the whole array as mongo cannot remove by array index
+            let fieldName = prefix;
+            if (fieldName.endsWith('.')) {
+                fieldName = fieldName.substr(0, fieldName.length-1);
+            }
+            console.log(fieldName);
+            setterObj[fieldName] = this.$parse(fieldName)(item);
+            return;
+        }
+        _.each(delta, (value, key) => {
+            if (key === '_t') return;       // ignore array indicator
+            if (_.isArray(value)) {
+                if (value.length === 1) {           // it's a new value
+                    setterObj[`${prefix}${key}`] = value[0];
+                } else if (value.length === 2) {    // it's an update value
+                    setterObj[`${prefix}${key}`] = value[1];
+                } else if (value.length === 3) {    // value was remove
+                    unsetterObj[`${prefix}${key}`] = ''
+                }
+            } else if (_.isObject(value)) {
+                this.__constructUpdateInstruction(value, `${prefix}${key}.`, setterObj, unsetterObj, item);
+            }
+        })
+    }
+
     _constructUpdateInstruction(itemToSave) {
         if (this.options.includeAllWhenSaving === true || this.formSchema.includeAllWhenSaving === true) {
             return {$set: itemToSave}
         }
 
-        let setInstruction = this.$tmvUiUtils.determineObjSets(this.$previousItem, itemToSave);
-        // check if there are properties forced for saving
-        if (_.isArray(this.formSchema.options.alwaysIncludedProperties)) {
-            this.formSchema.options.alwaysIncludedProperties.forEach((prop) => {
-                if ( itemToSave[prop] ) {
-                    setInstruction[prop] = itemToSave[prop]
-                }
-            })
-        }
-        let unsetInstruction = { };
+        // get delta between old and using jsondiffpatch
+        let delta = jsondiffpatch.diff(this.$previousItem, itemToSave),
+            setterObj = { }, unsetterObj = { };
+        if (_.isObject(delta)) delete delta._id;        // remove id from the delta
+        this.__constructUpdateInstruction(delta, '', setterObj, unsetterObj, itemToSave);
 
-        // transfer undefined to unset instructions
-        _.each(setInstruction, (v, k) => {
-            if (v === undefined || v === null) {
-                unsetInstruction[k] = null;
-                delete setInstruction[k];
-            }
-        });
-        let result = { $set: setInstruction || { } };
-        if (!_.isEmpty(unsetInstruction)) {
-            result.$unset = unsetInstruction;
+        let result = { };
+        if (!_.isEmpty(setterObj)) {
+            result.$set = setterObj;
         }
-
+        if (!_.isEmpty(unsetterObj)) {
+            result.$unset = unsetterObj;
+        }
+        
         return result;
     }
 

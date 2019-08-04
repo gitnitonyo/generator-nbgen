@@ -1,13 +1,15 @@
 .tmv-collection-list {
-    > .tmv-collection-list-content-wrapper {
+    >.tmv-collection-list-content-wrapper {
         position: relative;
 
         .tmv-list-table-header {
             padding: 10px 16px;
+
             .tmv-list-table-column {
                 white-space: normal;
                 line-height: 1;
                 padding: 0 5px;
+
                 &.tmv-list-action-buttons {
                     button {
                         margin: 0;
@@ -15,15 +17,19 @@
                     }
                 }
             }
+
             a.tmv-list-sort-link {
                 color: inherit;
                 text-decoration: none;
+
                 .sort-icons {
                     font-size: 24px;
                     color: rgba(0, 0, 0, 0.3);
+
                     .up {
                         top: 0;
                     }
+
                     .down {
                         top: 8px;
                     }
@@ -32,6 +38,7 @@
         }
     }
 }
+
 .tmv-collection-form {
     .tmv-collection-form-content-wrapper {
         position: relative;
@@ -44,8 +51,73 @@
     .nbgen-input-in-bar {
         md-input-container {
             margin: 0px;
+
             .md-errors-spacer {
                 min-height: 0px;
+            }
+        }
+    }
+}
+
+#tmv-collection-toolbar,
+.tmv-toolbar {
+    min-height: 40px;
+
+    .toolbar-title {}
+
+    min-height: 48px;
+
+    &.groupHeader {
+        min-height: 40px;
+
+        button.md-button {
+            line-height: 30px;
+            min-height: 30px;
+            margin-top: 0;
+            margin-bottom: 0;
+
+            &[disabled]>span {
+                opacity: 0.54;
+            }
+        }
+
+        .toolbar-back>button.md-icon-button:first-child {
+            margin-right: 0;
+        }
+    }
+
+    .md-subheader-inner {
+        padding: 0;
+    }
+}
+
+.has-toolbar-actions>.toolbar-title {
+    // @media (max-width: $layout-breakpoint-xs) {
+    //    display: none;
+    // }
+}
+
+#tmv-collection-toolbar {
+    // border-bottom: 1px solid;
+}
+
+.nbgen-collection-container {
+    position: relative;
+}
+
+.nbgen-collection-form {
+    .nbgen-tmv-form {
+
+        //        padding-top: 10px;
+        //        padding-bottom: 20px;
+        //        overflow-x: hidden;         // no horizontal scrolling
+        >.tmv-collection-form-content-wrapper {
+            >.tmv-form-layout-container {
+                &:not(.tmv-has-tabs) {
+                    padding-top: $tmv-gutter-width;
+                }
+
+                padding-bottom: $tmv-gutter-width;
             }
         }
     }

@@ -3,21 +3,25 @@
  */
 import _ from 'underscore';
 import _s from 'underscore.string';
+import angular from 'angular';
 import listActions from './tmvCollectionListActions.html';
 
 import { USED_NG_SERVICES } from './tmvCollectionCommon.js';
 import { TmvCollectionBase } from './tmvCollectionBase';
 
+
+
 export class TmvCollectionListBaseCtrl extends TmvCollectionBase {
     /**
      * $options can be injected via resolve
      */
-    constructor($scope, $injector) {
+    constructor($scope, $injector, $element) {
         'ngInject';
 
         super();
         this.$scope = $scope;
         this.$injector = $injector;
+        this.$element = $element;
 
         this.__setupInjectedServices(USED_NG_SERVICES);
 
@@ -36,7 +40,61 @@ export class TmvCollectionListBaseCtrl extends TmvCollectionBase {
         if (!_.isObject(this.options)) throw "No valid options was passed into tmvCollection list";
         this.__processOptions();
 
+        // enable scroll shrink
+        if (this.layout.enableScrollShrink === true) {
+            this.enableScrollShrink();
+        }
+
         this.$init && this.$init.call(this);
+    }
+
+    enableScrollShrink() {
+        const toolbarToShrink = '.nbgen-main-toolbar';
+        const elemToScroll = '.md-virtual-repeat-scroller';
+        const $$rAF = this.$injector.get('$$rAF');
+        if (!$$rAF) return;     // this service don't exist
+
+        let prevScrollTop = 0,
+            shrinkSpeedFactor = 0.5,
+            y = 0,
+            toolbarHeight = 48;
+
+        const toolbarElement = angular.element(toolbarToShrink);
+        if (toolbarElement.length === 0) return;        // no toolbar element found
+
+        const origMarginTop = toolbarElement.css('margin-top');
+        toolbarHeight = toolbarElement.height();
+
+        function onScroll(e) {
+            let scrollTop = e ? e.target.scrollTop : prevScrollTop;
+
+            y = Math.min(toolbarHeight / shrinkSpeedFactor, Math.max(0, y + scrollTop - prevScrollTop));
+            let topmargin = -y * shrinkSpeedFactor + 'px';
+
+            toolbarElement.css({'margin-top': topmargin});
+            
+            prevScrollTop = scrollTop;
+        }
+        let debouceOnScroll = $$rAF.throttle(onScroll.bind(this));
+        const scrollElement = this.$element.find(elemToScroll)
+        if (scrollElement.length === 0) return;     // no scroller element found
+        scrollElement.bind('scroll', debouceOnScroll);
+
+        this.disableScrollShrink = () => {
+            y = 0;
+            toolbarElement.css({'margin-top': origMarginTop});
+        }
+
+        this.autorun(() => {
+            this.getReactively('$state.current.name');
+            if (this.isInForm()) {
+                this.disableScrollShrink && this.disableScrollShrink();
+            }
+        })
+    }
+
+    $onDestroy() {
+        this.disableScrollShrink && this.disableScrollShrink();
     }
 
     /**

@@ -4,7 +4,7 @@
 import {ServiceConfigurations} from './collection.js'
 import {publishCollection} from '../common/publish.js'
 import {appRoles, COLLECTION_OWNER_FIELD, COLLECTION_PUBLIC_FIELD, COLLECTION_GROUP_FIELD} from '/imports/common/app.roles.js'
-import {Roles} from 'meteor/alanning:roles'
+import {Roles} from '../common'
 
 const publishName = 'serviceConfigurations'
 const collection = ServiceConfigurations

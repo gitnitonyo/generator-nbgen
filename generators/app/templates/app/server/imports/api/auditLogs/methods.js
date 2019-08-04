@@ -1,7 +1,7 @@
 /**
  * Defines remotely accessible methods pertinent to AuditLogs collection
  */
-import { Meteor } from 'meteor/meteor';
+import { Meteor } from '../common';
 import { AuditLogs } from './collection.js';
 import _ from 'underscore';
 

@@ -1,7 +1,7 @@
 /**
  * Contains data initialization routines for Announcements collection
  */
-import {Meteor} from 'meteor/meteor'
+import {Meteor} from '../common'
 import {Announcements} from './collection.js';
 
 import {COLLECTION_GROUP_FIELD, GLOBAL_GROUP, COLLECTION_PUBLIC_FIELD} from '/imports/common/app.roles.js'

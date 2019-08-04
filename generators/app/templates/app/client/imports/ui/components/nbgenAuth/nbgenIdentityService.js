@@ -1,6 +1,6 @@
 import angular from 'angular'
 import { Roles } from '../nbgenMeteor';
-import { Meteor } from '../nbgenMeteor';
+import { Meteor, Tracker } from '../nbgenMeteor';
 
 import nbgenAuth from './nbgenAuth.js';
 
@@ -9,38 +9,31 @@ const USER_GROUP_FIELD = '_activeGroup';
 // import _ from 'underscore'
 
 const serviceName = '$nbgenIdentityService'
-const $roles = Roles
-
-angular.module(nbgenAuth)
-    .factory(serviceName, nbgenIdentityServiceFn)
 
 class NbgenIdentityService {
     constructor($nbgenAuthProviderService, $q) {
+        'ngInject';
+
         this.$nbgenAuthProviderService = $nbgenAuthProviderService;
         this.$q = $q;
+
+        Tracker.autorun(() => {
+            this._currentUser = Meteor.user();
+            this._currentUserId = this._currentUser && this._currentUser._id;
+        })
     }
 
     isIdentityResolved() {
-        let currentUser = this.$nbgenAuthProviderService.user();
-        if (!currentUser || !currentUser.roles) return false;
-        return true;
+        return this._currentUser && this._currentUser.roles;    // if roles has been retrieve from server
     }
 
     isAuthenticated() {
-        return this.isIdentityResolved()
+        return !! this._currentUser;
     }
 
     isInRole(role) {
-        const userId = this.$nbgenAuthProviderService.userId()
-        if (!userId) {
-            return false;
-        }
-        const user = this.$nbgenAuthProviderService.user()
-        if (!user) {
-            return false;
-        }
-
-        return $roles.userIsInRole(user, role, (user.profile && user.profile._activeGroup))
+        if (!this._currentUser) return;
+        return this.$nbgenAuthProviderService.isUserInRole(this._currentUser, role);
     }
 
     isInAnyRole(roles) {
@@ -48,7 +41,8 @@ class NbgenIdentityService {
     }
 
     identity(force) { // eslint-disable-line
-        return this.$nbgenAuthProviderService.user()
+        if (force) return Meteor.user();
+        return this._currentUser;
     }
 
     authenticate() {
@@ -60,16 +54,16 @@ class NbgenIdentityService {
     }
 
     getActiveGroup() {
-        const user = this.$nbgenAuthProviderService.user()
+        const user = this._currentUser;
         return user.profile && user.profile[USER_GROUP_FIELD];
     }
 
     userId() {
-        return this.$nbgenAuthProviderService.userId()
+        return this._currentUserId;
     }
 
     user() {
-        return this.$nbgenAuthProviderService.user()
+        return this._currentUser;
     }
 
     // returns the first role assigned to the user
@@ -79,7 +73,7 @@ class NbgenIdentityService {
     }
 
     getUserRoles() {
-        const user = this.$nbgenAuthProviderService.user();
+        const user = this._currentUser;
         if (user) {
             const currentGroup = user.profile[USER_GROUP_FIELD] || Roles.GLOBAL_GROUP;
             return Roles.getRolesForUser(user, currentGroup);
@@ -100,8 +94,6 @@ class NbgenIdentityService {
     }
 }
 
-function nbgenIdentityServiceFn($nbgenAuthProviderService, $q) {
-    'ngInject';
+angular.module(nbgenAuth)
+    .service(serviceName, NbgenIdentityService)
 
-    return new NbgenIdentityService($nbgenAuthProviderService, $q)
-}

@@ -426,7 +426,7 @@ utils.filter('titleize', function() {
     'ngInject';
 
     return function(matchItem) {
-        return _s.titleize(matchItem);
+        return _s.titleize(_s.humanize(matchItem));
     }
 })
 

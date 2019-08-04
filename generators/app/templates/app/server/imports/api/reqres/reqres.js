@@ -2,9 +2,9 @@
  * Handles uploading of files
  */
 /* globals WebApp */
-import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
-import { Roles } from 'meteor/alanning:roles';
+import { Meteor } from '../common';
+import { Accounts } from '../common';
+import { Roles } from '../common';
 import { appRoles, COLLECTION_GROUP_FIELD, COLLECTION_OWNER_FIELD, getActiveGroup } from '/imports/common/app.roles.js';
 
 import { UploadedFiles } from './collection.js';

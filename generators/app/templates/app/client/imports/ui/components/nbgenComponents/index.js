@@ -14,7 +14,6 @@ import nbgenSocial from '../nbgenSocial';
 import nbgenUtilsUi from '../nbgenUtilsUi';
 import nbgenMeteor from '../nbgenMeteor';
 import { Meteor, Accounts, Counts, Roles, Tracker, Mongo, TimeSync } from '../nbgenMeteor';
-import { NbgenCollectionBaseCtrl, setupNbgenComponent } from '../nbgenUtilsUi/nbgenCollection';
 import { TmvCollectionListBaseCtrl, TmvCollectionFormBaseCtrl, setupTmvCollection } from '../nbgenUtilsUi/tmvCollection';
 
 const moduleName = 'nbgenComponents';
@@ -31,7 +30,7 @@ angular.module(moduleName, [
 
 export { detect as nbgenDetect, nbgenAuth, nbgenForm, nbgenSocial, nbgenUtilsUi, nbgenMeteor };
 export { Meteor, Accounts, Counts, Roles, Tracker, Mongo, TimeSync };
-export { NbgenCollectionBaseCtrl, setupNbgenComponent, TmvCollectionListBaseCtrl, TmvCollectionFormBaseCtrl };
+export { TmvCollectionListBaseCtrl, TmvCollectionFormBaseCtrl };
 export { setupTmvCollection }
 
 

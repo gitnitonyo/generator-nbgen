@@ -2,9 +2,9 @@
  * Declares the <%= collection.name %> Mongo collection here.
  */
 <% if (collectionName === 'users') { -%>
-import { Meteor } from 'meteor/meteor';
+import { Meteor } from '../common';
 <% } else { -%>
-import { Mongo } from 'meteor/mongo';
+import { Mongo } from '../common';
 <% } -%>
 
 const collectionName = '<%= collectionName %>';

@@ -7,23 +7,21 @@
                         <div class="tagline">
                             <span translate="nbgenMain.labels.slogan1"></span>
                             <div class="sub-tagline">
+                                <div>&nbsp;</div>
                                 <span translate="nbgenMain.labels.slogan2"></span>
                             </div>
                         </div>
                         <div class="action-section">
                             <div ng-if="!nbgenMain.isAuthenticated()">
-                                <div class="signin-section">
-                                    <span translate="global.login.haveAnAccount"></span>
-                                    <span>&nbsp;</span>
-                                    <md-button class="md-raised home-button" md-theme="dark" tmv-label="tx:global.common.signIn"
-                                        ng-click="nbgenMain.nbgenApp.gotoLogin()"
-                                        >
+                                <div layout="column">
+                                    <md-button class="md-raised home-button md-primary"
+                                        tmv-label="tx:global.common.signUp" ng-click="nbgenMain.nbgenApp.gotoSignup()">
                                     </md-button>
                                 </div>
-                                <div layout="column">
-                                    <md-button class="md-raised home-button" md-theme="dark" tmv-label="tx:global.common.signUp"
-                                        ng-click="nbgenMain.nbgenApp.gotoSignup()"
-                                        >
+                                <div class="signin-section">
+                                    <md-button class="md-raised home-button" md-theme="dark" aria-label="Signin"
+                                        ng-click="nbgenMain.nbgenApp.gotoLogin()">
+                                        <span translate="global.login.haveAnAccount"></span>
                                     </md-button>
                                 </div>
                             </div>
@@ -49,15 +47,18 @@
             </div>
         </div> -->
     </md-content>
-    <md-toolbar flex="none" layout="column" layout-align="center center" class="md-caption nbgen-support-toolbar tmv-reverse-shadow"
-        md-colors="{backgroundColor: 'background-hue-3'}"
-        >
+    <md-toolbar flex="none" layout="column" layout-align="center center"
+        class="md-caption nbgen-support-toolbar tmv-reverse-shadow" md-colors="{backgroundColor: 'background-hue-3'}">
         <div>{{nbgenMain.nbgenApp.$config.applicationName}} &copy; 2019</div>
         <div layout="row" layout-align="center center" layout-wrap>
-            <md-button ui-sref="aboutUs" class="nbgen-href"><span class="md-caption" translate="global.menu.aboutUs">About</span></md-button>&nbsp;|&nbsp;
-            <md-button ui-sref="privacy" class="nbgen-href"><span class="md-caption" translate="global.menu.privacy">Privacy Policy</span></md-button>&nbsp;|&nbsp;
-            <md-button ui-sref="termsOfUse" class="nbgen-href"><span class="md-caption" translate="global.menu.termsOfUse">Terms of Use</span></md-button>&nbsp;|&nbsp;
-            <md-button ui-sref="contactUs" class="nbgen-href"><span class="md-caption" translate="global.menu.contactUs">Contact Us</span></md-button>
+            <md-button ui-sref="aboutUs" class="nbgen-href"><span class="md-caption"
+                    translate="global.menu.aboutUs">About</span></md-button>&nbsp;|&nbsp;
+            <md-button ui-sref="privacy" class="nbgen-href"><span class="md-caption"
+                    translate="global.menu.privacy">Privacy Policy</span></md-button>&nbsp;|&nbsp;
+            <md-button ui-sref="termsOfUse" class="nbgen-href"><span class="md-caption"
+                    translate="global.menu.termsOfUse">Terms of Use</span></md-button>&nbsp;|&nbsp;
+            <md-button ui-sref="contactUs" class="nbgen-href"><span class="md-caption"
+                    translate="global.menu.contactUs">Contact Us</span></md-button>
         </div>
     </md-toolbar>
 </div>

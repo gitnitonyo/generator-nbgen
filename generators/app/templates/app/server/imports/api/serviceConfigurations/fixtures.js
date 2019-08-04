@@ -1,7 +1,7 @@
 /**
  * Contains data initialization routines for ServiceConfigurations collection
  */
-import {Meteor} from 'meteor/meteor'
+import {Meteor} from '../common'
 import {ServiceConfigurations} from './collection.js'
 
 const initialServiceConfigurations = [{

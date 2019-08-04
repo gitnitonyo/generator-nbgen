@@ -1,7 +1,7 @@
 /**
  * Defines remotely accessible methods pertinent to Countries collection
  */
-import {Meteor} from 'meteor/meteor'
+import {Meteor} from '../common'
 
 Meteor.methods({
     // enumerate remote methods here

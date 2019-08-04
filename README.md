@@ -115,7 +115,9 @@ Generated codes:
   - `_collection.scss` - may be modified to change css styles of the component
   - `actionToolbarListView.html` - to include other UI components on the top toolbar shown when viewing the collection list
   - `actionToolbarFormView.html` - to include other UI components on the top toolbar shown when viewing or editing a specific document from the collection.
-  - `config.js` - this is where you mostly put codes to customize the behaviour of the component. There are several options you can put in here to modify or override the default operations of the collection maintenance which will be explained on a separate section below.
+  - `config.js` - this is where you put codes to customize the behaviour of the component. 
+  - `listLayout.js` - contains configuration on how to layout the list of collections.There are several options you can put in here to modify or override the default operations of the collection maintenance which will be explained on a separate section below.
+  - `formSchema.js` - contains configuration describing how to layout and composition of the forms. More details about this on the form components section.
   - `setup.js` - this is where the component and its options are setup. For instance if you want to limit the access to of the client-side route to a set of roles, you will modify the alloweRoles variable declared in this file.
   - `i18n.hjson` - this is located in client/imports/i18n/en
   - An entry into the menu will be injected into `client/imports/ui/app/nbgenApp/nbgenAppMenu.js`

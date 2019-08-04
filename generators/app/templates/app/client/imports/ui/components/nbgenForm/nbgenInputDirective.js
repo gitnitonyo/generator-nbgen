@@ -258,11 +258,11 @@ class TmvInputController {
 
     __putDisabled(elemDom) {
         let disabledFn = this.$attrs.readOnly || '';
-        if (angular.isDefined(this.fieldSchema.fieldDisable)) {
+        if (this.fieldSchema.fieldDisable) {
             if (disabledFn.length > 0) {
                 disabledFn += ' || '
             }
-            disabledFn += this.fieldSchema.fieldDisable;
+            disabledFn += this.__generateAttrValue(this.fieldSchema, true, 'fieldDisable');
         }
         if (disabledFn.length > 0) {
             elemDom.attr('ng-disabled', disabledFn);
@@ -284,7 +284,12 @@ class TmvInputController {
     __customValidation() {
         let validationFn = this.fieldSchema.fieldValidateRulesCustom && this.fieldSchema.fieldValidateRulesCustom.validationFn;
         if (validationFn) {
-            let result = this.$parse(validationFn)(this.$scope.$parent);
+            let result = false;
+            if (_.isString(validationFn)) {
+                result = this.$parse(validationFn)(this.$scope.$parent);
+            } else if (_.isFunction(validationFn)) {
+                result = this.__invokeFunction(validationFn);
+            }
             let errorId = this.fieldSchema.fieldValidateRulesCustom && this.fieldSchema.fieldValidateRulesCustom.errorId;
             this.modelCtrl.$setValidity(errorId, result);
         }
@@ -355,7 +360,7 @@ class TmvInputController {
         if (mesgClass) ngMessages.addClass(mesgClass);
 
         let hasAttachedMessage = false,     // eslint-disable-line
-            constraintValue, errorMessage
+            errorMessage
 
         if (fieldSchema.fieldValidateRulesRequired !== undefined) {
             const attrValue = this.__generateAttrValue(fieldSchema, true, 'fieldValidateRulesRequired');
@@ -367,33 +372,37 @@ class TmvInputController {
         }
 
         if (fieldSchema.fieldValidateRulesMinlength !== undefined) {
-            constraintValue = fieldSchema.fieldValidateRulesMinlength.toString()
-            errorMessage = $translate.instant('form.validation.minlength', { min: constraintValue })
-            inputElement.attr('ng-minlength', constraintValue);
+            const attrValue = this.__generateAttrValue(fieldSchema, true, 'fieldValidateRulesMinlength');
+            errorMessage = `<span translate="form.validation.minlength" translate-values="{min: ${attrValue}}"></span>`;
             ngMessages.append(angular.element('<div>')
-                .attr('ng-message', 'minlength').append(angular.element('<span>')
-                    .append(errorMessage)))
+                .attr('ng-message', 'minlength').append(errorMessage));
             hasAttachedMessage = true
+            inputElement.attr('ng-minlength', attrValue);
         }
 
         if (fieldSchema.fieldValidateRulesMaxlength !== undefined) {
-            constraintValue = fieldSchema.fieldValidateRulesMaxlength.toString()
-            errorMessage = $translate.instant('form.validation.maxlength', { max: constraintValue })
-            ngMessages.append(angular.element('<div>')
-                .attr('ng-message', 'maxlength').append(angular.element('<span>')
-                    .append(errorMessage)))
+            const attrValue = this.__generateAttrValue(fieldSchema, true, 'fieldValidateRulesMaxlength');
             hasAttachedMessage = true
+            let msgId;
             if (fieldSchema.useMdMaxlength !== false) {
-                inputElement.attr('md-maxlength', constraintValue)
+                inputElement.attr('md-maxlength', attrValue);
+                msgId = 'md-maxlength';
             } else {
-                inputElement.attr('ng-maxlength', constraintValue)
+                inputElement.attr('ng-maxlength', attrValue);
+                msgId = 'maxlength';
             }
-            inputElement.attr('nbgen-maxlength', constraintValue);      // for preventing input to maxlength
+            if (fieldSchema.stopOnMaxlength === true) {
+                inputElement.attr('nbgen-maxlength', attrValue);
+            }
+
+            errorMessage = `<span translate="form.validation.maxlength" translate-values="{max: ${attrValue}}"></span>`;
+            ngMessages.append(angular.element('<div>')
+                .attr('ng-message', msgId).append(errorMessage));
         }
 
         if (fieldSchema.fieldValidateRulesMin !== undefined) {
             const attrValue = this.__generateAttrValue(fieldSchema, true, 'fieldValidateRulesMin');
-            errorMessage = `<span translate="form.validation.min" translate-values="{min: '{{${attrValue}}}'}"></span>`;
+            errorMessage = `<span translate="form.validation.min" translate-values="{min: ${attrValue}}"></span>`;
             ngMessages.append(angular.element('<div>')
                 .attr('ng-message', 'min').append(errorMessage));
             hasAttachedMessage = true
@@ -402,7 +411,7 @@ class TmvInputController {
 
         if (fieldSchema.fieldValidateRulesMax !== undefined) {
             const attrValue = this.__generateAttrValue(fieldSchema, true, 'fieldValidateRulesMax');
-            errorMessage = `<span translate="form.validation.max" translate-values="{max: '{{${attrValue}}}'}"></span>`;
+            errorMessage = `<span translate="form.validation.max" translate-values="{max: ${attrValue}}"></span>`;
             ngMessages.append(angular.element('<div>')
                 .attr('ng-message', 'max').append(errorMessage));
             hasAttachedMessage = true
@@ -410,14 +419,16 @@ class TmvInputController {
         }
 
         if (fieldSchema.fieldValidateRulesPattern !== undefined) {
-            constraintValue = fieldSchema.fieldValidateRulesPattern.toString()
-            const patternValidationMessage = fieldSchema.patternValidationMessage || 'form.validation.pattern'
-            errorMessage = $translate.instant(patternValidationMessage, { pattern: constraintValue })
+            const attrValue = this.__generateAttrValue(fieldSchema, true, 'fieldValidateRulesPattern');
+            let patternValidationMessage = 'form.validation.pattern';
+            if (fieldSchema.patternValidationMessage) {
+                patternValidationMessage = `${this.translatePrefix}${fieldSchema.patternValidationMessage}`;
+            }
+            errorMessage = `<span translate="${patternValidationMessage}" translate-values="{pattern: ${attrValue}}"></span>`;
             ngMessages.append(angular.element('<div>')
-                .attr('ng-message', 'pattern').append(angular.element('<span>')
-                    .append(errorMessage)))
+                .attr('ng-message', 'pattern').append(errorMessage));
             hasAttachedMessage = true
-            inputElement.attr('ng-pattern', constraintValue);
+            inputElement.attr('ng-pattern', attrValue);
         }
 
         if (fieldSchema.fieldValidateRulesUnique !== undefined) {
@@ -450,12 +461,11 @@ class TmvInputController {
         if (fieldSchema.fieldValidateRulesCustom !== undefined) {
             const errorId = fieldSchema.fieldValidateRulesCustom.errorId;
             const ctrlErrorId = translatePrefix + errorId;
-            const validationFnStr = fieldSchema.fieldValidateRulesCustom.validationFn;
 
             // check if there's already an existing ng-change attr for the current input dom
             let ngChangeAttr = inputElement.attr('ng-change');
             if (ngChangeAttr) {
-                ngChangeAttr = `${ngChangeAttr} && ${validationFnStr}`;
+                ngChangeAttr = `${ngChangeAttr} && ${controllerAs}.__customValidation()`;
             } else {
                 ngChangeAttr = `${controllerAs}.__customValidation()`;
             }
@@ -1073,7 +1083,7 @@ class TmvInputController {
         }
 
         if (fieldSchema.fieldDisable && fieldSchema.fieldInputType !== 'static') {
-            inputDom.attr('ng-disabled', fieldSchema.fieldDisable);
+            inputDom.attr('ng-disabled', this.__generateAttrValue(fieldSchema, true, 'fieldDisable'));
         }
 
         if (fieldSchema.placeholder && fieldSchema.fieldInputType !== 'static') {
@@ -1226,7 +1236,7 @@ class TmvInputController {
             TmvFormUtils.__domProperties(radioDom, schema);
             this.__domVisibilityProperties(radioDom, schema);
             if (schema.disabled !== undefined) {
-                radioDom.attr('ng-disabled', schema.disabled);
+                radioDom.attr('ng-disabled', this.__generateAttrValue(schema, true, 'disabled'));
             }
         })
 
@@ -1295,19 +1305,24 @@ class TmvInputController {
         this.__putAttrs(buttonDom, fieldSchema.btnAttrs);
         containerDom.append(buttonDom);
 
-        if (angular.isString(fieldSchema.fieldDisable)) {
-            buttonDom.attr('ng-disabled', fieldSchema.fieldDisable);
-        } else if (angular.isString(fieldSchema.btnDisabled)) {
-            buttonDom.attr('ng-disabled', fieldSchema.btnDisabled);
+        if (fieldSchema.fieldDisable) {
+            buttonDom.attr('ng-disabled', this.__generateAttrValue(fieldSchema, true, 'fieldDisable'));
+        } else if (fieldSchema.btnDisabled) {
+            buttonDom.attr('ng-disabled', this.__generateAttrValue(fieldSchema, true, 'btnDisabled'));
         }
-        if (angular.isString(fieldSchema.btnClick)) {
-            buttonDom.attr('ng-click', fieldSchema.btnClick);
+        if (fieldSchema.btnClick) {
+            buttonDom.attr('ng-click', this.__generateAttrValue(fieldSchema, true, 'btnClick'));
         }
         if (angular.isString(fieldSchema.btnIconClass)) {
-            buttonDom.attr('tmv-icon', fieldSchema.btnIconClass);
+            buttonDom.attr('tmv-icon', this.__generateAttrValue(fieldSchema, 'interpolate', 'btnDisabled'));
         }
-        const label = fieldSchema.fieldLabel;
-        buttonDom.attr('tmv-label', `{{'${this.translatePrefix}${label}' | translate}}`);
+        let label;
+        if (_.isString(fieldSchema.fieldLabel)) {
+            label = `{{'${this.translatePrefix}${fieldSchema.fieldLabel}' | translate}}`
+        } else {
+            label = `{{'${this.translatePrefix}${this.__generateAttrValue(fieldSchema, true, 'fieldLabel')}' | translate}}`
+        }
+        buttonDom.attr('tmv-label', label);
 
         return containerDom;
     }
@@ -1647,10 +1662,11 @@ angular.module(moduleName)
         'ngInject';
 
         class NbgenPasswordShowCtrl {
-            constructor($scope, $element) {
+            constructor($scope, $element, $timeout) {
                 'ngInject';
 
                 this.$element = $element;
+                this.$timeout = $timeout;
                 this.showPassword = false;
                 this.templateDom = angular.element(nbgenPasswordShowTemplate);
                 $element.after(this.templateDom);

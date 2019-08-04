@@ -8,7 +8,7 @@ import uiStyles from './nbgenUtilsStyles.html';
 angular.module(nbgenUtilsUi)
     .factory('$tmvUiUtils', function($mdDialog, $translate, $rootScope, $mdMedia, $mdSidenav,
         $mdColorPalette, $tmvUtils, $mdColors, $sce, $timeout, $parse,
-        $mdToast, $reactive, $q, $compile, $state, $nbgenWaitDialog) {
+        $mdToast, $reactive, $q, $state, $nbgenWaitDialog) {
         'ngInject'
 
         let $tmvUiUtils = {

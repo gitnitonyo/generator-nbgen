@@ -1,7 +1,7 @@
 /**
  * Controls published information for Announcements collection
  */
-import { Roles } from 'meteor/alanning:roles';
+import { Roles } from '../common';
 import {Announcements} from './collection.js';
 import {publishCollection, publishVirtualCollection} from '../common/publish.js'
 import {COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD, appRoles, getActiveGroup} from '/imports/common/app.roles.js'

@@ -1,7 +1,7 @@
 /**
  * Controls published information for Organizations collection
  */
-import { Meteor } from 'meteor/meteor';
+import { Meteor } from '../common';
 import {Organizations} from './collection.js'
 import {publishCollection, publishVirtual} from '../common/publish.js'
 import {COLLECTION_PUBLIC_FIELD, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD, getActiveGroup} from '/imports/common/app.roles.js'

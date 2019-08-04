@@ -1,4 +1,4 @@
-import { ServiceConfiguration } from 'meteor/service-configuration';
+import { ServiceConfiguration } from '../common';
 
 const serviceConfigurations = ServiceConfiguration.configurations;
 export const ServiceConfigurations = serviceConfigurations;

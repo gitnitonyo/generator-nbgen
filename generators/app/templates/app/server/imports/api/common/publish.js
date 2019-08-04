@@ -2,11 +2,11 @@
  * Common functions for publishing data for collections
  */
 
-import {Meteor} from 'meteor/meteor'
-import {Roles} from 'meteor/alanning:roles'
-import {Counts} from 'meteor/tmeasday:publish-counts'
+import {Meteor} from '../common'
+import {Roles} from '../common'
+import {Counts} from '../common'
 
-import { ReactiveAggregate } from 'meteor/jcbernack:reactive-aggregate';
+import { ReactiveAggregate } from '../common';
 
 import _ from 'underscore'
 

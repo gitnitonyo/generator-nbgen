@@ -53,7 +53,7 @@ _.assign(TmvClientGenerator.prototype, {
             if (this.abort) return;
             this.baseName = _.camelCase(this.baseName);
             this.angularAppName = this.angularAppName || (this.baseName + 'App');
-            this.title = _s.humanize(this.baseName)
+            this.title = _s.titleize(_s.humanize(this.baseName))
             this.dasherizedName = _s.dasherize(this.baseName)
             this.config.set('title', this.title)
             this.config.set('angularAppName', this.angularAppName);

@@ -1,5 +1,5 @@
-import {Meteor} from 'meteor/meteor'
-import {Roles} from 'meteor/alanning:roles'
+import {Meteor} from '../common'
+import {Roles} from '../common'
 
 import _ from 'underscore'
 

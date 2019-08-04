@@ -93,20 +93,20 @@
                                     </div>
                                 </md-menu-item>
                                 <md-divider></md-divider>
-                                <md-menu-item ng-show="nbgenApp.$userFirstRole">
+                                <md-menu-item>
                                     <md-button nbgen-icon="mdi-settings-box" nbgen-label="tx:global.menu.accountSettings" ng-click="nbgenApp.$authUiService.userSettings()">
                                     </md-button>
                                 </md-menu-item>
-                                <md-menu-item ng-show="nbgenApp.$userFirstRole">
+                                <md-menu-item>
                                     <md-button nbgen-icon="mdi-key-variant" nbgen-label="tx:global.menu.password" ng-click="nbgenApp.$authUiService.changePassword()" ng-disabled="!nbgenApp.canChangePassword()">
                                     </md-button>
                                 </md-menu-item>
-                                <md-menu-item>
+                                <!-- <md-menu-item>
                                     <md-button nbgen-icon="mdi-map" ng-click="nbgenApp.changeLanguage()">
                                         <span translate="global.menu.language"></span>
                                         <span>({{'language.' + nbgenApp.$currentLanguage | translate}})</span>
                                     </md-button>
-                                </md-menu-item>
+                                </md-menu-item> -->
                                 <md-menu-item>
                                     <md-button nbgen-icon="mdi-logout" nbgen-label="tx:global.menu.logout" ng-click="nbgenApp.performLogout()">
                                     </md-button>

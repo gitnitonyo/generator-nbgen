@@ -56,7 +56,7 @@ _.assign(TmvCollectionGenerator.prototype, {
             this.adminMenu = (this.collection.options.adminMenu == true)
         }
 
-        this.iconClass = this.options.iconClass || 'mdi-package'
+        this.iconClass = this.collection.options.iconClass || this.options.iconClass || 'mdi-package'
     },
     
     prompting: {
@@ -67,7 +67,11 @@ _.assign(TmvCollectionGenerator.prototype, {
 
         askIfServer() {
             if (this.abort) return;
-            this.askForConfirmation('regenerateServer', 'Do you want to regenerate server files?', false)
+            let prompt = 'Do you want to generate server files?'
+            if (this.collection.options.regenerateServer !== undefined) {
+                prompt = 'Do you want to regenerate server files?';
+            }
+            this.askForConfirmation('regenerateServer', prompt, false)
         },
 
         // would add audit log capability
@@ -236,13 +240,19 @@ _.assign(TmvCollectionGenerator.prototype, {
             this.template('client/__collection.hjson', path.join(i18nDir, this.collectionName + '.hjson'))
 
             // collection controller js file
-            this.template('client/__collection.js', path.join(targetDir, this.collectionName + 'Collection.js'))
+            this.template('client/__collection.js', path.join(targetDir, 'collection.js'))
 
             // configuration js file
-            this.template('client/__collectionConfig.js', path.join(targetDir, this.collectionName + 'Config.js'))
+            this.template('client/__collectionConfig.js', path.join(targetDir, 'config.js'))
+
+            // listLayout js file
+            this.template('client/__listLayout.js', path.join(targetDir, 'listLayout.js'))
+
+            // formSchema js file
+            this.template('client/__formSchema.js', path.join(targetDir, 'formSchema.js'))
 
             // setup js file
-            this.template('client/__collectionSetup.js', path.join(targetDir, this.collectionName + 'Setup.js'))
+            this.template('client/__collectionSetup.js', path.join(targetDir, 'setup.js'))
 
             // collection-specific styles
             this.template('client/___collection.scss', path.join(targetDir, '_' + this.collectionName + '.scss'))
@@ -279,7 +289,7 @@ _.assign(TmvCollectionGenerator.prototype, {
             })
 
             // put i18n entry into global.hjson
-            var hjsonEntry = _.template('<%= collectionName %>: "<%= _s.humanize(collection.name) %>"')(this)
+            var hjsonEntry = _.template('<%= collectionName %>: "<%= _s.titleize(_s.humanize(collection.name)) %>"')(this)
             this.rewriteFile({
                 file: CONSTANTS.nbgenGlobalhjson,
                 needle: '_menu_: "Menu items will be put here"',

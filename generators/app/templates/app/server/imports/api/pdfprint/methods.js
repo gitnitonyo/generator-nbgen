@@ -1,5 +1,5 @@
 /* globals Assets */
-import { Meteor } from 'meteor/meteor';
+import { Meteor } from '../common';
 
 import _ from 'underscore';
 import _s from 'underscore.string';
