@@ -2,7 +2,81 @@
 
 var chalk = require('chalk'),
     _ = require('lodash'),
-    _s = require('underscore.string');
+    _s = require('underscore.string'),
+    moment = require('moment')
+
+const BASE_VALIDATION_CHOICES = [
+    {
+        value: 'required',
+        name: 'Required'
+    },
+];
+
+const STRING_VALIDATION_CHOICES = BASE_VALIDATION_CHOICES.concat([
+    {
+        name: 'Minimum length',
+        value: 'minlength'
+    },
+    {
+        name: 'Maximum length',
+        value: 'maxlength'
+    },
+    {
+        name: 'Regular expression pattern',
+        value: 'pattern'
+    }
+])
+
+const TYPE_OF_FIELDS = [
+    {
+        value: "text",
+        name: "String",
+        validationChoices: STRING_VALIDATION_CHOICES.concat([]),
+    },
+    {
+        value: "number",
+        name: "Number",
+        validationChoices: BASE_VALIDATION_CHOICES.concat([
+            {
+                name: 'Minimum',
+                value: 'min'
+            },
+            {
+                name: 'Maximum',
+                value: 'max'
+            }
+        ]),
+        decimalPlaces: 0,
+    },
+    {
+        value: "checkbox",
+        name: "Boolean",
+        validationChoices: BASE_VALIDATION_CHOICES.concat([])
+    },
+    {
+        value: "date",
+        name: "Date",
+        validationChoices: BASE_VALIDATION_CHOICES.concat([]),
+        displayFormat: 'MM/DD/YYYY'
+    },
+    {
+        value: "time",
+        name: "Time",
+        validationChoices: BASE_VALIDATION_CHOICES.concat([]),
+        displayFormat: 'HH:mm A'
+    },
+    {
+        value: "datetime",
+        name: "Date / Time",
+        validationChoices: BASE_VALIDATION_CHOICES.concat([]),
+        displayFormat: 'MM/DD/YYYY HH:mm A'
+    },
+    {
+        value: 'email',
+        name: 'Email',
+        validationChoices: STRING_VALIDATION_CHOICES.concat([]),
+    }
+]
 
 module.exports = {
     askForFields,
@@ -19,11 +93,13 @@ function askForFields() {
  */
 function askForField(cb) {
     this.log(chalk.green('\nGenerating field #' + (this.fields.length + 1) + '\n'));
+
     var prompts = [
+        // ask for field name
         {
             type: 'input',
             name: 'fieldName',
-            validate: function (input) {
+            validate(input) {
                 if (!(/^([a-zA-Z0-9_]*)$/.test(input))) {
                     return 'Your field name cannot contain special characters';
                 }
@@ -35,240 +111,157 @@ function askForField(cb) {
                     this.warning("\n`" + input + "` is already defined. Will overwite the existing field definition.")
                 }
                 return true;
-            }.bind(this),
+            },
             message: 'What is the name of the field (Blank to finish)?'
         },
+
+        // ask for the type of field
         {
-            when: function (response) {
-                return response.fieldName && response.fieldName.length > 0;
+            when(response) {
+                if (_.isEmpty(response.fieldName)) return false;    // skip if fieldname is blank
+                return true;
             },
             type: 'list',
-            name: 'fieldType',
+            name: 'fieldInputType',
             message: 'What is the type of your field?',
-            choices: [
-                {
-                    value: 'String',
-                    name: 'String'
-                },
-                {
-                    value: 'Integer',
-                    name: 'Integer'
-                },
-                {
-                    value: 'Long',
-                    name: 'Long'
-                },
-                {
-                    value: 'Float',
-                    name: 'Float'
-                },
-                {
-                    value: 'Double',
-                    name: 'Double'
-                },
-                {
-                    value: 'BigDecimal',
-                    name: 'BigDecimal'
-                },
-                {
-                    value: 'DateTime',
-                    name: 'DateTime'
-                },
-                {
-                    value: 'Date',
-                    name: 'Date',
-                },
-                {
-                    value: 'Boolean',
-                    name: 'Boolean'
-                },
-                /*
-                {
-                    value: 'Object',
-                    name: 'Object'
-                }
-                */
-            ],
+            choices: TYPE_OF_FIELDS,
             default: 0
         },
         {
-            when: function (response) {
-                return response.fieldName && response.fieldName.length > 0 &&
-                    response.fieldType == 'String';
+            when(response) {
+                // look for the validation choices
+                if (_.isEmpty(response.fieldName)) return false;    // skip if fieldname is blank
+                const fieldTypeInfo = _.find(TYPE_OF_FIELDS, (t) => t.value === response.fieldType);
+                response._fieldTypeInfo = fieldTypeInfo;
+
+                return fieldTypeInfo && fieldTypeInfo.validationChoices;
             },
             type: 'checkbox',
-            name: 'fieldValidateRules',
+            name: '_fieldValidateRules',
             message: 'Which validation rules do you want to add?',
-            choices: [
-                {
-                    name: 'Required',
-                    value: 'required'
-                },
-                {
-                    name: 'Minimum length',
-                    value: 'minlength'
-                },
-                {
-                    name: 'Maximum length',
-                    value: 'maxlength'
-                },
-                {
-                    name: 'Regular expression pattern',
-                    value: 'pattern'
-                }
-            ],
+            choices: r => r._fieldTypeInfo.validationChoices,
             default: 0
         },
+
+        // input based on type of input
         {
-            when: function (response) {
-                return response.fieldName && response.fieldName.length > 0 &&
-                    (response.fieldType === 'Integer' ||
-                    response.fieldType === 'Long' ||
-                    response.fieldType === 'Float' ||
-                    response.fieldType === 'Double' ||
-                    response.fieldType === 'BigDecimal');
+            // if it's a number
+            when(response) {
+                return !_.isEmpty(response.fieldName) &&
+                       response.fieldType === 'number'
             },
-            type: 'checkbox',
-            name: 'fieldValidateRules',
-            message: 'Which validation rules do you want to add?',
-            choices: [
-                {
-                    name: 'Required',
-                    value: 'required'
-                },
-                {
-                    name: 'Minimum',
-                    value: 'min'
-                },
-                {
-                    name: 'Maximum',
-                    value: 'max'
-                }
-            ],
-            default: 0
-        },
-        {
-            when: function (response) {
-                return response.fieldName && response.fieldName.length > 0 &&
-                    (response.fieldType === 'LocalDate' ||
-                    response.fieldType === 'DateTime' ||
-                    response.fieldType === 'Boolean');
+            type: 'input',
+            name: 'decimalPlaces',
+            message: 'Number of decimal places to display',
+            validate(input) {
+                let numInput = Number(input);
+                return _.isFinite(numInput) && _.isInteger(numInput) && numInput >= 0 && numInput <= 6;
             },
-            type: 'checkbox',
-            name: 'fieldValidateRules',
-            message: 'Which validation rules do you want to add?',
-            choices: [
-                {
-                    name: 'Required',
-                    value: 'required'
-                }
-            ],
             default: 0
         },
+
         {
-            when: function (response) {
-                return response.fieldName && response.fieldName.length > 0 &&
-                    response.fieldValidateRules &&
-                    response.fieldValidateRules.indexOf('minlength') !== -1;
+            // if it's a date or time
+            when(response) {
+                return !_.isEmpty(response.fieldName) &&
+                    (response.fieldInputType === 'date' ||
+                     response.fieldInputType === 'time' ||
+                     response.fieldInputType === 'datetime')
+            },
+            type: 'input',
+            name: 'displayFormat',
+            message: 'Format to use for display',
+            validate(input) {
+                let sampleFormat = moment().format(input);
+                console.log(`'${sampleFormat}' '${input}'`)
+                if (sampleFormat === input) {
+                    return 'Invalid format'
+                }
+                return true; 
+            },
+            default(response) {
+                return response._fieldTypeInfo.displayFormat || ''
+            }
+        },
+
+        // input based chosen validation rules
+        {
+            when(response) {
+                if (_.isEmpty(response.fieldName)) return false;    // skip if fieldname is blank
+                return response._fieldValidateRules && response._fieldValidateRules.indexOf('minlength') !== -1;
             },
             type: 'input',
             name: 'fieldValidateRulesMinlength',
-            validate: function (input) {
-                if (this.isNumber(input)) return true;
+            validate(input) {
+                if (_.isFinite(Number(input))) return true;
                 return 'Minimum length must be a positive number';
-            }.bind(this),
+            },
             message: 'What is the minimum length of your field?',
             default: 0
         },
         {
-            when: function (response) {
-                return response.fieldName && response.fieldName.length > 0 &&
-                    response.fieldValidateRules && response.fieldValidateRules.indexOf('maxlength') !== -1;
+            when(response) {
+                if (_.isEmpty(response.fieldName)) return false;    // skip if fieldname is blank
+                return response._fieldValidateRules && response._fieldValidateRules.indexOf('maxlength') !== -1;
             },
             type: 'input',
             name: 'fieldValidateRulesMaxlength',
-            validate: function (input) {
-                if (this.isNumber(input)) return true;
+            validate(input, response) {
+                const numInput = Number(input);
+                if (_.isFinite(numInput)) {
+                    let minlength = Number(response.fieldValidateRulesMinlength) || 0;
+                    if (numInput < minlength) {
+                        return `Maximum length must be at least ${minlength}`;
+                    }
+                    return true;
+                } 
                 return 'Maximum length must be a positive number';
-            }.bind(this),
+            },
             message: 'What is the maximum length of your field?',
             default: 20
         },
         {
-            when: function (response) {
-                return response.fieldName && response.fieldName.length > 0 &&
-                    response.fieldValidateRules &&
-                    response.fieldValidateRules.indexOf('min') !== -1 &&
-                    (response.fieldType === 'Integer' ||
-                    response.fieldType === 'Long');
+            when(response) {
+                return !_.isEmpty(response.fieldName) &&
+                    response._fieldValidateRules &&
+                    response._fieldValidateRules.indexOf('min') !== -1
             },
             type: 'input',
             name: 'fieldValidateRulesMin',
             message: 'What is the minimum of your field?',
-            validate: function (input) {
-                if (this.isSignedNumber(input)) return true;
+            validate(input) {
+                if (_.isFinite(Number(input))) return true;
                 return 'Minimum must be a number';
-            }.bind(this),
+            },
             default: 0
         },
         {
-            when: function (response) {
+            when(response) {
                 return response.fieldName && response.fieldName.length > 0 &&
-                    response.fieldValidateRules &&
-                    response.fieldValidateRules.indexOf('max') !== -1 &&
-                    (response.fieldType === 'Integer' ||
-                    response.fieldType === 'Long');
+                    response._fieldValidateRules &&
+                    response._fieldValidateRules.indexOf('max') !== -1
             },
             type: 'input',
             name: 'fieldValidateRulesMax',
             message: 'What is the maximum of your field?',
-            validate: function (input) {
-                if (this.isSignedNumber(input)) return true;
+            validate(input, response) {
+                const numInput = Number(input);
+                if (_.isFinite(numInput)) {
+                    let minInput = Number(response.fieldValidateRulesMin);
+                    if (_.isFinite(minInput) && numInput < minInput) {
+                        return `Maximum number must be at least ${minInput}`
+                    }
+                    return true;
+                }
                 return 'Maximum must be a number';
-            }.bind(this),
+            },
             default: 100
         },
         {
             when: function (response) {
                 return response.fieldName && response.fieldName.length > 0 &&
-                    response.fieldValidateRules &&
-                    response.fieldValidateRules.indexOf('min') !== -1 &&
-                    (response.fieldType === 'Float' ||
-                    response.fieldType === 'Double' ||
-                    response.fieldType === 'BigDecimal');
-            },
-            type: 'input',
-            name: 'fieldValidateRulesMin',
-            message: 'What is the minimum of your field?',
-            validate: function (input) {
-                if (this.isSignedDecimalNumber(input, true)) return true;
-                return 'Minimum must be a decimal number';
-            }.bind(this),
-            default: 0
-        },
-        {
-            when: function (response) {
-                return response.fieldName && response.fieldName.length > 0 &&
-                    response.fieldValidateRules &&
-                    response.fieldValidateRules.indexOf('max') !== -1 &&
-                    (response.fieldType === 'Float' ||
-                    response.fieldType === 'Double' ||
-                    response.fieldType === 'BigDecimal');
-            },
-            type: 'input',
-            name: 'fieldValidateRulesMax',
-            message: 'What is the maximum of your field?',
-            validate: function (input) {
-                if (this.isSignedDecimalNumber(input, true)) return true;
-                return 'Maximum must be a decimal number';
-            }.bind(this),
-            default: 100
-        },
-        {
-            when: function (response) {
-                return response.fieldName && response.fieldName.length > 0 &&
-                    response.fieldValidateRules &&
-                    response.fieldValidateRules.indexOf('pattern') !== -1;
+                    response._fieldValidateRules &&
+                    response._fieldValidateRules.indexOf('pattern') !== -1;
             },
             type: 'input',
             name: 'fieldValidateRulesPattern',
@@ -277,20 +270,11 @@ function askForField(cb) {
         }
     ];
 
-    this.prompt(prompts).then(function (props) {
-        if (props.fieldName && props.fieldName.length > 0) {
-            var field = {
-                fieldName: props.fieldName,
-                fieldType: props.fieldType,
-                fieldValidateRulesRequired: (props.fieldValidateRules && props.fieldValidateRules.indexOf('required') !== -1) ? true : undefined,
-                fieldValidateRulesMinlength: props.fieldValidateRulesMinlength,
-                fieldValidateRulesMaxlength: props.fieldValidateRulesMaxlength,
-                fieldValidateRulesPattern: props.fieldValidateRulesPattern,
-                fieldValidateRulesPatternJava: props.fieldValidateRulesPattern ? props.fieldValidateRulesPattern.replace(/\\/g, '\\\\') : props.fieldValidateRulesPattern,
-                fieldValidateRulesMin: props.fieldValidateRulesMin,
-                fieldValidateRulesMax: props.fieldValidateRulesMax,
-                fieldValidateRulesMinbytes: props.fieldValidateRulesMinbytes,
-                fieldValidateRulesMaxbytes: props.fieldValidateRulesMaxbytes
+    this.prompt(prompts).then((props) => {
+        if (_.isEmpty(props.fieldName)) {
+            let field = _.extend({}, props);
+            if (props._fieldValidateRules && props._fieldValidateRules.indexOf('required') !== -1) {
+                field.fieldValidateRulesRequired = true;
             }
 
             // check if fieldname specified already exists
@@ -307,5 +291,5 @@ function askForField(cb) {
         }  else {
             cb();
         }
-    }.bind(this));
+    });
 }

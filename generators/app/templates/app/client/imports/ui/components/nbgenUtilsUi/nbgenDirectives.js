@@ -3,6 +3,7 @@
  */
 import angular from 'angular'
 import nbgenUtilsUi from './nbgenUtilsUi.js'
+import moment from 'moment'
 
 import _ from 'underscore';
 import _s from 'underscore.string';
@@ -429,6 +430,30 @@ utils.filter('titleize', function() {
         return _s.titleize(_s.humanize(matchItem));
     }
 })
+
+// REQUIRES:
+// moment.js - http://momentjs.com/
+
+// USAGE:
+// {{ someDate | moment: [any moment function] : [param1] : [param2] : [param n] 
+
+// EXAMPLES:
+// {{ someDate | moment: 'format': 'MMM DD, YYYY' }}
+// {{ someDate | moment: 'fromNow' }}
+
+// To call multiple moment functions, you can chain them.
+// For example, this converts to UTC and then formats...
+// {{ someDate | moment: 'utc' | moment: 'format': 'MMM DD, YYYY' }}
+
+utils.filter('moment', function () {
+    'ngInject'
+
+    return function (input, momentFn /*, param1, param2, ...param n */) {
+        let args = Array.prototype.slice.call(arguments, 2),
+        momentObj = moment(input);
+        return momentObj[momentFn].apply(momentObj, args);
+    };
+});
 
 // Add this directive where you keep your directives
 utils.directive('onLongPress', function($timeout) {

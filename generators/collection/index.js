@@ -60,10 +60,10 @@ _.assign(TmvCollectionGenerator.prototype, {
     },
     
     prompting: {
-        checkForNewVersion: function() {
-           if (this.abort) return;
-           this.checkNewerVersion();
-        },
+        // checkForNewVersion: function() {
+        //    if (this.abort) return;
+        //    this.checkNewerVersion();
+        // },
 
         askIfServer() {
             if (this.abort) return;
@@ -152,35 +152,6 @@ _.assign(TmvCollectionGenerator.prototype, {
             })
 
             this.serverIsGenerated = true;
-
-            // inject import statement into the server's entry point
-            /* no need the gulp process automatically handles this
-            var needle = "// nbgen: imports for collections will be placed above; don't delete"
-            this.rewriteFile({
-                file: CONSTANTS.nbgenServerEntryPoint,
-                needle: needle,
-                splicable: [`import './imports/api/${this.collectionName}';`]
-            })
-            */
-        },
-
-        determineFieldInputType() {
-            if (this.abort) return;
-            if (!this.generateUI) return;
-
-            // map the fieldType to fieldInputType
-            this.fields.forEach((field) => {
-                var fieldType = field.fieldType
-                if (fieldType !== 'String') {
-                    if (/(Long|Integer|Float|Double|BigDecimal)/.test(fieldType)) {
-                        field.fieldInputType = 'number';
-                    } else if (/Boolean/.test(fieldType)) {
-                        field.fieldInputType = 'checkbox';
-                    } else if (/Date/.test(fieldType)) {
-                        field.fieldInputType = 'date';
-                    }
-                }
-            })
         },
 
         generateListLayout() {
@@ -190,14 +161,17 @@ _.assign(TmvCollectionGenerator.prototype, {
             var listLayout = [ ]
             for (var i = 0; i < this.fields.length; i++) {
                 if (i > 5) break;   // list layout is limited to 6 fields
-                var fieldObj = {
-                    fieldName: this.fields[i].fieldName,
-                    value: "{{ " + this.fields[i].fieldName +
-                        (this.fields[i].fieldInputType === 'data' ? ' | date: \'MM/dd/yyyy\'' : '') +
-                        " }}"
+                let { fieldInputType } = this.fields[i];
+                let fieldObj = _.extend({}, this.fields[i])
+                if (/date|time|datetime/.test(fieldInputType)) {
+                    // use the display format specified in the input
+                    let displayFormat = this.fields[i].displayFormat || 'MM/DD/YYYY';
+                    fieldObj.value = `{{ ${this.fields[i].fieldName} | moment: 'format': '${displayFormat}'}}`
+                    delete fieldObj.displayFormat;      // not needed anymore
                 }
-                if (this.fields[i].fieldType === 'String') {
-                    fieldObj.searchField = [ this.fields[i].fieldName ];
+
+                if (/string|email/.test(fieldInputType)) {
+                    fieldObj.searchField = [fieldObj.fieldName];
                 }
                 listLayout.push(fieldObj);
             }
@@ -209,18 +183,13 @@ _.assign(TmvCollectionGenerator.prototype, {
             if (this.abort) return;
             if (!this.generateUI) return;
 
-            var fields = _.cloneDeep(this.fields);
-            // remove the fieldType field, it's not needed in the front-end
-            fields.forEach((field) => {
-                field.fieldType = undefined;
-                // remove fields which are undefined
-                _.each(field, (f, k) => {
-                    if (f === undefined) {
-                        delete field[k];
-                    }
-                })
-            })
-            this.fieldsString = stringifyObject(fields, {indent: Array(5).join(' ')})
+            const formLayoutObj = { };
+            // TODO: allow form groups looping
+            formLayoutObj.formGroups = [];
+            const formGroup = { cssClass: 'form-group-border' }
+            formGroup.fields = this.fields;
+
+            this.formLayoutString = stringifyObject(formLayoutObj, {indent: Array(5).join(' ')})
                 .replace(/\n/g, '\n' + Array(17).join(' '));
         },
 
