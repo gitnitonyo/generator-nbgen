@@ -27,10 +27,5 @@ export const formSchema = {
 
     // this is the form layout which controls how the fields are laid out
     // fields processing including validations can also be specified here
-    formLayout: {
-        formGroups: [{
-            cssClass: "form-group-border",
-            fields: <%- fieldsString %>
-        }]
-    }
+    formLayout: <%- formLayoutString %>
 }
