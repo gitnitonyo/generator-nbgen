@@ -3,6 +3,7 @@
 var chalk = require('chalk'),
     _ = require('lodash'),
     _s = require('underscore.string'),
+    stringifyObject = require('stringify-object'),
     moment = require('moment')
 
 const BASE_VALIDATION_CHOICES = [
@@ -75,7 +76,11 @@ const TYPE_OF_FIELDS = [
         value: 'email',
         name: 'Email',
         validationChoices: STRING_VALIDATION_CHOICES.concat([]),
-    }
+    },
+    // {
+    //     value: 'object',
+    //     name: 'Object',
+    // }
 ]
 
 module.exports = {
@@ -91,8 +96,11 @@ function askForFields() {
 /**
  * ask question for a field creation
  */
-function askForField(cb) {
-    this.log(chalk.green('\nGenerating field #' + (this.fields.length + 1) + '\n'));
+function askForField(cb, parentField) {
+    parentField = parentField || this;
+    const parentFieldName = parentField.fieldName || parentField.baseName;
+
+    this.log(chalk.green(`\nGenerating field # ${this.fields.length + 1} for ${parentFieldName}\n`));
 
     var prompts = [
         // ask for field name
@@ -105,7 +113,8 @@ function askForField(cb) {
                 }
                 // check if fieldName is already used in the current collection
                 var field = _.find(this.fields, function(fld) {
-                    return _.toLower(input) == _.toLower(fld.fieldName);
+                    const prefixed = parentField.fieldName ? `${parentField.fieldName}.${input}` : input;
+                    return _.toLower(prefixed) == _.toLower(fld.fieldName);
                 });
                 if (field) {
                     this.warning("\n`" + input + "` is already defined. Will overwite the existing field definition.")
@@ -130,8 +139,8 @@ function askForField(cb) {
         {
             when(response) {
                 // look for the validation choices
-                if (_.isEmpty(response.fieldName)) return false;    // skip if fieldname is blank
-                const fieldTypeInfo = _.find(TYPE_OF_FIELDS, (t) => t.value === response.fieldType);
+                if (_.isEmpty(response.fieldName) || response.fieldInputType === 'object') return false;    // skip if fieldname is blank
+                const fieldTypeInfo = _.find(TYPE_OF_FIELDS, (t) => t.value === response.fieldInputType);
                 response._fieldTypeInfo = fieldTypeInfo;
 
                 return fieldTypeInfo && fieldTypeInfo.validationChoices;
@@ -147,8 +156,9 @@ function askForField(cb) {
         {
             // if it's a number
             when(response) {
+                if (_.isEmpty(response.fieldName) || response.fieldInputType === 'object') return false;    // skip if fieldname is blank
                 return !_.isEmpty(response.fieldName) &&
-                       response.fieldType === 'number'
+                       response.fieldInputType === 'number'
             },
             type: 'input',
             name: 'decimalPlaces',
@@ -163,6 +173,7 @@ function askForField(cb) {
         {
             // if it's a date or time
             when(response) {
+                if (_.isEmpty(response.fieldName) || response.fieldInputType === 'object') return false;    // skip if fieldname is blank
                 return !_.isEmpty(response.fieldName) &&
                     (response.fieldInputType === 'date' ||
                      response.fieldInputType === 'time' ||
@@ -187,7 +198,7 @@ function askForField(cb) {
         // input based chosen validation rules
         {
             when(response) {
-                if (_.isEmpty(response.fieldName)) return false;    // skip if fieldname is blank
+                if (_.isEmpty(response.fieldName) || response.fieldInputType === 'object') return false;    // skip if fieldname is blank
                 return response._fieldValidateRules && response._fieldValidateRules.indexOf('minlength') !== -1;
             },
             type: 'input',
@@ -201,7 +212,7 @@ function askForField(cb) {
         },
         {
             when(response) {
-                if (_.isEmpty(response.fieldName)) return false;    // skip if fieldname is blank
+                if (_.isEmpty(response.fieldName) || response.fieldInputType === 'object') return false;    // skip if fieldname is blank
                 return response._fieldValidateRules && response._fieldValidateRules.indexOf('maxlength') !== -1;
             },
             type: 'input',
@@ -222,6 +233,7 @@ function askForField(cb) {
         },
         {
             when(response) {
+                if (_.isEmpty(response.fieldName) || response.fieldInputType === 'object') return false;    // skip if fieldname is blank
                 return !_.isEmpty(response.fieldName) &&
                     response._fieldValidateRules &&
                     response._fieldValidateRules.indexOf('min') !== -1
@@ -237,6 +249,7 @@ function askForField(cb) {
         },
         {
             when(response) {
+                if (_.isEmpty(response.fieldName) || response.fieldInputType === 'object') return false;    // skip if fieldname is blank
                 return response.fieldName && response.fieldName.length > 0 &&
                     response._fieldValidateRules &&
                     response._fieldValidateRules.indexOf('max') !== -1
@@ -259,6 +272,7 @@ function askForField(cb) {
         },
         {
             when: function (response) {
+                if (_.isEmpty(response.fieldName) || response.fieldInputType === 'object') return false;    // skip if fieldname is blank
                 return response.fieldName && response.fieldName.length > 0 &&
                     response._fieldValidateRules &&
                     response._fieldValidateRules.indexOf('pattern') !== -1;
@@ -271,10 +285,14 @@ function askForField(cb) {
     ];
 
     this.prompt(prompts).then((props) => {
-        if (_.isEmpty(props.fieldName)) {
+        if (!_.isEmpty(props.fieldName)) {
             let field = _.extend({}, props);
             if (props._fieldValidateRules && props._fieldValidateRules.indexOf('required') !== -1) {
                 field.fieldValidateRulesRequired = true;
+            }
+            // adjust the fieldname
+            if (parentField.fieldName) {
+                field.fieldName = `${parentField.fieldName}.${field.fieldName}`;
             }
 
             // check if fieldname specified already exists
@@ -287,8 +305,24 @@ function askForField(cb) {
                 this.fields.push(field);
             }
 
-            askForField.call(this, cb);
-        }  else {
+            // remove properties that starts with _
+            _.each(props, (v, k) => {
+                if (k.startsWith('_')) {
+                    delete field[k];
+                }
+            })
+
+            // display the current list of fields
+            for (let i=0; i < this.fields.length; i++) {
+                this.log(chalk.green(`Field number: ${i+1}`));
+                this.log(stringifyObject(this.fields[i], {indent: Array(4).join(' ')}))
+            }
+            if (field.fieldInputType === 'object') {
+                askForField.call(this, cb, field);
+            } else {
+                askForField.call(this, cb, parentField);
+            }
+        } else {
             cb();
         }
     });

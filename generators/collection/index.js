@@ -171,7 +171,7 @@ _.assign(TmvCollectionGenerator.prototype, {
                 listLayout.push(fieldObj);
             }
             this.listLayoutString = stringifyObject(listLayout, {indent: Array(5).join(' ')})
-                .replace(/\n/g, '\n' + Array(9).join(' '));
+                .replace(/\n/g, '\n' + Array(5).join(' '));
         },
 
         generateFormLayout() {
@@ -183,9 +183,10 @@ _.assign(TmvCollectionGenerator.prototype, {
             formLayoutObj.formGroups = [];
             const formGroup = { cssClass: 'form-group-border' }
             formGroup.fields = this.fields;
+            formLayoutObj.formGroups.push(formGroup);
 
             this.formLayoutString = stringifyObject(formLayoutObj, {indent: Array(5).join(' ')})
-                .replace(/\n/g, '\n' + Array(17).join(' '));
+                .replace(/\n/g, '\n' + Array(5).join(' '));
         },
 
         writeClientFiles() {
