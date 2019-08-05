@@ -24,25 +24,8 @@ const nbgenAppMenu = [
                 iconClass: "mdi-account-multiple mdi",
                 action: "sref:appUsers",
             },
-            {
-                menuId: "_organizations",
-                label: "global.menu.organizations",
-                iconClass: "mdi-group mdi",
-                action: "sref:organizations",
-                rolesAllowed: [ appRoles.SUPER_ADMIN ],
-            },
-            /**
-             * No service configuration for this app
-             */
-            /*
-            {
-                menuId: "_serviceConfigurations",
-                label: "global.menu.serviceConfigurations",
-                iconClass: "mdi-key-change mdi",
-                action: "sref:serviceConfigurations",
-                rolesAllowed: [appRoles.SUPER_ADMIN]
-            },
-            */
+            /*:nbgen:social:service-configurations*/
+            /* PLEASE DO NOT REMOVE THIS MARKER */
             {
                 menuId: '_appSettings',
                 label: 'global.menu.appSettings',

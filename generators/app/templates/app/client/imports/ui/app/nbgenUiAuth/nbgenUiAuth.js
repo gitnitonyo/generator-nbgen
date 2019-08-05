@@ -158,7 +158,7 @@ function authUiService($tmvUiData, $translate, $tmvUiUtils, $rootScope, $state, 
 
             let imgUrl;
 
-            if (user && user.profile.accountPicture) {
+            if (user && user.profile && user.profile.accountPicture) {
                 let accountPicture = user.profile.accountPicture;
                 if (_.isArray(user.profile.accountPicture)) {
                     accountPicture = user.profile.accountPicture[0];

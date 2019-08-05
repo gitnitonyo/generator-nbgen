@@ -20,8 +20,7 @@
                     <div>&nbsp;</div>
                 </div>
                 <div class="md-caption text-center text-fullwidth text-emphasis" tmv-color="primary">
-                    <div>{{nbgenApp.$currentOrganization.companyName}}</div>
-                    <div>&nbsp;</div>
+                    <!-- section to put user group or organization -->
                 </div>
                 <div class="md-caption text-center text-fullwidth">
                     <div>{{nbgenApp.$serverDateTime | date: 'short'}}</div>
@@ -58,9 +57,6 @@
                                 <img ng-src="{{nbgenApp.$config.applicationLogo}}" class="application-logo">
                                 <span>&nbsp;&nbsp;{{nbgenApp.$config.applicationName}}</span>
                             </div>
-                        </div>
-                        <div id="nbgenOrganizationArea" class="text-ellipsis" hide-xs ng-show="nbgenApp.$currentOrganization">
-                            <span>{{nbgenApp.$currentOrganization.companyName}}</span>
                         </div>
                         <div id="nbgenTitleArea" class="text-ellipsis">
                         </div>

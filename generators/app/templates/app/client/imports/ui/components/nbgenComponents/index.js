@@ -10,11 +10,12 @@ import scrollParent from '../misc/scrollParent.js';
 import detect from '../misc/detect.js';
 import nbgenAuth from '../nbgenAuth';
 import nbgenForm from '../nbgenForm';
-import nbgenSocial from '../nbgenSocial';
 import nbgenUtilsUi from '../nbgenUtilsUi';
 import nbgenMeteor from '../nbgenMeteor';
 import { Meteor, Accounts, Counts, Roles, Tracker, Mongo, TimeSync } from '../nbgenMeteor';
 import { TmvCollectionListBaseCtrl, TmvCollectionFormBaseCtrl, setupTmvCollection } from '../nbgenUtilsUi/tmvCollection';
+/*:nbgen:component:imports*/
+/* DO NOT REMOVE THIS MARKER */
 
 const moduleName = 'nbgenComponents';
 
@@ -23,16 +24,24 @@ export default moduleName;
 angular.module(moduleName, [
     nbgenAuth,
     nbgenForm,
-    nbgenSocial,
     nbgenUtilsUi,
     nbgenMeteor,
+    /*:nbgen:component:modules*/
+    /* DO NOT REMOVE THIS MARKER */
 ]);
 
-export { detect as nbgenDetect, nbgenAuth, nbgenForm, nbgenSocial, nbgenUtilsUi, nbgenMeteor };
+export {
+    nbgenAuth,
+    nbgenForm,
+    nbgenUtilsUi,
+    nbgenMeteor,
+    /*:nbgen:component:exports*/
+    /* DO NOT REMOVE THIS MARKER */
+}
+export { detect as nbgenDetect };
 export { Meteor, Accounts, Counts, Roles, Tracker, Mongo, TimeSync };
 export { TmvCollectionListBaseCtrl, TmvCollectionFormBaseCtrl };
 export { setupTmvCollection }
-
 
 /**
  * Use as base class for controller of ng component

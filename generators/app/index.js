@@ -10,12 +10,10 @@ var chalk = require('chalk'),
 class TmvClientGenerator extends BaseGenerator {
     constructor(args, opts) {
         super(args, opts);
-        this.configOptions = _.assign({}, this.defaultConfigOptions(), this.config.getAll());
-        _.assign(this, this.configOptions);
+        
         this.webappDir = CONSTANTS.defaultWebappDir || 'src/webapp';
         this.path = path;
         this.CONSTANTS = CONSTANTS
-        this.lodash = _;
     }
 }
 
@@ -45,6 +43,13 @@ _.assign(TmvClientGenerator.prototype, {
         askBasename() {
             if (this.abort) return;
             this.askForBasename();
+        },
+
+        askToIncludeSocial() {
+            if (this.abort) return;
+            this.askForConfirmation('includeSocialSignin', 
+                'Do you want to include Authentication through social media?',
+                true)
         }
     },
 
@@ -126,6 +131,13 @@ _.assign(TmvClientGenerator.prototype, {
             let contents = this.fs.read(file);
             contents = contents.replace(strToReplace, newStr);
             this.fs.write(file, contents);
+        },
+
+        // social signin
+        isSocialSignin() {
+            if (this.includeSocialSignin) {
+                this.composeWith('nbgen:social', {})
+            }
         }
     },
 

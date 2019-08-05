@@ -11,9 +11,6 @@ var _ = require('lodash'),
 class TmvGenerator extends BaseGenerator {
     constructor(args, opts) {
         super(args, opts);
-
-        this._lodash = _;       // make lodash functions available on templates
-        this._s = _s;
     }
 }
 
@@ -26,10 +23,10 @@ _.assign(TmvGenerator.prototype, {
 
     prompting: {
         // functions for prompting parameters to be used in generation of codes
-        checkForNewVersion() {
-            if (this.abort) return;
-            this.checkNewerVersion();
-        },
+        // checkForNewVersion() {
+        //     if (this.abort) return;
+        //     this.checkNewerVersion();
+        // },
     },
 
     configuring() {

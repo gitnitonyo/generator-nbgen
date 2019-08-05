@@ -4,6 +4,7 @@
 var Generator = require('yeoman-generator'),
     chalk = require('chalk'),
     _ = require('lodash'),
+    _s = require('underscore.string'),
     path = require('path'),
     fg = require('fast-glob'),
     CONSTANTS = require('./tmv-constants'),
@@ -18,8 +19,10 @@ class BaseGenerator extends Generator {
     constructor(args, opts) {
         super(args, opts);
 
-        // this.env.options.appPath = this.config.get('appPath') || CONSTANTS.defaultWebappDir;
-        // this._s = _;
+        this.configOptions = _.extend({}, this.defaultConfigOptions(), this.config.getAll());
+        _.assign(this, this.configOptions);
+        this._lodash = _;
+        this._s = _s;
     }
 
     /**
@@ -34,14 +37,7 @@ class BaseGenerator extends Generator {
             serverType: 'meteor'
         };
 
-        var result = {};
-
-        _.forOwn(defaultValues, (value, key) => {
-            result[key] = this.config.get(key) || value;
-            this.config.set(key, result[key]);
-        });
-
-        return result;
+        return defaultValues;
     }
 
     /**
