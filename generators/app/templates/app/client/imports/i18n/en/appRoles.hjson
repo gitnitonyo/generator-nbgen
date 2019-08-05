@@ -2,7 +2,6 @@ appRoles: {
     "super-admin": "Super Administrator"
     "user-admin": "User Administrator"
 
-    "helpdesk": "Customer Service Representative",
     "normal-user": "Normal User",
 
     /** Sample Roles **/

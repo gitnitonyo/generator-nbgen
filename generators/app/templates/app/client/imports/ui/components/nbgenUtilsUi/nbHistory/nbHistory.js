@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import angular from 'angular';
-import moduleName from '../nbgenApp';
+import moduleName from '../nbgenUtilsUi';
 
 import nbHistoryPanelTemplate from './nbHistoryPanel.html';
 

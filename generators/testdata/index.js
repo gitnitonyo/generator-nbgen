@@ -14,9 +14,6 @@ class TmvTestDataGenerator extends BaseGenerator {
     constructor(args, opts) {
         super(args, opts);
 
-        this.configOptions = _.assign({}, this.defaultConfigOptions(), this.config.getAll());
-        _.assign(this, this.configOptions);
-
         // This makes `name` a required argument.
         this.argument('name', {
             type: String,
@@ -50,9 +47,9 @@ _.assign(TmvTestDataGenerator.prototype, {
     },
 
     prompting: {
-        checkForNewVersion() {
-            this.checkNewerVersion();
-        },
+        // checkForNewVersion() {
+        //     this.checkNewerVersion();
+        // },
         askForTestDetails () {
             if (this.abort) return;
             prompts.askForTestDataDetails.call(this);

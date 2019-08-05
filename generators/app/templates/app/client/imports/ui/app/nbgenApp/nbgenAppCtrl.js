@@ -9,18 +9,14 @@ import nbgenAppConfig from './nbgenAppConfig.js'
 import nbgenAppMenu from './nbgenAppMenu.js'
 
 // import {Countries} from '/imports/common/countries/collection.js'
-import { appRoles, getActiveGroup } from '/imports/common/app.roles.js';
+import { appRoles } from '/imports/common/app.roles.js';
 
 import { ApplicationParameters } from '/imports/common/applicationParameters/collection.js';
 
 import { Meteor } from '/client/imports/ui/components/nbgenComponents';
-import { Mongo } from '/client/imports/ui/components/nbgenComponents';
 import { TimeSync } from '/client/imports/ui/components/nbgenComponents';
 
-const MyOrganization = new Mongo.Collection('myOrganization');
-
-const loginState = 'nbgenLogin',
-    signupState = 'nbgenRegister';
+const loginState = 'nbgenLogin'
 
 const supportedBrowsers = [{
     family: "Chrome",
@@ -127,10 +123,56 @@ export default class NbGenAppCtrl {
             return true;
         }
 
-        // subscriptions
-        this.subscribe('myAccount') // for getting details of the currently logged-in user
-        this.subscribe('myOrganization'); // to get info on organizations
+        // setup application parameters
+        this._processApplicationParameters();
 
+        this._processCurrentUser();
+
+        this._processUserLanguage();
+
+        this._processServerTime();
+    }
+
+    _processUserLanguage() {
+        this.autorun(() => {
+            this.getReactively('$currentUser');
+            if (!this.$currentUser) {
+                // set language to the english by default
+                this.$currentLanguage = 'en';
+            } else {
+                const userLanguage = this.$currentUser.profile && this.$currentUser.profile.lang || 'en';
+                if (userLanguage !== this.$currentLanguage) {
+                    this.$currentLanguage = userLanguage;
+                }
+            }
+        })
+
+        this.autorun(() => {
+            // automatically adjust language
+            const lang = this.getReactively('$currentLanguage');
+            if (lang) {
+                this.$translate.use(lang);
+            }
+        })
+    }
+
+    _processCurrentUser() {
+        // subscribe to own account so own user info will be retrieve from the server
+        this.subscribe('myAccount') // for getting details of the currently logged-in user
+        this.autorun(() => {
+            this.$currentUser = Meteor.user();
+        });
+    }
+
+    _processServerTime() {
+        this.autorun(() => {
+            // update every 5 seconds
+            let serverTime = TimeSync.serverTime(null, 5000)
+            this.$serverDateTime = (serverTime && new Date(serverTime)) || new Date();
+        });
+    }
+
+    _processApplicationParameters() {
         this.subscribe('$applicationParameters');
         this.autorun(() => {
             this.$applicationParameters = ApplicationParameters.find({}).fetch()[0];
@@ -139,39 +181,6 @@ export default class NbGenAppCtrl {
                 this.$$currentAppVersion = this.$applicationParameters.version;
             }
         })
-
-        this.autorun(() => {
-            this.$currentUser = Meteor.user();
-            if (!this.$currentUser) {
-                // set language to the english by default
-                this.$currentLanguage = 'en';
-            } else {
-                const userLanguage = this.$currentUser.profile.lang || 'en';
-                if (userLanguage !== this.$currentLanguage) {
-                    this.$currentLanguage = userLanguage;
-                }
-            }
-            
-        });
-
-        this.autorun(() => {
-            // store the current organization
-            this.$currentOrganization = $rootScope.$currentOrganization = MyOrganization.findOne(getActiveGroup(Meteor.user()));
-        });
-
-        this.autorun(() => {
-            // automatically adjust language
-            const lang = this.getReactively('$currentLanguage');
-            if (lang) {
-                this.$translate.use(lang);
-            }
-        });
-
-        this.autorun(() => {
-            // update every 5 seconds
-            let serverTime = TimeSync.serverTime(null, 5000)
-            this.$serverDateTime = (serverTime && new Date(serverTime)) || new Date();
-        });
     }
 
     _processRequiredResources() {
@@ -245,10 +254,6 @@ export default class NbGenAppCtrl {
 
     gotoLogin() {
         this.$state.go(loginState);
-    }
-
-    gotoSignup() {
-        this.$state.go(signupState);
     }
 
     performLogout() {

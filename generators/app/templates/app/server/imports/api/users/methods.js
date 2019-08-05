@@ -9,8 +9,6 @@ import { check } from '../common'
 import { appRoles, getActiveGroup, COLLECTION_GROUP_FIELD, USER_GROUP_FIELD } from '/imports/common/app.roles.js';
 import { Roles } from '../common';
 
-import { Organizations } from '../organizations/collection.js';
-
 import { sendHtmlTo, sendEmail, sendEmailUsingTemplate } from '../email/methods.js';
 import { getApplicationInfo } from '/imports/common/applicationParameters/collection.js';
 import { escapeRegExp, serviceName } from '../common/utils.js';
@@ -162,7 +160,6 @@ function completeInfo(userInfo, companyInfo) {
         // create a new company info
         companyInfo._registeredAt = new Date();
         companyInfo._registeredBy = this.userId;
-        Organizations.insert(companyInfo);
         // update the user roles
         Meteor.users.update({ _id: this.userId }, {
             $set: {

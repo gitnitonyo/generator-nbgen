@@ -169,7 +169,7 @@ gulp.task('watch', function () {
     gulp.watch(filePatterns.jsImports.srcMatches, filePatterns.jsImports.options, series('js-imports'));
     gulp.watch(filePatterns.scssImports.srcMatches, filePatterns.scssImports.options, series('scss-imports'));
     gulp.watch(filePatterns.scssCommonImports.srcMatches, filePatterns.scssCommonImports.options, series('scss-common-imports'));
-    gulp.watch(filePatterns.i18nTransform.srcMatches, filePatterns.i18nTransform.options, series('i18n-transform'));
+    gulp.watch(filePatterns.i18nTransform.srcMatches, filePatterns.i18nTransform.options, series('i18n-transform', 'js-imports'));
     gulp.watch(filePatterns.serverJsImports.srcMatches, filePatterns.serverJsImports.options, series('server-js-imports'))
 })
 

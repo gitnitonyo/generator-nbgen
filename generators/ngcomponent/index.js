@@ -20,8 +20,6 @@ class TmvGenerator extends BaseGenerator {
             description: 'Module name'
         });
 
-        this._lodash = _;       // make lodash functions available on templates
-        this._s = _s;
         this.name = this.options.name;
     }
 }
@@ -43,10 +41,10 @@ _.assign(TmvGenerator.prototype, {
 
     prompting: {
         // functions for prompting parameters to be used in generation of codes
-        checkForNewVersion() {
-            if (this.abort) return;
-            this.checkNewerVersion();
-        },
+        // checkForNewVersion() {
+        //     if (this.abort) return;
+        //     this.checkNewerVersion();
+        // },
 
         // ask if want to add menu entry
         askToGenerateState() {

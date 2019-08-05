@@ -14,9 +14,6 @@ class TmvCollectionGenerator extends BaseGenerator {
     constructor(args, opts) {
         super(args, opts);
 
-        this.configOptions = _.assign({}, this.defaultConfigOptions(), this.config.getAll());
-        _.assign(this, this.configOptions);
-
         // This makes `name` a required argument.
         this.argument('name', {
             type: String,
@@ -24,8 +21,6 @@ class TmvCollectionGenerator extends BaseGenerator {
             description: 'Collection name'
         });
 
-        this._s = _s;
-        this._lodash = _;
         this.name = this.options.name;
     }
 }
