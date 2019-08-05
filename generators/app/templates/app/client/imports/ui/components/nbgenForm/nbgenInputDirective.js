@@ -196,7 +196,8 @@ class TmvInputController {
     __putAttrs(domObj, attrs) {
         if (_.isObject(attrs)) {
             _.each(attrs, (v, k) => {
-                domObj.attr(k, this.__generateAttrValue(attrs, true, k));
+                let attrName = _s.dasherize(k);
+                domObj.attr(attrName, this.__generateAttrValue(attrs, true, k));
             });
         }
     }
