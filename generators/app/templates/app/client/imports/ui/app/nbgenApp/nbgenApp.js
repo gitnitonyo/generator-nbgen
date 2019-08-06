@@ -184,7 +184,7 @@ angular.module(name, [
         $translateProvider.useCookieStorage();
     })
     // configure routing
-    .config(($stateProvider, $urlRouterProvider, $locationProvider) => {
+    .config(($stateProvider, $urlRouterProvider/*, $locationProvider*/) => {
         'ngInject';
 
         // this is a workaround for deploying the not on the root path
@@ -193,7 +193,7 @@ angular.module(name, [
         baseNode.setAttribute('href', Meteor.absoluteUrl());
         document.getElementsByTagName("HEAD")[0].appendChild(baseNode);
 
-        $locationProvider.html5Mode(true);
+        // $locationProvider.html5Mode(true);
         $urlRouterProvider.otherwise('/');
         $stateProvider
             .state('site', {

@@ -59,7 +59,7 @@ function nbgenDataPickerFactory($tmvUiData) {
 
         if (!collection) {
             // assume the collection is the same subscription
-            collection = Mongo.Collection.get(subscription);
+            collection = Mongo.Collection.get(subscription) || new Mongo.Collection(subscription);
         }
 
         const includedFunctions = {

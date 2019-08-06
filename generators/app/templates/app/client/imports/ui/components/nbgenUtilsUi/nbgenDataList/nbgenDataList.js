@@ -4,7 +4,8 @@ import _ from 'underscore';
 import nbgenUtilsUi from '../nbgenUtilsUi.js'
 
 import template from './nbgenDataList.html';
-import actionTemplate from './listActionsTemplate.html';
+import actionTemplateNontabular from './listActionsTemplate.html';
+import actionTemplateTabular from './listActionsTemplateTabular.html';
 
 const componentName = 'tmvList';
 const controllerAs = `$${componentName}`;
@@ -48,10 +49,6 @@ class TmvList {
 
         if (!this.initials) {
             this.initials = this.layout.getInitials || this.getInitials;
-        }
-
-        if (!this.layout.actionListTemplate) {
-            this.layout.actionListTemplate = actionTemplate;
         }
     }
 
@@ -223,6 +220,21 @@ class TmvList {
         }
                 
         return fieldSchema.cssStyle;
+    }
+
+    $onChanges(changes) {
+        // there's a change in the tabular section
+        if (changes.tabular) {
+            let {currentValue, previousValue} = changes.tabular;
+            if (currentValue !== previousValue) {
+                // change the action template
+                if (currentValue === 'true') {
+                    this.actionTemplate = this.layout.actionListTemplateTabular || actionTemplateTabular;
+                } else {
+                    this.actionTemplate = this.layout.actionListTemplate || actionTemplateNontabular;
+                }
+            }
+        }
     }
 }
 

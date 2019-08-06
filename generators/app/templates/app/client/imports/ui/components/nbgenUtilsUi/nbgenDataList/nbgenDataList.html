@@ -67,7 +67,7 @@
                     <md-button class="md-icon-button" ng-click="$mdMenu.open()"
                         tmv-icon="mdi-dots-vertical" aria-label="more">
                     </md-button>
-                    <md-menu-content width="4" nbgen-template="$tmvList.layout.actionListTemplate">
+                    <md-menu-content width="4" nbgen-template="$tmvList.actionTemplate">
                     </md-menu-content>
                 </md-menu>
             </div>
@@ -91,8 +91,8 @@
                             ng-bind-html="$tmvList.getFieldText($index, item)">
                         </span>
                     </div>
-                    <div class="tmv-list-table-column tmv-list-action-buttons">
-                        <div nbgen-template="$tmvList.layout.actionListTemplate">
+                    <div class="tmv-list-table-column tmv-list-action-buttons" flex="{{$tmvList.layout.actionFlex || '10'}}">
+                        <div nbgen-template="$tmvList.actionTemplate">
                         </div>
                     </div>
                 </div>

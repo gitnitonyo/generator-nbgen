@@ -60,18 +60,20 @@
                 <div ng-if="$tmvCollection.isTabular()" style="width: 100%">
                     <div class="tmv-list-table-header" layout="row" style="width: 100%">
                         <div ng-repeat="field in $tmvCollection.layout.fields" class="tmv-list-table-column" flex="{{field.flexStyle + ''}}">
-                            <a class="tmv-list-sort-link" href='#' ng-disabled="!field.sortable"
+                            <a class="tmv-list-sort-link" href='#' ng-disabled="!$tmvCollection.isFieldSortable(field)"
                                 nbgen-noclick="" ng-click="$tmvCollection.performSort(field)">
                                 <span ng-class="field.cssClass"
                                     class="md-body-2"
-                                    translate="{{field.fieldLabel || field.fieldName | translate}}"></span>
-                                <span ng-hide="!field.sortable" class="window-relative sort-icons">
+                                    translate="{{field.fieldLabel || $tmvCollection.translatePrefix + '.' + field.fieldName | translate}}"></span>
+                                <span ng-hide="!$tmvCollection.isFieldSortable(field)" class="window-relative sort-icons">
                                     <i class="mdi-menu-up mdi window-absolute up" ng-class="{'tmv-primary-color': $tmvCollection.sortingField === field.fieldName && $tmvCollection.sortingDirection === -1}"></i>
                                     <i class="mdi-menu-down mdi window-absolute down" ng-class="{'tmv-primary-color': $tmvCollection.sortingField === field.fieldName && $tmvCollection.sortingDirection === 1}"></i>
                                     <!-- <i ng-class="{'mdi-menu-up': $tmvCollection.sortingField === field.fieldName && $tmvCollection.sortingDirection === -1, 'mdi-menu-down': $tmvCollection.sortingField === field.fieldName && $tmvCollection.sortingDirection === 1}" class="mdi"></i> -->
                                 </span>
                             </a>
                         </div>
+                        <!-- this is for the action which get's 10% of the width -->
+                        <div flex="{{$tmvCollection.layout.actionFlex || '10'}}"></div>
                     </div>
                     <md-divider></md-divider>
                 </div>

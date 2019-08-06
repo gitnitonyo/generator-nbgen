@@ -642,26 +642,28 @@ md-input-container {
     min-height: 0;
 }
 
+@mixin _form-group-border {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 5px;
+    // margin: 0 $tmv-gutter-width $tmv-gutter-width + 8px;
+    margin-bottom: $tmv-gutter-width;
+    padding-top: $tmv-gutter-width * 2;
+    padding-bottom: $tmv-gutter-width;
+    @media (max-width: $layout-breakpoint-xs) {
+        // margin-left: $tmv-gutter-width / 2;
+        // margin-right: $tmv-gutter-width / 2;
+    }
+}
+
 .tmv-form-group {
     position: relative;
     &.form-group-border, 
     &.flat-group-border {
-        border-width: 1px;
-        border-style: solid;
-        border-radius: 5px;
-        // margin: 0 $tmv-gutter-width $tmv-gutter-width + 8px;
-        margin-bottom: $tmv-gutter-width;
-        padding-top: $tmv-gutter-width * 2;
-        padding-bottom: $tmv-gutter-width;
-        @media (max-width: $layout-breakpoint-xs) {
-            // margin-left: $tmv-gutter-width / 2;
-            // margin-right: $tmv-gutter-width / 2;
-        }
-        &.nbgen-file-upload-content {
-            padding-top: 0;
-        }
+        @include _form-group-border();
     }
-    &.flat-group-border {
+    &.flat-group-border, &.form-group-border .form-group-border {
+        // no shadow effect
         margin: 0 $tmv-gutter-width $tmv-gutter-width + 8px;
     }
     > div:not(:last-child) > .form-group-border-bottom {
@@ -676,14 +678,14 @@ md-input-container {
     }
 }
 
-.tmv-form-group.form-group-boder .tmv-form-group.form-group-border {
-    // disregard the effect on inner-form group border
-    border-width: 0;
-    border-radius: 0;
-    margin: 0;
-    padding: 0;
-    box-shadow: none;
-}
+// .tmv-form-group.form-group-boder .tmv-form-group.form-group-border {
+//     // disregard the effect on inner-form group border
+//     border-width: 0;
+//     border-radius: 0;
+//     margin: 0;
+//     padding: 0;
+//     box-shadow: none;
+// }
 
 // card view css
 .tmv-card-view {
@@ -708,6 +710,13 @@ md-input-container {
             box-sizing: border-box;
             box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
             background-color: rgb(250, 250, 250);
+
+            .form-group-border {
+                // disregard the effect if inner border
+                @include _form-group-border();
+                margin: 0 $tmv-gutter-width $tmv-gutter-width + 8px;
+                box-shadow: none;
+            }
         }
     }
     md-tabs-wrapper {

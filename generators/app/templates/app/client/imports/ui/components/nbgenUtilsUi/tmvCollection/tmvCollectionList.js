@@ -180,13 +180,9 @@ export class TmvCollectionListBaseCtrl extends TmvCollectionBase {
             // if (this.layout && this.layout.fields.length > 0) {
             //     this.sort[this.layout.fields[0].fieldName] = 1;
             // }
-            this.layout.fields.forEach((field) => {
-                if (field.initialSort) {
-                    this.sortingField = field.fieldName;
-                    this.sortingDirection = field.initialSortDir || 1;
-                    this.sort = {[this.sortingField]: this.sortingDirection};
-                }
-            })
+            // find the field with initial sort setting
+            const sortField = _.find(this.layout.fields, f => f.initialSort === true)
+            if (sortField) this.performSort(sortField);
         }
         this.searchText = '';
         this.pageSize = this.options.pageSize || 50;
@@ -447,6 +443,10 @@ export class TmvCollectionListBaseCtrl extends TmvCollectionBase {
         return /\.form$/.test(this.$state.current.name);
     }
 
+    isFieldSortable(field) {
+        return !! field.sortingFields;
+    }
+
     performSort(field) {
         const fieldName = field.fieldName;
         if (fieldName === this.sortingField) {
@@ -457,13 +457,19 @@ export class TmvCollectionListBaseCtrl extends TmvCollectionBase {
         }
         const sortParam = { };
         const sortingDirection = this.sortingDirection;
-        if (field.sortingFields && _.isArray(field.sortingFields)) {
-            _.each(field.sortingFields, (sortField) => {
-                sortParam[sortField] = sortingDirection;
-            })
+        let sortingFields;
+        if (_.isBoolean(field.sortingFields) && field.sortingFields === true) {
+            sortingFields = [field.fieldName];
+        } else if (!_.isArray(field.sortingFields)) {
+            sortingFields = [field.sortingFields]
         } else {
-            sortParam[this.sortingField] = sortingDirection;
+            sortingFields = field.sortingFields;
         }
+
+        _.each(sortingFields, (sortField) => {
+            sortParam[sortField] = sortingDirection;
+        })
+
         this.sort = sortParam;
     }
 }

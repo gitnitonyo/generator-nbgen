@@ -1,0 +1,10 @@
+<md-button tmv-icon="mdi-pencil" ng-if="!$tmvList.hideEdit({item: item})" class="md-icon-button"
+    tmv-label="{{$tmvList.editLabel || $tmvList.layout.editLabel || 'global.common.edit' | translate}}"
+    ng-click="$tmvList.onEdit({event: $event, item: item, index: $index})"
+    ng-disabled="$tmvList.editDisabled({event: $event, item: item, index: $index})">
+</md-button>
+<md-button tmv-icon="mdi-delete" ng-if="!$tmvList.hideDelete({item: item})" class="md-icon-button"
+    tmv-label="{{$tmvList.deleteLabel || $tmvList.layout.deleteLabel || 'global.common.remove' | translate}}"
+    ng-click="$tmvList.onDelete({event: $event, item: item, index: $index})"
+    ng-disabled="$tmvList.deleteDisabled({event: $event, item: item, index: $index})">
+</md-button>
