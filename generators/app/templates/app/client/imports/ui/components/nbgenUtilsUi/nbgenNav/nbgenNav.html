@@ -1,0 +1,33 @@
+<div class="nbgen-nav-container">
+    <md-nav-bar md-no-ink-bar="nbgenNav.disableInkBar" , md-selected-nav-item="nbgenNav.currentNavItem" ,
+        nav-bar-aria-label="Navigation Links" md-theme="{{nbgenNav.nbgenTheme}}">
+        <md-nav-item ng-repeat="menuItem in nbgenNav.menu" name="{{menuItem.menuId}}"
+            ng-if="nbgenNav.isVisible(menuItem)" ng-disabled="nbgenNav.isDisabled(menuItem)"
+            md-nav-click="nbgenNav.doAction(menuItem)"
+            ng-mouseover="nbgenNav.mouseEnter(menuItem)"
+            ng-mouseleave="nbgenNav.mouseLeave(menuItem)"
+            >
+            <div class="menu-item-content">
+                <span class="menuitem-icon"><i ng-class="menuItem.iconClass"></i></span>
+                <span>{{ menuItem.label | translate }}</span>
+                <span class="submenu-icon" ng-if="menuItem.submenu">
+                    <i class="mdi"
+                        ng-class="{'mdi-chevron-down': menuItem.menuId != nbgenNav.toggledItem, 'mdi-chevron-up': menuItem.menuId == nbgenNav.toggledItem}"></i>
+                </span>
+            </div>
+            <div class="submenu-container" 
+                ng-if="menuItem.submenu && menuItem.menuId == nbgenNav.toggledItem"
+                md-theme="default"
+                >
+                <md-list class="submenu-menu md-whiteframe-z1">
+                    <md-list-item ng-repeat="submenuItem in menuItem.submenu" ng-click="nbgenNav.doAction(submenuItem)">
+                        <div layout="row">
+                            <span class="submenu-icon"><i ng-class="submenuItem.iconClass"></i></span>
+                            <div class="text-nowrap submenu-text">{{submenuItem.label | translate}}</div>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </md-nav-item>
+    </md-nav-bar>
+</div>

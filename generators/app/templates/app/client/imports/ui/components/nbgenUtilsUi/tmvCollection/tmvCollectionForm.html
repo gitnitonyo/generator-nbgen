@@ -29,10 +29,10 @@
         </div>
     </md-toolbar>
     <md-content
-        flex
+        flex layout="column"
         ng-class="{'tmv-card-view': $tmvCollection.formSchema.cardView !== false, 'tmv-compressed-view-wrapper': !$tmvCollection.fullWidthView}"
     >
-        <form name="$tmvCollection.editForm" novalidate="" class="tmv-collection-form-content-wrapper">
+        <form name="$tmvCollection.editForm" novalidate="" class="tmv-collection-form-content-wrapper" flex layout="column">
             <div class="tmv-collection-form-schema">
                 <div
                     ng-if="$tmvCollection.options.preFormTemplate"
@@ -45,6 +45,7 @@
                     form-model="$tmvCollection.$currentItem"
                     read-only="$tmvCollection.viewMode == 'view'"
                     translate-prefix="{{ $tmvCollection.translatePrefix }}"
+                    flex
                 >
                 </tmv-form>
                 <div

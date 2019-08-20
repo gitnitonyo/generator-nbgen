@@ -12,6 +12,7 @@ import nbgenAuth from '../nbgenAuth';
 import nbgenForm from '../nbgenForm';
 import nbgenUtilsUi from '../nbgenUtilsUi';
 import nbgenMeteor from '../nbgenMeteor';
+import nbgenChat from './nbgenChat/nbgenChat.service';
 import { Meteor, Accounts, Counts, Roles, Tracker, Mongo, TimeSync } from '../nbgenMeteor';
 import { TmvCollectionListBaseCtrl, TmvCollectionFormBaseCtrl, setupTmvCollection } from '../nbgenUtilsUi/tmvCollection';
 /*:nbgen:component:imports*/
@@ -26,6 +27,7 @@ angular.module(moduleName, [
     nbgenForm,
     nbgenUtilsUi,
     nbgenMeteor,
+    nbgenChat,
     /*:nbgen:component:modules*/
     /* DO NOT REMOVE THIS MARKER */
 ]);

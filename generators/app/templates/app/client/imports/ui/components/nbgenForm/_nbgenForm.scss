@@ -9,7 +9,7 @@
 }
 
 .tmv-form-layout-container {
-    width: 100%;
+    // width: 100%;
 
     // override styles for md stepper
     md-step-body {
@@ -425,11 +425,11 @@ md-tabs.tmv-tabs-container {
     }
 
     &.tmv-tabs-stretch {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        // position: absolute;
+        // top: 0;
+        // left: 0;
+        // right: 0;
+        // bottom: 0;
     }
 
     .tmv-tabs-content {

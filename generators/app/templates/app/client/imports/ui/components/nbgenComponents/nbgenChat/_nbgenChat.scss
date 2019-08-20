@@ -1,0 +1,125 @@
+.nbgen-chat-dialog {
+    min-width: 100%;
+    border-radius: 5px;
+    @media (min-width: $layout-breakpoint-xs) {
+        min-width: 450px;
+    }
+    .chat-content-window {
+        height: 65vh;
+        border-bottom-color: rgba(250, 250, 250, 0.12);
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        padding: 15px;
+        .chat-content {
+            background-color: rgba(250, 250, 250, 0.12);
+            box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 10px;
+            // * {
+            //     overflow-anchor: none;
+            // }
+            .chat-message-item-container {
+                padding: 12px;
+                &.chat-item-bot {
+                    text-align: right;
+                }
+                .chat-message-item {
+                    padding: 10px;
+                    border-radius: 10px;
+                    background-color: #283593;
+                    &.chat-item-bot {
+                        background-color: #33691E;
+                    }
+                }
+            }
+            // .chat-anchor {
+            //     overflow-anchor: auto;
+            //     min-height: 1px;
+            // }
+        } 
+    }
+    .chat-actions-window {
+        padding: 15px;
+        md-input-container {
+            margin: 0;
+            padding: 0;
+            .md-errors-spacer {
+                min-height: 0;
+            }
+        }
+        .chat-input {
+            padding: 8px 5px;
+            border-radius: 5px;
+            border: 1px solid rgba(0, 0, 0, 0.4);
+            background-color: rgba(250, 250, 250, 0.8);
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+@keyframes blink {
+    /**
+    * At the start of the animation the dot
+    * has an opacity of .2
+    */
+    0% {
+    opacity: .2;
+    }
+    /**
+    * At 20% the dot is fully visible and
+    * then fades out slowly
+    */
+    20% {
+    opacity: 1;
+    }
+    /**
+    * Until it reaches an opacity of .2 and
+    * the animation can start again
+    */
+    100% {
+    opacity: .2;
+    }
+}
+
+.waiting-for-reply span {
+    /**
+    * Use the blink animation, which is defined above
+    */
+    animation-name: blink;
+    /**
+    * The animation should take 1.4 seconds
+    */
+    animation-duration: 1.4s;
+    /**
+    * It will repeat itself forever
+    */
+    animation-iteration-count: infinite;
+    /**
+    * This makes sure that the starting style (opacity: .2)
+    * of the animation is applied before the animation starts.
+    * Otherwise we would see a short flash or would have
+    * to set the default styling of the dots to the same
+    * as the animation. Same applies for the ending styles.
+    */
+    animation-fill-mode: both;
+}
+
+.waiting-for-reply span:nth-child(2) {
+    /**
+    * Starts the animation of the third dot
+    * with a delay of .2s, otherwise all dots
+    * would animate at the same time
+    */
+    animation-delay: .2s;
+}
+
+.waiting-for-reply span:nth-child(3) {
+    /**
+    * Starts the animation of the third dot
+    * with a delay of .4s, otherwise all dots
+    * would animate at the same time
+    */
+    animation-delay: .4s;
+}

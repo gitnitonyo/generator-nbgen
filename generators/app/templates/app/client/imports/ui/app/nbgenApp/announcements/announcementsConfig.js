@@ -55,6 +55,8 @@ const config = {
         // computedValue: "fn" // function whose returns serves as template for this field passed item as parameter
         // searchField: true    // if field is searchable, can be array of searchable fields
 
+        tabular: false,
+
         initialSort: {
             dateToPost: -1,
             modifiedAt: -1,

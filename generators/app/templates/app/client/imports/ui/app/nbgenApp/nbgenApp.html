@@ -16,8 +16,7 @@
                 </md-button>
                 <div class="text-center text-fullwidth">
                     <div>&nbsp;</div>
-                    <img ng-src="{{nbgenApp.$config.applicationLogoSquare}}" style="width: 150px" />
-                    <div>&nbsp;</div>
+                    <img ng-src="{{nbgenApp.$config.applicationLogoSquare}}" style="height: 80px" />
                 </div>
                 <div class="md-caption text-center text-fullwidth text-emphasis" tmv-color="primary">
                     <!-- section to put user group or organization -->
@@ -50,25 +49,22 @@
                 <md-button class="md-icon-button md-no-focus" aria-label="Menu" show-gt-sm ng-click="nbgenApp.toggleSidenav('left-sidenav')">
                     <md-icon md-font-icon="mdi-menu" class="mdi"></md-icon>
                 </md-button>
-                <div layout="row" layout-align="space-between center" flex>
-                    <div layout="row" layout-align="start center" flex layout-xs="column" layout-align-xs="center start">
-                        <div id="nbgenAppLogoArea">
-                            <div layout="row" layout-align="start center">
-                                <img ng-src="{{nbgenApp.$config.applicationLogo}}" class="application-logo">
-                                <span>&nbsp;&nbsp;{{nbgenApp.$config.applicationName}}</span>
-                            </div>
-                        </div>
-                        <div id="nbgenTitleArea" class="text-ellipsis">
-                        </div>
-                        <div id="nbgenSearchArea" flex>
-                            <!-- search area -->
+                <div layout="row" layout-align="start center" flex layout-wrap>
+                    <div id="nbgenAppLogoArea" hide-xs hide-sm>
+                        <div layout="row" layout-align="start center">
+                            <img ng-src="{{nbgenApp.$config.applicationLogo}}" class="application-logo">
                         </div>
                     </div>
-                </div>
-                <div layout="row" layout-align="end center">
+                    <div id="nbgenTitleArea" class="text-ellipsis">
+                    </div>
+                    <div id="nbgenSearchArea" flex-xs>
+                        <!-- search area -->
+                    </div>
                     <div class="md-caption" id="tmvDataInfo">
                         <!-- additional data info -->
                     </div>
+                </div>
+                <div layout="row" layout-align="end center">
                     <div id="nbgenActionArea" layout="row" layout-align="end center">
                         <!-- action area -->
                     </div>

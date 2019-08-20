@@ -1,0 +1,56 @@
+<md-content aria-label="Chat Dialog" class="nbgen-chat-dialog" md-theme="dark" layout="column">
+    <div layout="row">
+        <span flex></span>
+        <span>
+            <md-button tmv-icon="mdi-close" aria-label="Close" class="md-icon-button"
+                ng-click="chat.mdPanelRef.close()"
+                >
+
+            </md-button>
+        </span>
+    </div>
+    <div class="chat-content-window" layout="column" flex>
+        <!-- chat transcript here -->
+        <md-content class="chat-content" flex>
+            <div ng-repeat="msg in chat.mainCtrl.currentMessages" 
+                class="chat-message-item-container" ng-class="{'chat-item-bot': msg.user === false}">
+                <span class="chat-message-item md-whiteframe-z1" ng-class="{'chat-item-bot': msg.user === false}">
+                    {{msg.text}}
+                </span>
+            </div>
+            <div class="chat-anchor waiting-for-reply text-right text-emphasis" style="font-size:40px; margin-top:-15px" 
+                ng-show="chat.waitingForReply">
+                <span>.</span><span>.</span><span>.</span>
+            </div>
+        </md-content>
+    </div>
+    <div class="chat-actions-window">
+        <!-- chat input here -->
+        <form layout="row" layout-align="start center"
+            ng-submit="chat.sendMessage(chat.inputChat)">
+            <div flex layout="column">
+                <md-input-container class="md-block" md-no-float="" md-theme="default">
+                    <textarea 
+                        md-autofocus class="chat-input"
+                        ng-model="chat.inputChat"
+                        autocomplete="off"
+                        placeholder="Please enter your message here"
+                        rows="1"
+                        max-rows="3"
+                        md-no-resize
+                        ng-enter="chat.sendMessage(chat.inputChat)"
+                    >
+                    </textarea>
+                </md-input-container>
+                <!-- <input class="chat-input" ng-model="chat.inputChat" 
+                    md-autofocus placeholder="Please enter your message here"
+                    autocomplete="off"
+                    > -->
+            </div>
+            <md-button class="md-icon-button" type="submit" tmv-icon="mdi-send" aria-label="Send"
+                style="padding-left: 10px;"
+                >
+            </md-button>
+        </form>
+    </div>
+</md-content>

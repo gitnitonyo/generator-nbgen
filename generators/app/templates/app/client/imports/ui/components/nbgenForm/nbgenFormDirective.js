@@ -17,7 +17,7 @@ import { WAITING_TEMPLATE as tmpTemplate } from './nbgenFormUtils.js';
 const _defaultTabOptions = {
     'md-border-bottom': 'true',
     'md-swipe-content': 'false',
-    'md-dynamic-height': 'false',
+    'md-dynamic-height': 'true',
     'md-enable-disconnect': 'true',
 };
 
@@ -257,7 +257,7 @@ class TmvFormController {
         let tabContainer = angular.element('<md-tabs>').addClass('tmv-tabs-container').attr('ng-cloak', '');
         if (formTabs.options.stretchVertically === true) {
             tabContainer.addClass('tmv-tabs-stretch');
-            tabOptions['md-dynamic-height'] = 'false';  // for dynamic height to be false
+            // tabOptions['md-dynamic-height'] = 'false';  // for dynamic height to be false
         }
         _.each(tabOptions, (value, key) => { tabContainer.attr(key, value); });
         parentDom.append(tabContainer);

@@ -4,7 +4,6 @@
 
 import {Meteor} from '../common'
 import {Roles} from '../common'
-import {Counts} from '../common'
 
 import { ReactiveAggregate } from '../common';
 
@@ -87,6 +86,25 @@ function _determineOptions(options, optionsFn) {
 
 export const determineOptions = _determineOptions;
 
+export function publishCount(self, publishName, countCursor) {
+    let name = `${publishName}.count`;
+
+    let count = countCursor.count(false),
+        oldCount = count;
+    self.added('counts', name, {count});
+
+    // call every second to check if there are updates
+    let handle = Meteor.setInterval(() => {
+        count = countCursor.count(false);
+        if (count !== oldCount) {
+            self.changed('counts', name, {count});
+            oldCount = count;
+        }
+    }, 1000);
+
+    self.onStop(() => Meteor.clearInterval(handle));
+}
+
 export function publishCollection(publishName, collection, selectorFn, optionsFn, makePublic, isVirtual, observerFns) {
 
     Meteor.publish(publishName, function(selector, options) {
@@ -95,8 +113,8 @@ export function publishCollection(publishName, collection, selectorFn, optionsFn
         options = _determineOptions.call(this, options, optionsFn);
 
         // include counts
-        Counts.publish(this, `${publishName}.count`, collection.find(selector), {noReady: true});
         let cursor = collection.find(selector, options);
+        publishCount(this, publishName, cursor);
 
         return isVirtual === true ? publishVirtual(this, publishName, cursor, observerFns) : cursor;
     })

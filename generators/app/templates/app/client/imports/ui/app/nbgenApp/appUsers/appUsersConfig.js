@@ -448,6 +448,7 @@ const config = {
         // value: "{{}}"    // interpolate string to be displayed as value
         // computedValue: "fn" // function whose returns serves as template for this field passed item as parameter
         // searchField: true    // if field is searchable, can be array of searchable fields
+        tabular: false,
 
         initialSort: { "createdAt": -1, "profile.name": 1 },
         avatarField: "$tmvCollection.getAvatar(item)",

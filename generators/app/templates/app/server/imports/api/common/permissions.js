@@ -60,7 +60,8 @@ export function _checkPermission(userId, mapping, operation, doc, fields, modifi
     if (!_.isObject(operMapping)) return false
 
     // each member of the object is assumed to be a role name
-    for (let roleName in operMapping) {
+    let roleName;
+    for (roleName in operMapping) {
         const value = operMapping[roleName]
         if (Roles.userIsInRole(user, roleName, activeGroup) || roleName === '__default__') {
             // user is in role

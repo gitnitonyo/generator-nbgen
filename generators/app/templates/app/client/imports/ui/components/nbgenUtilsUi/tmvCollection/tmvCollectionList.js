@@ -40,15 +40,19 @@ export class TmvCollectionListBaseCtrl extends TmvCollectionBase {
         if (!_.isObject(this.options)) throw "No valid options was passed into tmvCollection list";
         this.__processOptions();
 
-        // enable scroll shrink
-        if (this.layout.enableScrollShrink === true) {
-            this.enableScrollShrink();
-        }
+        this.enableScrollShrink();
+
+        if (this.layout.tabular === undefined) this.layout.tabular = true;
 
         this.$init && this.$init.call(this);
     }
 
     enableScrollShrink() {
+        if (this.layout.enableScrollShrink === undefined) {
+            this.layout.enableScrollShrink = true;
+        }
+
+        if (this.layout.enableScrollShrink !== true) return;        // not setting
         const toolbarToShrink = '.nbgen-main-toolbar';
         const elemToScroll = '.md-virtual-repeat-scroller';
         const $$rAF = this.$injector.get('$$rAF');
@@ -63,9 +67,9 @@ export class TmvCollectionListBaseCtrl extends TmvCollectionBase {
         if (toolbarElement.length === 0) return;        // no toolbar element found
 
         const origMarginTop = toolbarElement.css('margin-top');
-        toolbarHeight = toolbarElement.height();
 
         function onScroll(e) {
+            toolbarHeight = toolbarElement.height();
             let scrollTop = e ? e.target.scrollTop : prevScrollTop;
 
             y = Math.min(toolbarHeight / shrinkSpeedFactor, Math.max(0, y + scrollTop - prevScrollTop));

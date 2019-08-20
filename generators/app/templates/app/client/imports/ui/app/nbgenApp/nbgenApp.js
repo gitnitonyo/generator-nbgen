@@ -189,9 +189,9 @@ angular.module(name, [
 
         // this is a workaround for deploying the not on the root path
         // parse the Meteor's absoluteUrl
-        const baseNode = document.createElement('BASE');
-        baseNode.setAttribute('href', Meteor.absoluteUrl());
-        document.getElementsByTagName("HEAD")[0].appendChild(baseNode);
+        // const baseNode = document.createElement('BASE');
+        // baseNode.setAttribute('href', Meteor.absoluteUrl());
+        // document.getElementsByTagName("HEAD")[0].appendChild(baseNode);
 
         // $locationProvider.html5Mode(true);
         $urlRouterProvider.otherwise('/');

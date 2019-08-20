@@ -7,6 +7,7 @@ import moment from 'moment'
 
 import _ from 'underscore';
 import _s from 'underscore.string';
+import { sprintf } from 'sprintf-js';
 
 const utils = angular.module(nbgenUtilsUi);
 /**
@@ -428,6 +429,13 @@ utils.filter('titleize', function() {
 
     return function(matchItem) {
         return _s.titleize(_s.humanize(matchItem));
+    }
+})
+
+utils.filter('numerize', function() {
+    'ngInject'
+    return function(matchItem, format) {
+        return sprintf(`%${format}`, matchItem);
     }
 })
 

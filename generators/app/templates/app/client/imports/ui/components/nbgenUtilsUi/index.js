@@ -10,5 +10,6 @@ import './nbgenToolbarActions/nbgenToolbarActionsCtrl.js';
 import './nbgenUiData/nbgenUiData.js';
 import './nbgenWaitDialog/nbgenWaitDialog.js';
 import './tmvImageViewer/tmvImageViewerCtrl.js';
+import './nbgenNav/nbgenNavCtrl.js';
 
 export default nbgenUtilsUi;

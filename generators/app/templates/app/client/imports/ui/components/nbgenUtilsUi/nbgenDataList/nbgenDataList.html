@@ -91,7 +91,9 @@
                             ng-bind-html="$tmvList.getFieldText($index, item)">
                         </span>
                     </div>
-                    <div class="tmv-list-table-column tmv-list-action-buttons" flex="{{$tmvList.layout.actionFlex || '10'}}">
+                    <div class="tmv-list-table-column tmv-list-action-buttons" flex="{{$tmvList.layout.actionFlex || '10'}}"
+                        ng-if="item && !$tmvList._hideAction(item)"
+                        >
                         <div nbgen-template="$tmvList.actionTemplate">
                         </div>
                     </div>
