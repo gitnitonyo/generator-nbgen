@@ -4,6 +4,8 @@
 helper
 tmv-template.js
 
+**/templates/**/keys/*.json
+
 ######################
 # Node
 ######################
