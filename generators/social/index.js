@@ -2,6 +2,7 @@ let BaseGenerator = require('../tmv-generator-base')
     CONSTANTS = require('../tmv-constants')
     _ = require('lodash')
     _s = require('underscore.string')
+    chalk = require('chalk')
 
 class TmvGenerator extends BaseGenerator {
     constructor(args, opts) {

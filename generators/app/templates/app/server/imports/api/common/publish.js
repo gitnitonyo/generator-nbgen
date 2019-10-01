@@ -113,8 +113,10 @@ export function publishCollection(publishName, collection, selectorFn, optionsFn
         options = _determineOptions.call(this, options, optionsFn);
 
         // include counts
+        // let countCursor = collection.find(selector);
+        // Counts.publish(this, `${publishName}.count`, countCursor, {noReady: true});
         let cursor = collection.find(selector, options);
-        publishCount(this, publishName, cursor);
+        publishCount(this, publishName, cursor)
 
         return isVirtual === true ? publishVirtual(this, publishName, cursor, observerFns) : cursor;
     })

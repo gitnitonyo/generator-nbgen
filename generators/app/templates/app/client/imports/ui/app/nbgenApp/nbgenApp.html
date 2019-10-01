@@ -16,7 +16,8 @@
                 </md-button>
                 <div class="text-center text-fullwidth">
                     <div>&nbsp;</div>
-                    <img ng-src="{{nbgenApp.$config.applicationLogoSquare}}" style="height: 80px" />
+                    <img ng-src="{{nbgenApp.$config.applicationLogoSquare}}" style="width: 150px" />
+                    <div>&nbsp;</div>
                 </div>
                 <div class="md-caption text-center text-fullwidth text-emphasis" tmv-color="primary">
                     <!-- section to put user group or organization -->
@@ -53,6 +54,7 @@
                     <div id="nbgenAppLogoArea" hide-xs hide-sm>
                         <div layout="row" layout-align="start center">
                             <img ng-src="{{nbgenApp.$config.applicationLogo}}" class="application-logo">
+                            <span>&nbsp;&nbsp;{{nbgenApp.$config.applicationName}}</span>
                         </div>
                     </div>
                     <div id="nbgenTitleArea" class="text-ellipsis">

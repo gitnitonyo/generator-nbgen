@@ -640,6 +640,30 @@ angular.module(nbgenUtilsUi)
             },
 
             /**
+             * @name convertObjectWithDates
+             * @methodOf $tmvUtils
+             * @param {object} obj the object which may contain string in date format
+             * @description
+             * Traverse the specified object, and inspect for possible date string,
+             * if found, these are converted to Date objects
+             */
+            convertObjectWithDates: function(obj) {
+                let _this = this;
+                for (let prop in obj) {
+                    if (obj.hasOwnProperty(prop)) {
+                        let propValue = obj[prop];
+                        if ((typeof propValue) == 'string') {
+                            let dateRx = /^(\d{4}\-\d\d\-\d\d([tT ][\d:\.]*)?)([zZ]|([+\-])(\d\d):(\d\d))?$/;
+                            if (dateRx.test(propValue)) {
+                                obj[prop] = Date.fromISO(propValue); // convert to date
+                            }
+                        } else if ((typeof propValue) == 'object') {
+                            _this.convertObjectWithDates(obj[prop]);
+                        }
+                    }
+                }
+            },
+            /**
              * @name storageGet
              * @param {string} key
              * @description
