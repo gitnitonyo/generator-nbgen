@@ -141,7 +141,7 @@ angular.module(name, [
         };
 
         const appTheme = nbgenAppConfig.colorTheme;
-        const secondaryAppTheme = nbgenAppConfig.secondaryColorTheme;
+        const secondaryAppTheme = nbgenAppConfig.secondaryTheme;
 
         // define 2 themes: 'light' & 'dark'
         let lightTheme = $mdThemingProvider.theme('default'),
@@ -152,7 +152,7 @@ angular.module(name, [
         let secondaryTheme, secondaryDarkTheme;
         if (secondaryAppTheme) {
             secondaryTheme = $mdThemingProvider.theme('secondary');
-            secondaryDarkTheme = $mdThemingProvider.theme('secondaryDark');
+            secondaryDarkTheme = $mdThemingProvider.theme('secondary-dark');
             secondaryDarkTheme.dark();
         }
 

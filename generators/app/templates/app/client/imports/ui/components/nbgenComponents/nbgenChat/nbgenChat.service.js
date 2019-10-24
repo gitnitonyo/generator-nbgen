@@ -107,7 +107,7 @@ class NbgenChatService {
 * This is for chat dialog
 */
 class ChatDialogController {
-    constructor($scope, $reactive, $element, $timeout, mainCtrl, mdPanelRef) {
+    constructor($scope, $reactive, $element, $timeout, mainCtrl, mdPanelRef, $tmvUiUtils) {
         'ngInject';
 
         this.$scope = $scope;
@@ -115,6 +115,7 @@ class ChatDialogController {
         this.$element = $element;
         this.$timeout = $timeout;
         this.mdPanelRef = mdPanelRef;
+        this.$tmvUiUtils = $tmvUiUtils
         $reactive(this).attach($scope);
 
         this.waitingForReply = false;

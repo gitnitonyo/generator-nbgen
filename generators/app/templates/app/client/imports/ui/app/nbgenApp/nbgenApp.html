@@ -15,9 +15,13 @@
                     <md-icon md-font-icon="mdi-arrow-left" class="mdi"></md-icon>
                 </md-button>
                 <div class="text-center text-fullwidth">
-                    <div>&nbsp;</div>
-                    <img ng-src="{{nbgenApp.$config.applicationLogoSquare}}" style="width: 150px" />
-                    <div>&nbsp;</div>
+                    <!-- <img ng-src="{{nbgenApp.$config.applicationLogoSquare}}" style="width: 150px" /> -->
+                    <div class="tmv-primary-color">
+                        <i class="nb-font nb-nube-clinic" style="font-size: 150px"></i>
+                    </div>
+                    <div class="md-subhead">
+                        {{nbgenApp.$config.applicationName}}
+                    </div>
                 </div>
                 <div class="md-caption text-center text-fullwidth text-emphasis" tmv-color="primary">
                     <!-- section to put user group or organization -->
@@ -43,18 +47,20 @@
             </md-toolbar>
         </md-sidenav>
     </div>
-    <div layout="column" flex>
-        <md-toolbar class="nbgen-main-toolbar" layout="column" flex="none">
+    <div layout="column" flex class="nbgen" ng-class="nbgenApp.mainContentClass()" ng-style="nbgenApp.mainContentStyle()">
+        <md-toolbar class="nbgen-main-toolbar transparent" layout="column" flex="none">
             <div layout="row" layout-align="start center" flex>
                 <!-- activate menu when screen is small -->
-                <md-button class="md-icon-button md-no-focus" aria-label="Menu" show-gt-sm ng-click="nbgenApp.toggleSidenav('left-sidenav')">
+                <md-button class="md-icon-button md-no-focus" aria-label="Menu"
+                    ng-click="nbgenApp.toggleSidenav('left-sidenav')" hide-gt-xs>
                     <md-icon md-font-icon="mdi-menu" class="mdi"></md-icon>
                 </md-button>
-                <div layout="row" layout-align="start center" flex layout-wrap>
-                    <div id="nbgenAppLogoArea" hide-xs hide-sm>
+                <div layout="row" layout-align="start center" flex>
+                    <div id="nbgenAppLogoArea">
                         <div layout="row" layout-align="start center">
-                            <img ng-src="{{nbgenApp.$config.applicationLogo}}" class="application-logo">
-                            <span>&nbsp;&nbsp;{{nbgenApp.$config.applicationName}}</span>
+                            <!-- <img ng-src="{{nbgenApp.$config.applicationLogo}}" class="application-logo"> -->
+                            <!-- <span>&nbsp;&nbsp;{{nbgenApp.$config.applicationName}}</span> -->
+                            <!-- <span class="text-padding" style="font-size: 30px;"><i class="nb-font nb-nube-clinic"></i></span> -->
                         </div>
                     </div>
                     <div id="nbgenTitleArea" class="text-ellipsis">
@@ -62,7 +68,7 @@
                     <div id="nbgenSearchArea" flex-xs>
                         <!-- search area -->
                     </div>
-                    <div class="md-caption" id="tmvDataInfo">
+                    <div class="md-caption" id="tmvDataInfo" hide-xs>
                         <!-- additional data info -->
                     </div>
                 </div>
@@ -108,15 +114,19 @@
                             </md-menu-content>
                         </md-menu>
                     </div>
-                    <md-button class="md-icon-button md-no-focus" aria-label="Menu" show-gt-lg ng-click="nbgenApp.toggleSidenav('right-sidenav')">
+                    <!-- <md-button class="md-icon-button md-no-focus" aria-label="Menu" show-gt-lg ng-click="nbgenApp.toggleSidenav('right-sidenav')">
                         <md-icon md-font-icon="mdi-newspaper" class="mdi"></md-icon>
-                    </md-button>
+                    </md-button> -->
+                    <md-button class="md-icon-button md-accent" aria-label="Chat" tmv-icon="mdi-comment-text"
+                        ng-click="nbgenApp.$nbgenChat.showChatPanel($event)"
+                    >
+
+                    </md-button> 
                 </div>
             </div>
+            <nbgen-nav menu="nbgenApp.nbgenAppMenu" nbgen-theme="secondary-dark" hide-xs ng-if="nbgenApp.isAuthenticated()"></nbgen-nav>
         </md-toolbar>
         <div layout="column" flex id="nbgenAppContent" class="nbgen-app-content" 
-            ng-style="nbgenApp.mainContentStyle()"
-            ng-class="nbgenApp.mainContentClass()"
             >
             <div id="nbgenFloatingButtonArea"></div>
             <!-- remove the anim-in-out -->

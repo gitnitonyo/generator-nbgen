@@ -1,11 +1,14 @@
 {
     "email": {
-        "fromEmail": "dont-reply@nubevtech.com",
+        "fromEmail": "dont-reply@enubevision.com.ph",
         "siteName": "NubeVision nbGenAppBase",
         "verifyEmailSubject": "Please Verify Email Address on nbGenAppBase service"
     },
     "public": {
         "serviceName": "nbGenAppBase",
         "env": "development"
+    },
+    "apiai": {
+        "clientKey": "32f68d9c7be04737b07370b457e24b09"
     }
 }

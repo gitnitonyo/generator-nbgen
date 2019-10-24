@@ -53,52 +53,52 @@ const nbgenAppMenu = [
         rolesAllowed: [appRoles.NORMAL_USER],
     },
     // nbgen: menu entry will be added above; don't delete
-    {
-        menuId: "__divider__"
-    },
-    {
-        menuId: '_support',
-        label: 'global.menu.support',
-        iconClass: 'mdi-help mdi',
-        rolesAllowed: "",
-        submenu: [
-            {
-                menuId: '_supportedBrowsers',
-                iconClass: "mdi-web mdi",
-                label: 'global.menu.supportedBrowsers',
-                showIf: "!nbgenApp.$isCordova",
-                action: 'sref:supportedBrowsers',
-            },
-            {
-                menuId: '_termsOfUse',
-                label: 'global.menu.termsOfUse',
-                iconClass: 'mdi-file-check mdi',
-                rolesAllowed: "",  // specify roles which can access this
-                action: 'sref:termsOfUse',
-            },
-            {
-                menuId: '_privacy',
-                label: 'global.menu.privacy',
-                iconClass: 'mdi-account-key mdi',
-                rolesAllowed: "",  // specify roles which can access this
-                action: 'sref:privacy',
-            },
-            {
-                menuId: '_aboutUs',
-                label: 'global.menu.aboutUs',
-                iconClass: 'mdi-comment-question-outline mdi',
-                rolesAllowed: "",  // specify roles which can access this
-                action: 'sref:aboutUs',
-            },
-        ]
-    },
-    {
-        menuId: '_contactUs',
-        label: 'global.menu.contactUs',
-        iconClass: 'mdi-deskphone mdi',
-        rolesAllowed: "",  // specify roles which can access this
-        action: 'sref:contactUs',
-    },
+    // {
+    //     menuId: "__divider__"
+    // },
+    // {
+    //     menuId: '_support',
+    //     label: 'global.menu.support',
+    //     iconClass: 'mdi-help mdi',
+    //     rolesAllowed: "",
+    //     submenu: [
+    //         {
+    //             menuId: '_supportedBrowsers',
+    //             iconClass: "mdi-web mdi",
+    //             label: 'global.menu.supportedBrowsers',
+    //             showIf: "!nbgenApp.$isCordova",
+    //             action: 'sref:supportedBrowsers',
+    //         },
+    //         {
+    //             menuId: '_termsOfUse',
+    //             label: 'global.menu.termsOfUse',
+    //             iconClass: 'mdi-file-check mdi',
+    //             rolesAllowed: "",  // specify roles which can access this
+    //             action: 'sref:termsOfUse',
+    //         },
+    //         {
+    //             menuId: '_privacy',
+    //             label: 'global.menu.privacy',
+    //             iconClass: 'mdi-account-key mdi',
+    //             rolesAllowed: "",  // specify roles which can access this
+    //             action: 'sref:privacy',
+    //         },
+    //         {
+    //             menuId: '_aboutUs',
+    //             label: 'global.menu.aboutUs',
+    //             iconClass: 'mdi-comment-question-outline mdi',
+    //             rolesAllowed: "",  // specify roles which can access this
+    //             action: 'sref:aboutUs',
+    //         },
+    //     ]
+    // },
+    // {
+    //     menuId: '_contactUs',
+    //     label: 'global.menu.contactUs',
+    //     iconClass: 'mdi-deskphone mdi',
+    //     rolesAllowed: "",  // specify roles which can access this
+    //     action: 'sref:contactUs',
+    // },
 ]
 
 export default nbgenAppMenu

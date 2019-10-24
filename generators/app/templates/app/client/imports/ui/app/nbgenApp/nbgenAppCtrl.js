@@ -68,7 +68,7 @@ const supportedBrowsers = [{
 export default class NbGenAppCtrl {
     constructor($scope, $mdMedia, $mdSidenav, $reactive, $translate, $state, $q,
         $translatePartialLoader, $nbgenIdentityService, $nbgenAuthProviderService,
-        $tmvUiUtils, $timeout, $authUiService, $rootScope, Language, $tmvUiData) {
+        $tmvUiUtils, $timeout, $authUiService, $rootScope, Language, $tmvUiData, $nbgenChat) {
         'ngInject';
 
         $reactive(this).attach($scope)
@@ -89,6 +89,8 @@ export default class NbGenAppCtrl {
 
         this.$nbgenLanguage = Language;
         this.$tmvUiData = $tmvUiData;
+
+        this.$nbgenChat = $nbgenChat;
 
         this.$translate = $translate;
         this.$translatePartialLoader = $translatePartialLoader;
@@ -325,5 +327,9 @@ export default class NbGenAppCtrl {
         if (this.$config.applicationBgs.length > 0) {
             return "nbgen-background-image";
         }
+    }
+
+    isAuthenticated() {
+        return this.$identityService.isAuthenticated()
     }
 }

@@ -30,7 +30,7 @@ const config = {
     },
     secondaryTheme: {
         // secondary color theme used
-        primary: "indigo",
+        primary: "blue",
         accent: "amber",
     }
 }
