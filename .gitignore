@@ -3,6 +3,7 @@
 ######################
 helper
 tmv-template.js
+.deploy/mup.js
 
 **/templates/**/keys/*.json
 
