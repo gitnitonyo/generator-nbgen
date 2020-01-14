@@ -146,7 +146,7 @@ _.assign(TmvClientGenerator.prototype, {
             if (this.abort) return;
             var done = this.async();
             this.log('Updating packages...')
-            this.meteorExec(['update', '--all-packages'], (code) => {
+            this.meteorExec(['update', '--release', '1.8.2', '--all-packages'], (code) => {
                 if (code !== 0) {
                     this.warning("Error updating meteor")
                 }
