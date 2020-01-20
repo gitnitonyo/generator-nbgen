@@ -1315,7 +1315,7 @@ class TmvInputController {
             buttonDom.attr('ng-click', this.__generateAttrValue(fieldSchema, true, 'btnClick'));
         }
         if (angular.isString(fieldSchema.btnIconClass)) {
-            buttonDom.attr('tmv-icon', this.__generateAttrValue(fieldSchema, 'interpolate', 'btnDisabled'));
+            buttonDom.attr('tmv-icon', this.__generateAttrValue(fieldSchema, 'interpolate', 'btnIconClass'));
         }
         let label;
         if (_.isString(fieldSchema.fieldLabel)) {

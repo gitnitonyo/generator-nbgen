@@ -1,7 +1,7 @@
 /* globals App */
 App.info({
-    id: 'com.nubevtech.nbgen2-base',
-    name: 'nbgen2Base',
+    id: 'com.nubevtech.nbgenBase',
+    name: 'nbgenBase',
     version: '0.0.1'
 });
 
@@ -30,11 +30,12 @@ App.icons({
     ipad_app_legacy_2x: "resources/ios/icon/icon-72@2x.png",                    // (144x144) Legacy
     
     // For Android
-    android_mdpi: "resources/android/icon/mipmap-mdpi/ic_launcher.png",         // (48x48)
-    android_hdpi: "resources/android/icon/mipmap-hdpi/ic_launcher.png",         // (72x72)
-    android_xhdpi: "resources/android/icon/mipmap-xhdpi/ic_launcher.png",       // (96x96)
-    android_xxhdpi: "resources/android/icon/mipmap-xxhdpi/ic_launcher.png",     // (144x144)
-    android_xxxhdpi: "resources/android/icon/mipmap-xxxhdpi/ic_launcher.png",   // (192x192)
+    // android_ldpi: "resources/android/icon/drawable-ldpi-icon.png",
+    android_mdpi: "resources/android/icon/drawable-mdpi-icon.png",         // (48x48)
+    android_hdpi: "resources/android/icon/drawable-hdpi-icon.png",         // (72x72)
+    android_xhdpi: "resources/android/icon/drawable-xhdpi-icon.png",       // (96x96)
+    android_xxhdpi: "resources/android/icon/drawable-xxhdpi-icon.png",     // (144x144)
+    android_xxxhdpi: "resources/android/icon/drawable-xxxhdpi-icon.png",   // (192x192)
 });
 
 App.launchScreens({
@@ -78,7 +79,8 @@ App.accessRule('*', {
 
 // App.setPreference('xwalkVersion', '23');
 App.setPreference('android-minSdkVersion', '19');
-App.setPreference('android-targetSdkVersion', '29');
+App.setPreference('android-targetSdkVersion', '28');
+App.setPreference('android-compileSdkVersion', '28');
 App.setPreference('AutoHideSplashScreen', 'true');
 App.setPreference('SplashScreenDelay', '0', 'ios');
 App.setPreference('FadeSplashScreenDuration', '0', 'ios');

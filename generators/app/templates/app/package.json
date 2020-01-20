@@ -17,7 +17,7 @@
     "watch": "meteor npm run gulp",
     "mongo": "meteor mongo",
     "gulp": "gulp --gulpfile .gulpfile.js --cwd .",
-    "resgen": "cordova-res && cp resources/android/icon/drawable-xxxhdpi-icon.png public/assets/images/application-logo.png && cp resources/android/icon/drawable-playstore-512-icon.png public/assets/images/application-logo-square.png",
+    "resgen": "cordova-res",
     "deploy-dev": "meteor npm install && npm run gulp -- build && cd .deploy/env/dev && mup deploy && cd -",
     "check-log": "cd .deploy/env/dev && mup logs --tail=100 -f && cd -"
   },
