@@ -45,6 +45,8 @@ const config = {
         // hideAction: true,    // will hide totally the actions
         // hideAdd: true,
 
+        tabular: false,
+
         // list of fields up to 6 items
         // fieldName: "fieldName"   // name of field
         // value: "{{}}"    // interpolate string to be displayed as value

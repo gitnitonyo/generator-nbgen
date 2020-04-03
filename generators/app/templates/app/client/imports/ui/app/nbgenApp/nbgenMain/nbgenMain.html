@@ -47,8 +47,10 @@
             </div>
         </div> -->
     </md-content>
-    <md-toolbar flex="none" layout="column" layout-align="center center"
-        class="md-caption nbgen-support-toolbar tmv-reverse-shadow" md-colors="{backgroundColor: 'background-hue-3'}">
+    <md-content flex="none" layout="column" layout-align="center center"
+        class="md-caption nbgen-support-toolbar tmv-reverse-shadow" 
+        md-colors="{backgroundColor: 'background-hue-3'}"
+        md-theme="dark">
         <div>{{nbgenMain.nbgenApp.$config.applicationName}} &copy; 2019</div>
         <div layout="row" layout-align="center center" layout-wrap>
             <md-button ui-sref="aboutUs" class="nbgen-href"><span class="md-caption"
@@ -60,5 +62,5 @@
             <md-button ui-sref="contactUs" class="nbgen-href"><span class="md-caption"
                     translate="global.menu.contactUs">Contact Us</span></md-button>
         </div>
-    </md-toolbar>
+    </md-content>
 </div>

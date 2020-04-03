@@ -78,9 +78,9 @@ App.accessRule('*', {
 
 
 // App.setPreference('xwalkVersion', '23');
-App.setPreference('android-minSdkVersion', '19');
-App.setPreference('android-targetSdkVersion', '28');
-App.setPreference('android-compileSdkVersion', '28');
+App.setPreference('android-minSdkVersion', '23');
+App.setPreference('android-targetSdkVersion', '23');
+// App.setPreference('android-compileSdkVersion', '28');
 App.setPreference('AutoHideSplashScreen', 'true');
 App.setPreference('SplashScreenDelay', '0', 'ios');
 App.setPreference('FadeSplashScreenDuration', '0', 'ios');

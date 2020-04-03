@@ -20,5 +20,6 @@ module.exports =  {
     nbgenAppMenuFile: 'client/imports/ui/app/nbgenApp/nbgenAppMenu.js',
     nbgenGlobalhjson: 'client/imports/i18n/en/global.hjson',
     nbgenServerEntryPoint: 'server/main.js',
-    commonDir: 'imports/common'
+    commonDir: 'imports/common',
+    meteorRelease: '1.10.1',
 };
