@@ -1,3 +1,4 @@
+// eslint-disable
 /**
  * supporting gulp tasks for automating file injections and conversions
  */
@@ -14,51 +15,49 @@ var series = gulp.series;
 var starttag = '// inject:imports:{{ext}}',
     endtag = '// endinject';
 
-var jsClientImportsFile = 'client/imports/imports.js';
-var jsServerImportsFile = 'server/imports/imports.js';
-var scssImportsFile = 'client/imports/scss/_imports.scss';
-var scssCommonImportsFile = 'client/imports/scss/_components.scss';
+var jsClientImportsFile = 'imports/ui/imports.js';
+var jsServerImportsFile = 'imports/api/imports.js';
+var scssImportsFile = 'imports/ui/scss/_imports.scss';
+var scssCommonImportsFile = 'imports/ui/scss/_components.scss';
 
 var filePatterns = {
     jsImports: {
         target: jsClientImportsFile,
-        options: {
-            cwd: 'client/imports'
-        },
         srcMatches: [
-            'ui/app/**/*.js',
+            'imports/ui/app/**/*.js',
+            'client/imports/ui/app/**/*.js',
         ],
-        dest: 'client/imports',
+        dest: 'imports/ui',
     },
     serverJsImports: {
         target: jsServerImportsFile,
-        options: {
-            cwd: 'server'
-        },
-        srcMatches: ['imports/api/**/*.js'],
-        dest: 'server/imports',
+        srcMatches: [
+            'imports/api/**/*.js', 
+            'server/imports/api/**/*.js',
+            '!imports/api/imports.js'
+        ],
+        dest: 'imports/api',
     },
     scssImports: {
         target: scssImportsFile,
-        options: {
-            cwd: 'client/imports'
-        },
-        srcMatches: ['ui/app/**/*.scss'],
-        dest: 'client/imports/scss',
+        srcMatches: [
+            'imports/ui/app/**/*.scss', 
+            'client/imports/ui/app/**/*.scss'
+        ],
+        dest: 'imports/ui/scss',
     },
     scssCommonImports: {
         target: scssCommonImportsFile,
-        options: {
-            cwd: 'client/imports'
-        },
-        srcMatches: ['ui/components/**/*.scss', '!ui/components/scss/**/*.scss'],
-        dest: 'client/imports/scss',
+        srcMatches: [
+            'imports/ui/components/**/*.scss', 
+            '!imports/ui/components/scss/**/*.scss'
+        ],
+        dest: 'imports/ui/scss',
     },
     i18nTransform: {
-        options: {
-            cwd: 'client/imports'
-        },
-        srcMatches: ['i18n/**/*.hjson'],
+        srcMatches: [
+            'imports/ui/i18n/**/*.hjson'
+        ],
         dest: 'public/i18n',
     }
 }

@@ -3,9 +3,9 @@
  */
 import { <%= collection.name %> } from '.';
 import { publishCollection } from '../common/publish.js'
-import { COLLECTION_PUBLIC_FIELD, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD } from '../../../../imports/common/app.roles.js'
-import { getActiveGroup } from '../../../../imports/common/app.roles.js';
-import { appRoles } from '../../../../imports/common/app.roles.js';    // eslint-disable-line
+import { COLLECTION_PUBLIC_FIELD, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD } from '../../common/app.roles'
+import { getActiveGroup } from '../../common/app.roles';
+import { appRoles } from '../../common/app.roles';    // eslint-disable-line
 import { Roles } from '../common';
 
 const publishName = '<%= collectionName %>';

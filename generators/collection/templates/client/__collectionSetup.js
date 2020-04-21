@@ -1,7 +1,7 @@
 import moduleName from '../nbgenApp';
-import { setupTmvCollection } from '/client/imports/ui/components/nbgenComponents';
+import { setupTmvCollection } from '../../components/nbgenComponents';
 import config from './config.js';
-import { appRoles } from '/imports/common/app.roles.js';
+import { appRoles } from '../../../common/app.roles';
 
 const stateName = '<%=collectionName%>';
 

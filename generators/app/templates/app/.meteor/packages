@@ -36,3 +36,4 @@ ecmascript@0.14.2
 filipenevola:minifiers-autoprefixer
 accounts-base@1.6.0
 fourseven:scss
+frozeman:persistent-minimongo2

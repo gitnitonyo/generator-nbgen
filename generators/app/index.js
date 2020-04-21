@@ -5,7 +5,8 @@ var chalk = require('chalk'),
     _s = require('underscore.string'),
     path = require('path'),
     BaseGenerator = require('../tmv-generator-base'),
-    CONSTANTS = require('../tmv-constants')
+    CONSTANTS = require('../tmv-constants'),
+    genVersion = require('../../package.json').version
 
 class TmvClientGenerator extends BaseGenerator {
     constructor(args, opts) {
@@ -63,6 +64,7 @@ _.assign(TmvClientGenerator.prototype, {
             this.config.set('title', this.title)
             this.config.set('angularAppName', this.angularAppName);
             this.config.set('dasherizedName', this.dasherizedName)
+            this.config.set('nbgenVersion', genVersion)
         },
     },
 
@@ -123,7 +125,7 @@ _.assign(TmvClientGenerator.prototype, {
 
         // replace name of the application
         changeAppNameInConfig() {
-            const configFile = 'client/imports/ui/app/nbgenApp/nbgenAppConfig.js';
+            const configFile = 'imports/ui/app/nbgenApp/nbgenAppConfig.js';
             const strToReplace = `"nbGenAppBase"`
             const newStr = `"${this.title}"`
 
