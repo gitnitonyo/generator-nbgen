@@ -4,7 +4,7 @@
  */
 import { <%= collection.name %> } from '.';
 
-import { appRoles, getActiveGroup, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD } from '../../../../imports/common/app.roles';
+import { appRoles, getActiveGroup, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD } from '../../common/app.roles';
 import { checkPermission } from '../common/permissions.js';
 <%_ if (generateAuditLog) { _%>
 import { postAuditLog } from '../auditLogs/methods.js';

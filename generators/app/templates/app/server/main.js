@@ -4,9 +4,8 @@
 import { Meteor } from 'meteor/meteor';
 
 // collection for application parameters
-import '/imports/common/applicationParameters/collection.js';
 
-import './imports/imports.js';
+import '../imports/api/imports.js';
 
 Meteor.startup(() => {
   // code to run on server at startup

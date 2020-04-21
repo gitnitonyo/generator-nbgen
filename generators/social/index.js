@@ -39,7 +39,7 @@ _.assign(TmvGenerator.prototype, {
     writing: {
         writeClientFiles() {
             const sourceDir = this.templatePath('client/nbgenSocial'),
-                  targetDir = this.destinationPath('client/imports/ui/components/nbgenSocial')
+                  targetDir = this.destinationPath('imports/ui/components/nbgenSocial')
 
             this.copyFiles(sourceDir, targetDir);
         },
@@ -48,7 +48,7 @@ _.assign(TmvGenerator.prototype, {
             const needle = `<!--:nbgen:social-login-->`;
             let strToInject = this.fs.read(this.templatePath('client/_social.html.ejs'));
             strToInject = _.template(strToInject)(this);
-            const targetFile = 'client/imports/ui/app/nbgenApp/nbgenLogin/nbgenLogin.html';
+            const targetFile = 'imports/ui/app/nbgenApp/nbgenLogin/nbgenLogin.html';
             this.rewriteFile({
                 file: targetFile,
                 needle,
@@ -60,7 +60,7 @@ _.assign(TmvGenerator.prototype, {
             const needle = `/*:nbgen:social:service-configurations*/`;
             let strToInject = this.fs.read(this.templatePath('client/_menuEntry.ejs'));
             strToInject = _.template(strToInject)(this);
-            const targetFile = 'client/imports/ui/app/nbgenApp/nbgenAppMenu.js';
+            const targetFile = 'imports/ui/app/nbgenApp/nbgenAppMenu.js';
             this.rewriteFile({
                 file: targetFile,
                 needle,
@@ -71,15 +71,15 @@ _.assign(TmvGenerator.prototype, {
         injectModuleDeclarations() {
             const injectInfo = [{
                 needle: `/*:nbgen:component:imports*/`,
-                file: 'client/imports/ui/components/nbgenComponents/index.js',
+                file: 'imports/ui/components/nbgenComponents/index.js',
                 splicable: [`import nbgenSocial from '../nbgenSocial'`,]
             }, {
                 needle: `/*:nbgen:component:modules*/`,
-                file: 'client/imports/ui/components/nbgenComponents/index.js',
+                file: 'imports/ui/components/nbgenComponents/index.js',
                 splicable: [`nbgenSocial,`,]
             }, {
                 needle: `/*:nbgen:component:exports*/`,
-                file: 'client/imports/ui/components/nbgenComponents/index.js',
+                file: 'imports/ui/components/nbgenComponents/index.js',
                 splicable: [`nbgenSocial,`,]
             }]
 
@@ -90,7 +90,7 @@ _.assign(TmvGenerator.prototype, {
 
         writeServerFiles() {
             const sourceDir = this.templatePath('server/serviceConfigurations'),
-                  targetDir = this.destinationPath('server/imports/api/serviceConfigurations')
+                  targetDir = this.destinationPath('imports/api/serviceConfigurations')
             
             this.copyFiles(sourceDir, targetDir);
         }

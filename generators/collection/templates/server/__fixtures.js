@@ -4,7 +4,7 @@
 import { Meteor } from '../common';
 import { <%= collection.name %> } from '.';
 
-import { COLLECTION_GROUP_FIELD, GLOBAL_GROUP } from '../../../../imports/common/app.roles.js';
+import { COLLECTION_GROUP_FIELD, GLOBAL_GROUP } from '../../common/app.roles';
 
 // add indices for the collection here
 // properties:

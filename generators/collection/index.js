@@ -139,7 +139,7 @@ _.assign(TmvCollectionGenerator.prototype, {
             ]
 
             // write the server files
-            this.serverDest = path.join(CONSTANTS.defaultServerDir, 'imports/api', this.collectionName)
+            this.serverDest = path.join(CONSTANTS.defaultServerDir, '', this.collectionName)
             this.template('server/__collection.js', path.join(this.serverDest, 'index.js'))
 
             files.forEach((filename) => {

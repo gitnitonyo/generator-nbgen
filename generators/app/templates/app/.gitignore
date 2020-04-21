@@ -3,6 +3,10 @@ client/imports/imports.js
 server/imports/imports.js
 client/imports/scss/_imports.scss
 client/imports/ui/components/scss/_imports.scss
+imports/ui/scss/_imports.scss
+imports/ui/imports.js
+imports/ui/components/scss/_imports.scss
+imports/api/imports.js
 
 # generated i18n files
 public/i18n/*

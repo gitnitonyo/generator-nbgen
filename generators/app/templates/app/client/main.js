@@ -5,9 +5,9 @@
 import angular from 'angular';
 import { Meteor } from 'meteor/meteor';
 
-import nbgenApp from './imports/ui/app/nbgenApp/nbgenApp.js';
-import './imports/imports.js';
-import { cordovaPluginsInit } from './imports/ui/app/nbgenApp/mobile/startup.js';
+import nbgenApp from '../imports/ui/app/nbgenApp/nbgenApp';
+import '../imports/ui/imports';
+import { cordovaPluginsInit } from '../imports/ui/app/nbgenApp/mobile/startup.js';
 
 const name = 'nubevision';
 export default name;
