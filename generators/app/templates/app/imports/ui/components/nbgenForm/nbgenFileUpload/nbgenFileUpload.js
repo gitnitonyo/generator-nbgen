@@ -30,7 +30,7 @@ const noPreviewAvailable = './assets/images/no-preview-available.png';
 const _webkitUrl = window.URL || window.webkitURL;
 
 class NbgenFileUploadCtrl {
-    constructor($scope, $element, $timeout, $tmvUiData, $translate, $tmvUiUtils, $compile, $sce, $window, $q, Upload, $mdMedia, $nbgenViewer) {
+    constructor($scope, $element, $timeout, $tmvUiData, $translate, $tmvUiUtils, $compile, $sce, $window, Upload, $mdMedia, $nbgenViewer) {
         'ngInject';
 
         this.$scope = $scope;
@@ -43,7 +43,6 @@ class NbgenFileUploadCtrl {
         this.$window = $window;
         this.Upload = Upload;
         this.$compile = $compile;
-        this.$q = $q;
         this.$mdMedia = $mdMedia;
         this.$nbgenViewer = $nbgenViewer;
 
@@ -199,7 +198,7 @@ class NbgenFileUploadCtrl {
     }
 
     _retrieveUrl(url) {
-        return this.$q((_resolve, _reject) => {
+        return new Promise((_resolve, _reject) => {
             this.Upload.urlToBlob(url).then((blob) => {
                 _resolve(_webkitUrl.createObjectURL(blob));
             }, (error) => {
@@ -248,7 +247,7 @@ class NbgenFileUploadCtrl {
         this._progressMode = 'determinate';
         this._isUploading = true;
         // create a preview of the file
-        this.$q.when(this.uploadCtrl.__createPreview(file)).then(preview => {
+        Promise.resolve(this.uploadCtrl.__createPreview(file)).then(preview => {
             const dataToUpload = _.extend({}, {file: file, preview: preview}, (this.uploadCtrl && this.uploadCtrl.includedData({$file: file})) || {});
 
             this._currentUpload = this.Upload.upload({

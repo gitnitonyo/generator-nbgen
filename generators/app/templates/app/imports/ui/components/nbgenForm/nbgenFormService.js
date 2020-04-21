@@ -32,9 +32,8 @@ export class FormServiceController extends TmvBaseFormController {
             this.$element = clone;      // reference to the element
             angular.element(`#${domLocation}`).append(clone);
         })
-        this.$deferred = this.$q.defer();
 
-        return this.$deferred.promise;
+        return new Promise();
     }
 
     /**

@@ -8,7 +8,7 @@ import _ from 'underscore';
 const name = 'chipPicker';
 
 class ChipPickerCtrl {
-    constructor($scope, $element, $attrs, nbgenDataPicker, $timeout, $parse, $interpolate, $q) {
+    constructor($scope, $element, $attrs, nbgenDataPicker, $timeout, $parse, $interpolate) {
         'ngInject';
 
         this.$config = config
@@ -18,7 +18,6 @@ class ChipPickerCtrl {
         this.$timeout = $timeout;
         this.$parse = $parse;
         this.$interpolate = $interpolate;
-        this.$q = $q;
         this.$attrs = $attrs;
     }
 
@@ -279,7 +278,7 @@ class ChipPickerCtrl {
 
     removeItem($event, item, index) {
         $event.stopPropagation();   // only consider this as the only event handler for this
-        this.$q.when(this.beforeItemRemove({$event, $item: item, $index: index}))
+        Promise.resolve(this.beforeItemRemove({$event, $item: item, $index: index}))
             .then(() => {
                 this.chipsValue.splice(index, 1);
                 this.afterItemRemvoe({$event, $item: item, $index: index});

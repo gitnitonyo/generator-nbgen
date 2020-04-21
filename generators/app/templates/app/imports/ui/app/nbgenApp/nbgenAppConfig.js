@@ -32,7 +32,8 @@ const config = {
         // secondary color theme used
         primary: "blue",
         accent: "amber",
-    }
+    },
+    horizontalMenu: false,
 }
 
 export default config

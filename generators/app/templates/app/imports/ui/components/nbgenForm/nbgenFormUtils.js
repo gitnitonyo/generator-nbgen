@@ -7,7 +7,7 @@ import angular from 'angular';
 import { Mongo } from '../nbgenMeteor';
 
 export const USED_NG_SERVICES = [
-    '$interpolate', '$parse', '$q', '$translate', '$state',
+    '$interpolate', '$parse', '', '$translate', '$state',
     '$timeout', '$sce', '$tmvUtils', '$tmvUiUtils', '$tmvUiData', '$tmvUiUtils',
     '$mdDialog', '$nbgenIdentityService', '$Counts',
 ];

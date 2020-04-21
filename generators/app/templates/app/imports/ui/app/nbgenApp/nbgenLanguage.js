@@ -3,25 +3,21 @@ import angular from 'angular';
 import nbgenApp from '.';
 
 angular.module(nbgenApp)
-    .factory('Language', function ($q, $http, $translate, LANGUAGES) {
+    .factory('Language', function ($http, $translate, LANGUAGES) {
         'ngInject';
 
         return {
             getCurrent: function () {
-                let deferred = $q.defer();
                 let language = $translate.storage().get('NG_TRANSLATE_LANG_KEY');
 
                 if (angular.isUndefined(language)) {
                     language = 'en';
                 }
 
-                deferred.resolve(language);
-                return deferred.promise;
+                return Promise.resolve(language)
             },
             getAll: function () {
-                let deferred = $q.defer();
-                deferred.resolve(LANGUAGES);
-                return deferred.promise;
+                return Promise.resolve(LANGUAGES)
             }
         };
     })

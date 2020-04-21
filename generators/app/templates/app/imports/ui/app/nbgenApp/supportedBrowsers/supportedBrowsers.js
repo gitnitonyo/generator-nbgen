@@ -23,13 +23,13 @@ angular.module(moduleName)
                             return $translate.refresh();
                         }],
                     // to remove the wait dialog, shown by state transition
-                    removeWaitDialog: ['$q', '$nbgenWaitDialog', ($q, $nbgenWaitDialog) => $q.when($nbgenWaitDialog.hideDialog())],
+                    removeWaitDialog: ['$nbgenWaitDialog', ($nbgenWaitDialog) => Promise.resolve($nbgenWaitDialog.hideDialog())],
                     displaySupportedBrowsers,
                 }
             })
     });
 
-function displaySupportedBrowsers($q, $tmvUiData, $nbgenAppConfig) {
+function displaySupportedBrowsers($tmvUiData, $nbgenAppConfig) {
     'ngInject';
 
     const supportedBrowsers = [{
@@ -54,7 +54,7 @@ function displaySupportedBrowsers($q, $tmvUiData, $nbgenAppConfig) {
         icon: 'mdi-edge',
     }]
 
-    return $q((_resolve, _reject) => {
+    return new Promise((_resolve, _reject) => {
         $tmvUiData.formDialog({
             template,
             okLabel: 'global.common.ok',

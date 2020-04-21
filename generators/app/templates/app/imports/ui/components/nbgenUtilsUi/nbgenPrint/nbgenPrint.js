@@ -97,38 +97,6 @@ angular.module(nbgenUtilsUi)
             })
         }
 
-        /*
-        function getPDF(templateStr, options) {
-            return $q((resolve, reject) => {
-                Meteor.call('generatePDF', templateStr, options, (err, buffer) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(buffer);
-                    }
-                })
-            })
-        }
-
-        function _toDataURI(buffer) {
-            let bufferString = '';
-            angular.forEach(buffer, (chCode) => {
-                bufferString += String.fromCharCode(chCode);
-            })
-            return 'data:application/pdf;base64,' + $tmvUtils.base64Encode(bufferString);
-        }
-
-        function _toBlob(buffer) {
-            let buf = new ArrayBuffer(Object.keys(buffer).length);
-            let ua = new Uint8Array(buf);
-            angular.forEach(buffer, function(value, key) {
-                ua[key] = value;
-            })
-
-            return new Blob([buf], {type: 'application/pdf'});
-        }
-        */
-
         function performPrint() {
             if (CKEDITOR && CKEDITOR.instances.nbCkPrint) {
                 CKEDITOR.instances.nbCkPrint.execCommand('print');

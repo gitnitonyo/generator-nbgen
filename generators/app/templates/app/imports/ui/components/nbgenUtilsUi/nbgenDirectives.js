@@ -293,7 +293,7 @@ function nbgenColorDirective($mdColors) {
 utils.directive('nbgenColor', nbgenColorDirective)
 utils.directive('tmvColor', nbgenColorDirective)
 
-function nbgenTemplateDirective($compile, $parse, $q) {
+function nbgenTemplateDirective($compile, $parse) {
     'ngInject';
     return {
         restrict: 'EA',
@@ -301,7 +301,7 @@ function nbgenTemplateDirective($compile, $parse, $q) {
             const directiveName = this.name;
             return ($scope, $element, $attrs) => {
                 const value = $attrs[directiveName] || $attrs.value;
-                $q.when($parse(value)($scope)).then((templateStr) => {
+                Promise.resolve($parse(value)($scope)).then((templateStr) => {
                     if (templateStr) {
                         const templateDom = angular.element(templateStr);
                         $element.prepend(templateDom);

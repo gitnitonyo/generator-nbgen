@@ -7,13 +7,12 @@ import template from './nbgenSideMenu.html'
 const name = 'nbgenSideMenu'
 
 class NbgenSideMenuCtrl {
-    constructor($scope, $state, $mdSidenav, $parse, $q, $injector) {
+    constructor($scope, $state, $mdSidenav, $parse, $injector) {
         'ngInject';
 
         this.$state = $state
         this.$mdSidenav = $mdSidenav
         this.$parse = $parse
-        this.$q = $q
         this.$injector = $injector
         this.$scope = $scope
     }
@@ -75,7 +74,7 @@ class NbgenSideMenuCtrl {
             return this.$mdSidenav(this.sidenavId).close()
         }
 
-        return this.$q.resolve()
+        return Promise.resolve()
     }
 
     isActive(menuItem) {

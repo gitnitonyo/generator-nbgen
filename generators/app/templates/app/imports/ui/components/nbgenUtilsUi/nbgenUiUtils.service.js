@@ -8,7 +8,7 @@ import uiStyles from './nbgenUtilsStyles.html';
 angular.module(nbgenUtilsUi)
     .factory('$tmvUiUtils', function($mdDialog, $translate, $rootScope, $mdMedia, $mdSidenav,
         $mdColorPalette, $tmvUtils, $mdColors, $sce, $timeout, $parse,
-        $mdToast, $reactive, $q, $state, $nbgenWaitDialog) {
+        $mdToast, $reactive, $state, $nbgenWaitDialog) {
         'ngInject'
 
         let $tmvUiUtils = {
@@ -93,7 +93,7 @@ angular.module(nbgenUtilsUi)
                     }.bind(this);
                 }
                 // check if text content needs translation
-                return $q((_resolve, _reject) => {
+                return new Promise((_resolve, _reject) => {
                     // use timeout to avoid the appearance of untranslated string
                     $timeout(() => {
                         $mdDialog.show(dlg).then((data) => _resolve(data), (data) => _reject(data));
@@ -347,55 +347,22 @@ angular.module(nbgenUtilsUi)
                 if (!Meteor.status().connected) {
                     return this.alert($translate.instant('global.messages.notConnected'))
                 }
-                return $q.resolve()
+                return Promise.resolve()
             },
 
-            // returns a promise which resolve to an image object if image is successfully loaded
-            /*
             loadImage: function(imgUrl) {
-                let deferred = $q.defer();
+                return new Promise((resolve, reject) => {
+                    const image = new Image()
 
-                Upload.urlToBlob(imgUrl).then((blob) => {
-                    let reader = new FileReader();
-                    reader.onload = function(e) { deferred.resolve(e.target.result); };
-                    reader.readAsDataURL(blob);
-                }, () => {
-                    deferred.reject(`${imgUrl} cannot be loaded.`);
-                });
-
-                return deferred.promise;
-            },
-
-            loadImages: function(imgArray) {
-                const imgPromises = [ ];
-                imgArray.forEach((imgUrl, idx) => {
-                    imgPromises.push($q((_resolve, _reject) => {
-                        this.loadImage(imgUrl).then((dataUrl) => {
-                            // replace the content of the array with the data url for faster access to the resources
-                            imgArray[idx] = dataUrl;
-                            _resolve(dataUrl);
-                        }, (err) => {
-                            _reject(err);
-                        })
-                    }));
+                    image.onerror = function() {
+                        reject(`${imgUrl} cannot be loaded.`)
+                    }
+                    image.onload = function() {
+                        resolve(image);
+                    }
+                    image.src = imgUrl;
                 })
-
-                return $q.all(imgPromises);
-            },
-            */
-            loadImage: function(imgUrl) {
-                const image = new Image(),
-                    deferred = $q.defer();
-
-                image.onerror = function() {
-                    deferred.reject(`${imgUrl} cannot be loaded.`)
-                }
-                image.onload = function() {
-                    deferred.resolve(image);
-                }
-                image.src = imgUrl;
-
-                return deferred.promise;
+                
             },
 
             loadImages: function(imgArray) {
@@ -404,7 +371,7 @@ angular.module(nbgenUtilsUi)
                     imgPromises.push(this.loadImage(imgUrl));
                 })
 
-                return $q.all(imgPromises);
+                return Promise.allSettled(imgPromises);
             },
 
             gotoState: function(stateName, stateOperation) {
@@ -855,6 +822,19 @@ angular.module(nbgenUtilsUi)
                     $tmvUtils.cleanupObjForMongo(obj);
                 })
             },
+
+            serialTasks(tasks) {
+                return tasks.reduce((promise, func) => {
+                    return promise.then((result) => {
+                        return func().then(Array.prototype.concat.bind(result))
+                    })
+                }, Promise.resolve([]))
+            },
+
+            when(obj) {
+                if (obj && obj.then) return obj
+                return Promise.resolve(obj)
+            }
         };
 
         window.$tmvUtils = $tmvUtils; // for convenient access, so long app.js injected it

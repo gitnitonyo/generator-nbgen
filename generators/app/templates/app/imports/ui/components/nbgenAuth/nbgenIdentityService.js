@@ -11,11 +11,10 @@ const USER_GROUP_FIELD = '_activeGroup';
 const serviceName = '$nbgenIdentityService'
 
 class NbgenIdentityService {
-    constructor($nbgenAuthProviderService, $q) {
+    constructor($nbgenAuthProviderService) {
         'ngInject';
 
         this.$nbgenAuthProviderService = $nbgenAuthProviderService;
-        this.$q = $q;
 
         Tracker.autorun(() => {
             this._currentUser = Meteor.user();
@@ -82,7 +81,7 @@ class NbgenIdentityService {
 
     // promisable checking of roles
     userIsInRole(role) {
-        return this.$q((_resolve, _reject) => {
+        return new Promise((_resolve, _reject) => {
             Meteor.call('accounts.isInRole', role, (err, result) => {
                 if (err) {
                     _reject(err);

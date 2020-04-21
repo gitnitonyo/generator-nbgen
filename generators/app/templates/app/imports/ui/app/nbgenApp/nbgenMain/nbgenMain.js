@@ -74,29 +74,6 @@ class NbgenMainCtrl {
     }
 }
 
-// function homeUserCheck($q, $reactive, $rootScope, $state, $timeout, $nbgenIdentityService) {
-//     'ngInject';
-//     $reactive(this).attach($rootScope);
-//     return $q((_resolve, _reject) => {
-//         this.autorun((c) => {
-//             let user = Meteor.user();
-//             if (user === undefined) return;     // user has not been resolved yet
-//             c.stop();   // user has been resolved
-//             if (user && $nbgenIdentityService.isInRole([appRoles.SUPER_ADMIN])) {
-//                 _resolve();
-//             } else if (user && user.emails && user.emails[0].verified !== true) {
-//                 _reject();
-//                 $timeout(() => $state.go(registerState));
-//             } else if (user && user.profile.pendingInfo !== false) {
-//                 _reject();
-//                 $timeout(() => $state.go(registerState));
-//             } else {
-//                 _resolve();
-//             }
-//         })
-//     })
-// }
-
 angular.module(nbgenApp)
 // the component
 .component(name, {

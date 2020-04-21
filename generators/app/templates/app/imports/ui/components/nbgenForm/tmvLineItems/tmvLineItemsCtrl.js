@@ -11,14 +11,13 @@ import moduleName from '../nbgenForm.js';
 const name = 'tmvLineItems';
 
 class TmvLineItemsCtrl {
-    constructor($scope, $element, $timeout, $q, $tmvUiData, $translate, $tmvUiUtils, $parse, $interpolate, $tmvFormService) {
+    constructor($scope, $element, $timeout, $tmvUiData, $translate, $tmvUiUtils, $parse, $interpolate, $tmvFormService) {
         'ngInject';
 
         this.$config = config;
         this.$timeout = $timeout;
         this.$scope = $scope;
         this.$element = $element;
-        this.$q = $q;
         this.$tmvUiData = $tmvUiData;
         this.$translate = $translate;
         this.$tmvUiUtils = $tmvUiUtils;
@@ -157,7 +156,7 @@ class TmvLineItemsCtrl {
 
     removeItem(index, lineItem) {
         // the beforeRemove may reject to cancel removing
-        this.$q.when(this.beforeRemove({$index: index, $lineItem:lineItem, $ngModel: this.ngModelCtrl}), () => {
+        Promise.resolve(this.beforeRemove({$index: index, $lineItem:lineItem, $ngModel: this.ngModelCtrl}), () => {
             // ask user to confirm first
             this.$tmvUiUtils.confirm('tx:global.common.removeConfirm').then(() => {
                     // continue only if the result is not false
@@ -183,7 +182,7 @@ class TmvLineItemsCtrl {
 
         this._formDialog(formModel, viewOnly ? 'view' : 'edit', index).then(formModel => {
             formModel = this.$tmvUiUtils.cleanUpData(formModel);
-            this.$q.when(this.beforeEdit({$index: index, $lineItem: lineItem, $ngModel: this.ngModelCtrl}), () => {
+            Promise.resolve(this.beforeEdit({$index: index, $lineItem: lineItem, $ngModel: this.ngModelCtrl}), () => {
                 // copy the new values to the line item
                 _.extend(lineItem, formModel);
                 this.afterEdit({$index: index, $lineItem: lineItem, $ngModel: this.ngModelCtrl});
@@ -196,7 +195,7 @@ class TmvLineItemsCtrl {
         let formModel = { };
         this._formDialog(formModel, 'new', index).then(formModel => {
             let dataToSave = this.$tmvUiUtils.cleanUpData(formModel);
-            this.$q.when(this.beforeAdd({$index: index, $ngModel: this.ngModelCtrl, $lineItem: dataToSave}), () => {
+            Promise.resolve(this.beforeAdd({$index: index, $ngModel: this.ngModelCtrl, $lineItem: dataToSave}), () => {
                 // save the form model to the line data
                 if (index === undefined || index >= this.lineItemData.length - 1) {
                     if (this.prependOnAdd) {
@@ -227,8 +226,8 @@ class TmvLineItemsCtrl {
     }
 
     _formDialog(formModel, mode, index) {
-        return this.$q((_resolve, _reject) => {
-            this.$q.when(this.formSchema({$formModel: formModel, $mode: mode, $index: index}) || this.formLayout({$formModel: formModel, $mode: mode, $index: index}), data => {
+        return new Promise((_resolve, _reject) => {
+            Promise.resolve(this.formSchema({$formModel: formModel, $mode: mode, $index: index}) || this.formLayout({$formModel: formModel, $mode: mode, $index: index}), data => {
                 // check if additional data is passed
                 let _formData = { };
                 if (data && data.formLayout) {

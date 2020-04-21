@@ -104,9 +104,9 @@ angular.module(nbgenApp)
                 }
             },
             resolve: {
-                checkAuthentication: ['$state', '$nbgenIdentityService', '$q', function($state, $nbgenIdentityService, $q) {
+                checkAuthentication: ['$state', '$nbgenIdentityService', function($state, $nbgenIdentityService) {
                     // ensure it won't go to this state if already authenticated
-                    return $q(function(resolve, reject) {
+                    return new Promise((resolve, reject) => {
                         if ($nbgenIdentityService.isAuthenticated()) {
                             reject()
                         } else {

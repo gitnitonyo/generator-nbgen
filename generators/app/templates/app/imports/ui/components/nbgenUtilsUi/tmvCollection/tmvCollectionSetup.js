@@ -125,7 +125,7 @@ export function setupTmvCollection(stateName, moduleName, stateOptions, ctrlOpti
 
     // resolve
     resolve = _.extend({
-        $options: ['$q', ($q) => $q.when(ctrlOptions)],        // set up the options
+        $options: [() => Promise.resolve(ctrlOptions)],        // set up the options
     }, resolve);
 
     // i18n
@@ -162,7 +162,7 @@ export function setupTmvCollection(stateName, moduleName, stateOptions, ctrlOpti
     // construct the form state
     let formStateName = `${name}.form`;
     formResolve = _.extend({
-        $options: ['$q', ($q) => $q.when(ctrlOptions)],        // set up the options
+        $options: [() => Promise.resolve(ctrlOptions)],        // set up the options
     }, formResolve);
 
     let formStateConfig = {

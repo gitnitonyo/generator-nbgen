@@ -18,7 +18,7 @@ angular.module(nbgenAuth)
 
     // override transition to provide security based
     // on configured roles for the specified state route
-    function _decoratorFn($delegate, $nbgenIdentityService, $q, $rootScope, $nbgenWaitDialog) {
+    function _decoratorFn($delegate, $nbgenIdentityService, $rootScope, $nbgenWaitDialog) {
         'ngInject';
 
         // let's locally use 'state' name
@@ -28,7 +28,7 @@ angular.module(nbgenAuth)
         state.baseTansitionTo = state.transitionTo;
 
         function _resolveUserIdentity() {
-            return $q((_resolve) => {
+            return new Promise((_resolve) => {
                 Tracker.autorun((ctx) => {
                     const currentUser = Meteor.user();
                     if ( currentUser !== undefined ) {
@@ -54,7 +54,7 @@ angular.module(nbgenAuth)
 
         // assign new 'go', right now decorating the old 'go'
         state.transitionTo = function (to, params, options) {
-            return $q((_resolve, _reject) => {
+            return new Promise((_resolve, _reject) => {
                 $nbgenWaitDialog.showDialog();
                 let toState = to;
                 if (angular.isString(toState)) {
@@ -183,14 +183,14 @@ angular.module(nbgenAuth)
     }
 })
 // deprecated
-.factory(serviceName, ($state, $nbgenIdentityService, $q, $rootScope) => {
+.factory(serviceName, ($state, $nbgenIdentityService, $rootScope) => {
     'ngInject';
 
     return nbgenStateAuthorizeFn
 
     function nbgenStateAuthorizeFn() {
 
-        return $q(_fn);
+        return new Promise(_fn);
 
         function _fn(resolve, reject) {
             let toState = $rootScope.toState;

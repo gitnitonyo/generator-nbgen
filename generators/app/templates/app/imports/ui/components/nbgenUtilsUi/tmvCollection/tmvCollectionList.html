@@ -1,4 +1,4 @@
-<div class="full-absolute tmv-collection-list" layout="column">
+<div class="full-absolute tmv-collection-list" layout="column" ng-class="$tmvCollection.isTabular() ? 'nbgen-collection-tabular' : ''">
     <!-- add button -->
     <tmv-put on-fab only-children ng-if="!$tmvCollection.hideAdd()">
         <md-button class="md-fab md-fab-bottom-right" tmv-icon="mdi-plus"
@@ -55,8 +55,8 @@
         <div ng-if="$tmvCollection.options.preListTemplate" flex="none"
             nbgen-template="$tmvCollection.options.preListTemplate">
         </div>
-        <md-content class="tmv-collection-list-content" flex>
-            <div class="full-absolute" layout="column">
+        <md-content class="tmv-collection-list-content" layout="column" flex>
+            <div layout="column" flex>
                 <div ng-if="$tmvCollection.isTabular()" style="width: 100%">
                     <div class="tmv-list-table-header" layout="row" style="width: 100%">
                         <div ng-repeat="field in $tmvCollection.layout.fields" class="tmv-list-table-column" flex="{{field.flexStyle + ''}}">

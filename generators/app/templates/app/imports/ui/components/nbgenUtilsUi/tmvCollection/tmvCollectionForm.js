@@ -51,11 +51,11 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
         this.$_origInitController = this.$initController; this.$initController = undefined;
 
         // initialization functions
-        promises.push(() => this.$q.when(this.$_origInit && this.$_origInit()));
-        promises.push(() => this.$q.when(this.$_origInitController && this.$_origInitController()));
+        promises.push(() => Promise.resolve(this.$_origInit && this.$_origInit()));
+        promises.push(() => Promise.resolve(this.$_origInitController && this.$_origInitController()));
 
         // resolve the form schema
-        promises.push(() => this.$q.when(this.getFormSchema() || this.formSchema || {}, (schema) => {
+        promises.push(() => Promise.resolve(this.getFormSchema() || this.formSchema || {}).then((schema) => {
             this.formSchema = schema || this.formSchema || this.options.formSchema;
             this.translatePrefix = this.translatePrefix || this.formSchema.translatePrefix || this.options.translatePrefix || '';
             this.__setupInjectedServices([].concat(this.options.injectedServices, this.formSchema.injectedServices));
@@ -63,25 +63,26 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
         }));
 
         // check for permission for the operation
-        promises.push(() => this.$q.when(this.checkIfOperationIsAllowed && this.checkIfOperationIsAllowed()));
+        promises.push(() => Promise.resolve(this.checkIfOperationIsAllowed && this.checkIfOperationIsAllowed()));
 
         // initialization functions
-        promises.push(() => this.$q.when(this.$init && this.$init()));
-        promises.push(() => this.$q.when(this.$initController && this.$initController()));
+        promises.push(() => Promise.resolve(this.$init && this.$init()));
+        promises.push(() => Promise.resolve(this.$initController && this.$initController()));
 
         // for delete operation
         if (this.isDeleteMode()) {
-            promises.push(() => this.$q.reject(this.removeItem && this.removeItem()));
+            promises.push(() => Promise.reject(this.removeItem && this.removeItem()));
         }
 
         // for new operation
         if (this.isNewMode()) {
-            promises.push(() => this.$q.when(this._resolveCreateItem && this._resolveCreateItem()));
+            promises.push(() => Promise.resolve(this._resolveCreateItem && this._resolveCreateItem()));
         }
 
-        this.$q.serial(promises).then(() => {
+        this.$tmvUtils.serialTasks(promises).then(() => {
             this.isReady = true;
-        }, () => {
+        }, (e) => {
+            console.log(e)
             this.isReady = false;
             this._doCancel();
         })
@@ -102,9 +103,9 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
 
     // resolve the current item
     _resolveCurrentItem() {
-        return this.$q((_resolve, _reject) => {
+        return new Promise((_resolve, _reject) => {
             if (this.currentItemFn) {
-                this.$q.when(this.currentItemFn({options: this.options})).then((item) => {
+                Promise.resolve(this.currentItemFn({options: this.options})).then((item) => {
                     this.$currentItem = item || this.$currentItem || { };
                     _resolve(item);
                 });
@@ -113,7 +114,7 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
                 this.$currentItem = this.$currentItem || { };
                 _resolve(this.$currentItem);
             } else {
-                this.$q.when(this.getCurrentItem()).then((item) => {
+                Promise.resolve(this.getCurrentItem()).then((item) => {
                     this.$currentItem = item || this.$currentItem;
                     _resolve(item);
                 }, (err) => _reject(err));
@@ -122,9 +123,9 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
     }
 
     _resolveCreateItem() {
-        return this.$q((_resolve, _reject) => {
+        return new Promise((_resolve, _reject) => {
             if (this.isNewMode()) {
-                this.$q.when(this.createItem && this.createItem()).then((item) => {
+                Promise.resolve(this.createItem && this.createItem()).then((item) => {
                     this.$currentItem = this.$currentItem || { };
                     _.extend(this.$currentItem, item);
                     _resolve(this.$currentItem);
@@ -136,7 +137,7 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
     }
 
     checkIfOperationIsAllowed() {
-        return this.$q((_resolve, _reject) => {
+        return new Promise((_resolve, _reject) => {
             if (this.isNewMode() && this.insertAllowed()) {
                 _resolve();
             } else if (this.isEditMode() && this.updateAllowed()) {
@@ -295,7 +296,7 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
     }
 
     _doCancel() {
-        this.$q.when(this.onCancel && this.onCancel()).then(() => {
+        Promise.resolve(this.onCancel && this.onCancel()).then(() => {
             this.cancel && this.cancel();
         })
     }
@@ -309,7 +310,7 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
     }
 
     _doClose() {
-        this.$q.when(this.onClose && this.onClose()).then(() => {
+        Promise.resolve(this.onClose && this.onClose()).then(() => {
             this.close && this.close();
         })
     }
@@ -320,12 +321,12 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
     }
 
     createItem() {
-        return this.$q.when(this.initNewItem && this.initNewItem());
+        return Promise.resolve(this.initNewItem && this.initNewItem());
     }
 
     // may be overriden to return an item
     getCurrentItem() {
-        return this.$q((_resolve) => {
+        return new Promise((_resolve) => {
             this.autorun((c) => {
                 const currentItem = this.getReactively('$currentItem');
                 if (_.isObject(currentItem)) {
@@ -490,7 +491,7 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
 
     // will save the
     saveDetails(exitAfter, cb) {
-        let when = this.$q.when;
+        let when = Promise.resolve;
         if (this.isNewMode()) {
             // call the before insert event first inserting; it can be used to transform item for saving
             when(this.beforeInsert && this.beforeInsert(this.$currentItem)).then((item) => {
@@ -566,7 +567,7 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
         let confirmMessage = formSchema.confirmDeleteMessage || `${translatePrefix}.home.deleteConfirmation`
         confirmMessage = this.$translate.instant(confirmMessage)
         this.$tmvUiUtils.confirm(confirmMessage).then(() => {
-            this.$q.when(this.beforeRemove && this.beforeRemove()).then(() => {
+            Promise.resolve(this.beforeRemove && this.beforeRemove()).then(() => {
                 this.removeDoc({_id: this.currentItemId}, (err) => {
                     if (err) {
                         if (this.removeError) {

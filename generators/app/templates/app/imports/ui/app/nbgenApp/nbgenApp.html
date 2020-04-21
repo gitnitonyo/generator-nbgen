@@ -37,7 +37,7 @@
                 <nbgen-side-menu menu-schema="nbgenApp.nbgenAppMenu"
                     filter-fn="nbgenApp.checkMenuItemAccess"
                     sidenav-id="left-sidenav"
-                    ng-hide="nbgenApp.$state.current.name === 'nbgenRegister'"
+                    ng-hide="nbgenApp.hideSideMenu()"
                     >
                 </nbgen-side-menu>
             </md-content>
@@ -52,7 +52,7 @@
             <div layout="row" layout-align="start center" flex>
                 <!-- activate menu when screen is small -->
                 <md-button class="md-icon-button md-no-focus" aria-label="Menu"
-                    ng-click="nbgenApp.toggleSidenav('left-sidenav')" hide-gt-xs>
+                    ng-click="nbgenApp.toggleSidenav('left-sidenav')" ng-hide="nbgenApp.hideSideMenu()">
                     <md-icon md-font-icon="mdi-menu" class="mdi"></md-icon>
                 </md-button>
                 <div layout="row" layout-align="start center" flex>
@@ -124,7 +124,9 @@
                     </md-button> 
                 </div>
             </div>
-            <nbgen-nav menu="nbgenApp.nbgenAppMenu" nbgen-theme="secondary-dark" hide-xs ng-if="nbgenApp.isAuthenticated()"></nbgen-nav>
+            <div ng-if="nbgenApp.isHorizontalMenu()">
+                <nbgen-nav menu="nbgenApp.nbgenAppMenu" nbgen-theme="secondary-dark" hide-xs ng-if="nbgenApp.isAuthenticated()"></nbgen-nav>
+            </div>
         </md-toolbar>
         <div layout="column" flex id="nbgenAppContent" class="nbgen-app-content" 
             >

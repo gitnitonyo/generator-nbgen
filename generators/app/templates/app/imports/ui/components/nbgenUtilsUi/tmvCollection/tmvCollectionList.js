@@ -403,27 +403,27 @@ export class TmvCollectionListBaseCtrl extends TmvCollectionBase {
 
     // click operations may be overriden
     itemClick(event, item, index) {     // eslint-disable-line
-        this.$q.when(this.beforeItemClick && this.beforeItemClick(item, index)).then(() => {
+        Promise.resolve(this.beforeItemClick && this.beforeItemClick(item, index)).then(() => {
             // perform operation when click
             this.gotoForm(item._id, this._getViewMode('view'));
         })
     }
 
     editClick(event, item, index) {     // eslint-disable-line
-        this.$q.when(this.beforeEditClick && this.beforeEditClick(item, index)).then(() => {
+        Promise.resolve(this.beforeEditClick && this.beforeEditClick(item, index)).then(() => {
             this.gotoForm(item._id, this._getViewMode('edit'));
         })
     }
 
     
     deleteClick(event, item, index) {   // eslint-disable-line
-        this.$q.when(this.beforeDeleteClick && this.beforeDeleteClick(item, index)).then(() => {
+        Promise.resolve(this.beforeDeleteClick && this.beforeDeleteClick(item, index)).then(() => {
             this.gotoForm(item._id, this._getViewMode('del'));
         })
     }
 
     addClick(event) {       // eslint-disable-line
-        this.$q.when(this.beforeAddClick && this.beforeAddClick()).then(() => {
+        Promise.resolve(this.beforeAddClick && this.beforeAddClick()).then(() => {
             this.gotoForm('_blank', this._getViewMode('new'));
         })
     }

@@ -106,8 +106,8 @@ App.setPreference('StatusBarStyle', 'lightcontent');
 //     </config-file>
 //   </platform>`);
 
-App.appendToConfig(`
-    <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
-        <application android:usesCleartextTraffic="true" xmlns:android="http://schemas.android.com/apk/res/android"></application>
-    </edit-config>
-`);
+// App.appendToConfig(`
+//     <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+//         <application android:usesCleartextTraffic="true" xmlns:android="http://schemas.android.com/apk/res/android"></application>
+//     </edit-config>
+// `);

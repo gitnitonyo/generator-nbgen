@@ -65,7 +65,7 @@ const supportedBrowsers = [{
 
 
 export default class NbGenAppCtrl {
-    constructor($scope, $mdMedia, $mdSidenav, $reactive, $translate, $state, $q,
+    constructor($scope, $mdMedia, $mdSidenav, $reactive, $translate, $state,
         $translatePartialLoader, $nbgenIdentityService, $nbgenAuthProviderService,
         $tmvUiUtils, $timeout, $authUiService, $rootScope, Language, $tmvUiData, $nbgenChat) {
         'ngInject';
@@ -75,7 +75,6 @@ export default class NbGenAppCtrl {
         this.$mdSidenav = $mdSidenav
         this.$scope = $scope;
         this.$state = $state;
-        this.$q = $q;
 
         this.$identityService = $nbgenIdentityService;
         this.$authProviderService = $nbgenAuthProviderService;
@@ -198,7 +197,7 @@ export default class NbGenAppCtrl {
 
         promises.push(this.$translate.refresh());
 
-        this.$q.all(promises)
+        Promise.all(promises)
             .then(() => {
                 this.requiredResourcesLoaded = true;
             }, (err) => {
@@ -330,5 +329,19 @@ export default class NbGenAppCtrl {
 
     isAuthenticated() {
         return this.$identityService.isAuthenticated()
+    }
+
+    /**
+     * Returns true if config is for horizontal menu
+     */
+    isHorizontalMenu() {
+        return this.$config.isHorizontalMenu
+    }
+
+    /**
+     * Switch to hide menu
+     */
+    hideSideMenu() {
+        return this.$state.current.name === 'nbgenRegister' || this.isHorizontalMenu()
     }
 }

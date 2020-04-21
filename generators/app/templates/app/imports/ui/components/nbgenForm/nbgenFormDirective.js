@@ -22,7 +22,7 @@ const _defaultTabOptions = {
 };
 
 class TmvFormController {
-    constructor($scope, $element, $attrs, $compile, $parse, $templateCache, $q, $mdStepper, $timeout, $mdMedia) {   // eslint-disable-line
+    constructor($scope, $element, $attrs, $compile, $parse, $templateCache, $mdStepper, $timeout, $mdMedia) {   // eslint-disable-line
         'ngInject';
 
         TmvFormUtils.__injectNgServices(this, arguments);

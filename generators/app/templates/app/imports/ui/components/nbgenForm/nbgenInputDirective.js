@@ -25,7 +25,7 @@ const _inputSettings = {
 }
 
 class TmvInputController {
-    constructor($scope, $element, $attrs, $parse, $compile, $q, $translate, $timeout, $interpolate) {
+    constructor($scope, $element, $attrs, $parse, $compile, $translate, $timeout, $interpolate) {
         'ngInject';
 
         this.$scope = $scope;
@@ -33,7 +33,6 @@ class TmvInputController {
         this.$attrs = $attrs;
         this.$parse = $parse;
         this.$compile = $compile;
-        this.$q = $q;
         this.$translate = $translate;
         this.$timeout = $timeout;
         this.$interpolate = $interpolate;
@@ -961,7 +960,7 @@ class TmvInputController {
         } else {
             this._fieldOptions = [ ];
         }
-        return this.$q.when(this._fieldOptions);
+        return Promise.resolve(this._fieldOptions);
     }
 
     __onFocus($event) {

@@ -55,7 +55,7 @@ class FormDialogController extends TmvBaseFormController {
 
 
 angular.module(nbgenUtilsUi)
-.factory('$tmvUiData', function($mdMedia, $interpolate, $mdPanel, $q) {
+.factory('$tmvUiData', function($mdMedia, $interpolate, $mdPanel) {
     'ngInject'
 
     // displays modal dialog for editing the form
@@ -87,12 +87,12 @@ angular.module(nbgenUtilsUi)
         let controller = options.controller || FormDialogController;
 
         let resolve = options.resolve || { }
-        resolve.$options = ['$q', function($q) {
-            return $q((_resolve) => _resolve(options));
+        resolve.$options = [function() {
+            return new Promise((_resolve) => _resolve(options));
         }];
 
-        resolve.$currentItem = ['$q', function($q) {
-            return $q((_resolve) => _resolve(options.formModel))
+        resolve.$currentItem = [function() {
+            return new Promise((_resolve) => _resolve(options.formModel))
         }]
 
         let i18nPart = options.i18nPart || options.i18npart;
@@ -114,7 +114,7 @@ angular.module(nbgenUtilsUi)
             panelClass = 'tmv-full-dialog-template';
         }
 
-        return $q(function(_resolve, _reject) {
+        return new Promise((_resolve, _reject) => {
 
             if (options.cssClass) {
                 panelClass += ' ' + options.cssClass;

@@ -51,6 +51,16 @@
     }
 }
 
+.tmv-collection-list:not(.nbgen-collection-tabular) {
+    .tmv-collection-list-content-wrapper {
+        background-color: rgb(224, 224, 224);
+        .tmv-collection-list-content {
+            @include nbgen-compressed-view();
+            @include card-view();
+        }
+    }
+}
+
 .tmv-collection-form {
     .tmv-collection-form-content-wrapper {
         position: relative;
