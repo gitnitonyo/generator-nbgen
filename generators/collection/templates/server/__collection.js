@@ -7,7 +7,8 @@ import { Meteor } from '../common';
 import { Mongo } from '../common';
 <% } -%>
 
-const collectionName = '<%= collectionName %>';
+export const collectionName = '<%= collectionName %>';
+export const publishName = '<%= collectionName %>';
 
 <% if (collectionName === 'users') { -%>
 export const <%= collection.name %> = Meteor.users;

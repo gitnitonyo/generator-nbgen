@@ -2,7 +2,8 @@
  * Contains data initialization routines for <%= collection.name %> collection
  */
 import { Meteor } from '../common';
-import { <%= collection.name %> } from '.';
+import { EJSON } from '../common';
+import { <%= collection.name %>, collectionName } from '.';
 
 import { COLLECTION_GROUP_FIELD, GLOBAL_GROUP } from '../../common/app.roles';
 
@@ -14,7 +15,7 @@ const indices = [{
     index: {[COLLECTION_GROUP_FIELD]: 1},
 }];
 
-const fileToLoad = 'dataload/<%=collectionName%>.json';
+const fileToLoad = `dataload/${collectionName}.json`;
 /* global Assets */
 
 Meteor.startup(() => {
@@ -26,7 +27,7 @@ Meteor.startup(() => {
         // initial load
         Assets.getText(fileToLoad, function(err, result) {
             if (!err) {
-                let collectionList = JSON.parse(result)
+                let collectionList = EJSON.parse(result)
 
                 collectionList.forEach(function(doc) {
                     if (!doc[COLLECTION_GROUP_FIELD]) {

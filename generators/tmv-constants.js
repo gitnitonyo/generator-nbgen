@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports =  {
+module.exports = {
     meteorDir: '.',
     defaultUILayoutDir: 'imports/ui',
     defaultWebappDir: 'imports/ui',
@@ -13,7 +13,7 @@ module.exports =  {
     meteorCmd: 'meteor',
     componentsDir: 'imports/ui/components',
     uiAppDir: 'imports/ui/app',
-    i18nDir: 'imports/i18n/en',
+    i18nDir: 'imports/ui/i18n/en',
     clientDir: 'imports/ui',
     nbgenAppModuleName: 'nbgenApp',
     mainModuleFile: 'client/main.js',
@@ -21,5 +21,5 @@ module.exports =  {
     nbgenGlobalhjson: 'imports/ui/i18n/en/global.hjson',
     nbgenServerEntryPoint: 'server/main.js',
     commonDir: 'imports/common',
-    meteorRelease: '1.10.1',
+    meteorRelease: '1.10.1'
 };

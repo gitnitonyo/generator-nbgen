@@ -1,14 +1,13 @@
 /**
  * Controls published information for <%= collection.name %> collection
  */
-import { <%= collection.name %> } from '.';
-import { publishCollection } from '../common/publish.js'
+import { <%= collection.name %>, publishName } from '.';
+import { <%= collection.options.isVirtual ? 'publishVirtualCollection' : 'publishCollection' %> } from '../common/publish.js'
 import { COLLECTION_PUBLIC_FIELD, COLLECTION_OWNER_FIELD, COLLECTION_GROUP_FIELD } from '../../common/app.roles'
 import { getActiveGroup } from '../../common/app.roles';
 import { appRoles } from '../../common/app.roles';    // eslint-disable-line
 import { Roles } from '../common';
 
-const publishName = '<%= collectionName %>';
 const collection = <%= collection.name %>;
 const isPublic = <%= !!collection.options.isPublic %>;
 const allowedRoles = [ appRoles.SUPER_ADMIN, appRoles.USER_ADMIN, appRoles.NORMAL_USER ];
@@ -18,7 +17,7 @@ export function viewAllowed(userId) {
     return Roles.userIsInRole(userId, allowedRoles, activeGroup);
 }
 
-publishCollection(publishName, collection, selectorFn, optionsFn, isPublic)
+<%= collection.options.isVirtual ? 'publishVirtualCollection' : 'publishCollection' %>(publishName, collection, selectorFn, optionsFn, isPublic)
 
 // for customizing set selector; you may set application-specific filter here
 // please check publishCollection for default filter

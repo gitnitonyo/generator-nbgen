@@ -84,6 +84,13 @@ _.assign(TmvCollectionGenerator.prototype, {
             }
         },
 
+        askIfVirtual() {
+            if (this.abort) return;
+            if (this.regenerateServer !== false) {
+                this.askForConfirmation('isVirtual', 'Do you want to create virtual collection?', false)
+            }
+        },
+
         askToGenerateUI() {
             if (this.abort) return;
             this.askForConfirmation('generateUI', `Generate UI for ${this.collection.name}?`,
@@ -115,8 +122,9 @@ _.assign(TmvCollectionGenerator.prototype, {
     configuring() {
         if (this.abort) return;
         this.collection.options.serverGenerated = true
-        this.collection.options.generateUI = this.generateUI || this.collection.options.generateUI
-        this.collection.options.isPublic = this.isPublic || this.collection.options.isPublic
+        this.collection.options.generateUI = this.generateUI
+        this.collection.options.isPublic = this.isPublic
+        this.collection.options.isVirtual = this.isVirtual
         this.collection.fields = this.fields;
         this.collections[this.collectionName] = this.collection;
         this.config.set('collections', this.collections);
