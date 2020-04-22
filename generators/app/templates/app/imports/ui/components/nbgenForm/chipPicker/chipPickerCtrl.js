@@ -269,7 +269,9 @@ class ChipPickerCtrl {
                     } else {
                         this.chipsValue = [ item ];
                     }
-                }).finally(() => {
+                })
+                .catch(_.noop)  // ignore cancel
+                .finally(() => {
                     this.$element.find('.chip-picker-input').focus();
                     this._pickerDialogActive = false;
                 });

@@ -104,7 +104,7 @@ export class TmvBaseFormController {
 
     __setupNgServices() {
         _.each(USED_NG_SERVICES, v => {
-            if (!this[v]) {
+            if (v && !this[v]) {
                 this[v] = this.$injector.get(v);
             }
         });

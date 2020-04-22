@@ -7,7 +7,8 @@ var gulp = require('gulp'),
     replace = require('gulp-string-replace'),
     fs = require('fs'),
     appVersion = require('./package.json').version,
-    hjson = require('gulp-hjson')
+    hjson = require('gulp-hjson'),
+    path = require('path')
 
 var extend = require('underscore').extend;
 var series = gulp.series;
@@ -56,7 +57,8 @@ var filePatterns = {
     },
     i18nTransform: {
         srcMatches: [
-            'imports/ui/i18n/**/*.hjson'
+            'imports/ui/i18n/**/*.hjson',
+            'imports/ui/app/**/i18n/**/*.hjson',
         ],
         dest: 'public/i18n',
     }
@@ -161,7 +163,14 @@ gulp.task('i18n-transform', function () {
         .pipe(hjson({
             to: 'json'
         }))
-        .pipe(gulp.dest(filePattern.dest))
+        .pipe(gulp.dest((fileVinyl) => {
+            let currentPath = path.dirname(fileVinyl.path)
+            while (currentPath && path.basename(currentPath) !== 'i18n') {
+                currentPath = path.dirname(currentPath)
+            }
+            fileVinyl.base = currentPath
+            return filePattern.dest;
+        }))
 })
 
 gulp.task('watch', function () {

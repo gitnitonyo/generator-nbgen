@@ -87,13 +87,13 @@ angular.module(nbgenUtilsUi)
         let controller = options.controller || FormDialogController;
 
         let resolve = options.resolve || { }
-        resolve.$options = [function() {
+        resolve.$options = function() {
             return new Promise((_resolve) => _resolve(options));
-        }];
+        };
 
-        resolve.$currentItem = [function() {
+        resolve.$currentItem = function() {
             return new Promise((_resolve) => _resolve(options.formModel))
-        }]
+        }
 
         let i18nPart = options.i18nPart || options.i18npart;
         if (i18nPart) {

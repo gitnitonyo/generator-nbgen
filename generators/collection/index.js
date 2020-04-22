@@ -210,7 +210,7 @@ _.assign(TmvCollectionGenerator.prototype, {
             this.entryPointImportDir = path.relative(targetDir, CONSTANTS.clientDir);
 
             // i18n
-            this.template('client/__collection.hjson', path.join(i18nDir, this.collectionName + '.hjson'))
+            this.template('client/__collection.hjson', path.join(targetDir, 'i18n', 'en', this.collectionName + '.hjson'))
 
             // collection controller js file
             this.template('client/__collection.js', path.join(targetDir, 'collection.js'))

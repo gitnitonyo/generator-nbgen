@@ -32,8 +32,8 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
     $onInit() {
         this.$currentUser = this.getUser();
         this.$parentState = this.$state.current.parent;
-        
-        if (!_.isObject(this.options)) throw "No valid options was passed into tmvCollection list";
+
+        if (!_.isObject(this.options)) throw 'No valid options was passed into tmvCollection list';
 
         this.__initLocalsFunctions();
 
@@ -41,26 +41,33 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
         this._initReactiveData();
 
         // create promises before making the form ready; promises will be chained serially
-        let promises = [ ];
+        let promises = [];
 
         // resolve current item
         promises.push(this._resolveCurrentItem.bind(this));
 
         // old init
-        this.$_origInit = this.$init; this.$init = undefined;
-        this.$_origInitController = this.$initController; this.$initController = undefined;
+        this.$_origInit = this.$init;
+        this.$init = undefined;
+        this.$_origInitController = this.$initController;
+        this.$initController = undefined;
 
         // initialization functions
         promises.push(() => Promise.resolve(this.$_origInit && this.$_origInit()));
         promises.push(() => Promise.resolve(this.$_origInitController && this.$_origInitController()));
 
         // resolve the form schema
-        promises.push(() => Promise.resolve(this.getFormSchema() || this.formSchema || {}).then((schema) => {
-            this.formSchema = schema || this.formSchema || this.options.formSchema;
-            this.translatePrefix = this.translatePrefix || this.formSchema.translatePrefix || this.options.translatePrefix || '';
-            this.__setupInjectedServices([].concat(this.options.injectedServices, this.formSchema.injectedServices));
-            this.__processOptions();
-        }));
+        promises.push(() =>
+            Promise.resolve(this.getFormSchema() || this.formSchema || {}).then((schema) => {
+                this.formSchema = schema || this.formSchema || this.options.formSchema;
+                this.translatePrefix =
+                    this.translatePrefix || this.formSchema.translatePrefix || this.options.translatePrefix || '';
+                this.__setupInjectedServices(
+                    [].concat(this.options.injectedServices, this.formSchema.injectedServices)
+                );
+                this.__processOptions();
+            })
+        );
 
         // check for permission for the operation
         promises.push(() => Promise.resolve(this.checkIfOperationIsAllowed && this.checkIfOperationIsAllowed()));
@@ -79,13 +86,16 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
             promises.push(() => Promise.resolve(this._resolveCreateItem && this._resolveCreateItem()));
         }
 
-        this.$tmvUtils.serialTasks(promises).then(() => {
-            this.isReady = true;
-        }, (e) => {
-            console.log(e)
-            this.isReady = false;
-            this._doCancel();
-        })
+        this.$tmvUtils.serialTasks(promises).then(
+            () => {
+                this.isReady = true;
+            },
+            (e) => {
+                console.log(e);
+                this.isReady = false;
+                this._doCancel();
+            }
+        );
     }
 
     // initialize functions on the options level
@@ -97,43 +107,48 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
             } else {
                 this[k] = v;
             }
-        })
-
+        });
     }
 
     // resolve the current item
     _resolveCurrentItem() {
         return new Promise((_resolve, _reject) => {
             if (this.currentItemFn) {
-                Promise.resolve(this.currentItemFn({options: this.options})).then((item) => {
-                    this.$currentItem = item || this.$currentItem || { };
+                Promise.resolve(this.currentItemFn({ options: this.options })).then((item) => {
+                    this.$currentItem = item || this.$currentItem || {};
                     _resolve(item);
                 });
             } else if (this.isNewMode()) {
                 // it's a new item
-                this.$currentItem = this.$currentItem || { };
+                this.$currentItem = this.$currentItem || {};
                 _resolve(this.$currentItem);
             } else {
-                Promise.resolve(this.getCurrentItem()).then((item) => {
-                    this.$currentItem = item || this.$currentItem;
-                    _resolve(item);
-                }, (err) => _reject(err));
+                Promise.resolve(this.getCurrentItem()).then(
+                    (item) => {
+                        this.$currentItem = item || this.$currentItem;
+                        _resolve(item);
+                    },
+                    (err) => _reject(err)
+                );
             }
-        })
+        });
     }
 
     _resolveCreateItem() {
         return new Promise((_resolve, _reject) => {
             if (this.isNewMode()) {
-                Promise.resolve(this.createItem && this.createItem()).then((item) => {
-                    this.$currentItem = this.$currentItem || { };
-                    _.extend(this.$currentItem, item);
-                    _resolve(this.$currentItem);
-                }, (err) => _reject(err));
+                Promise.resolve(this.createItem && this.createItem()).then(
+                    (item) => {
+                        this.$currentItem = this.$currentItem || {};
+                        _.extend(this.$currentItem, item);
+                        _resolve(this.$currentItem);
+                    },
+                    (err) => _reject(err)
+                );
             } else {
                 _resolve({});
             }
-        })
+        });
     }
 
     checkIfOperationIsAllowed() {
@@ -149,7 +164,7 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
             } else {
                 _reject();
             }
-        })
+        });
     }
 
     insertAllowed() {
@@ -173,7 +188,9 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
      */
     __setupInjectedServices(injectedServices) {
         injectedServices = injectedServices.concat(this.constructor.$inject || []);
-        _.each(injectedServices, v => { if (!this[v]) this[v] = this.$injector.has(v) && this.$injector.get(v) });
+        _.each(injectedServices, (v) => {
+            if (!this[v]) this[v] = this.$injector.has(v) && this.$injector.get(v);
+        });
         this.$identityService = this.$nbgenIdentityService;
     }
 
@@ -192,7 +209,11 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
     }
 
     _getModifierCollection() {
-        let modifierCollection = this.modifierCollection || (this.formSchema && this.formSchema.modifierCollection) || this.options.modifierCollection || this.collection;
+        let modifierCollection =
+            this.modifierCollection ||
+            (this.formSchema && this.formSchema.modifierCollection) ||
+            this.options.modifierCollection ||
+            this.collection;
         if (_.isString(modifierCollection)) {
             modifierCollection = Mongo.Collection.get(modifierCollection);
         }
@@ -212,20 +233,24 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
 
     _performSubscription() {
         if (this.subscription) {
-            this.$subsHandle = this.initSubscription(this.subscription, () => {
-                this.$subscriptionReady = false;
-                return [{_id: this.getReactively('currentItemId')}];
-            }, {
-                onStop(err) {
-                    if (err) {
-                        this.$tmvUiUtils.error(err);
-                    }
-                    this.$subscriptionReady = true;
+            this.$subsHandle = this.initSubscription(
+                this.subscription,
+                () => {
+                    this.$subscriptionReady = false;
+                    return [ { _id: this.getReactively('currentItemId') } ];
                 },
-                onReady() {
-                    this.$subscriptionReady = true;
+                {
+                    onStop(err) {
+                        if (err) {
+                            this.$tmvUiUtils.error(err);
+                        }
+                        this.$subscriptionReady = true;
+                    },
+                    onReady() {
+                        this.$subscriptionReady = true;
+                    }
                 }
-            });
+            );
         }
     }
 
@@ -236,7 +261,7 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
                 this.getReactively('_forceRefresh');
                 let id = this.getReactively('currentItemId');
                 if (!id || this.isNewMode()) return this.$currentItem;
-                const newItem = this.collection.findOne({_id: id});
+                const newItem = this.collection.findOne({ _id: id });
                 if (this.isViewMode()) {
                     return newItem;
                 }
@@ -251,7 +276,7 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
                 this.$previousItem = this.$tmvUiUtils.deepCopy(currentItem);
                 this.editForm && this.editForm.$setPristine();
             }
-        })
+        });
     }
 
     // may be overriden to return custom for schema
@@ -267,16 +292,18 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
 
         let result;
         if (this.isViewMode() || this.isEditMode()) {
-            result = (this.formSchema.detailsView && this.$interpolate(this.formSchema.detailsView)(this.$currentItem)) ||
-                this.$translate.instant(this.translatePrefix + '.home.titleDetails')
+            result =
+                (this.formSchema.detailsView && this.$interpolate(this.formSchema.detailsView)(this.$currentItem)) ||
+                this.$translate.instant(this.translatePrefix + '.home.titleDetails');
         } else if (this.isNewMode()) {
-            result = this.$translate.instant(this.translatePrefix + '.home.createNew')
+            result = this.$translate.instant(this.translatePrefix + '.home.createNew');
         }
         return result;
     }
 
-    hideFormSaveAction(item) { // eslint-disable-line
-        return false
+    // eslint-disable-next-line
+    hideFormSaveAction(item) {
+        return false;
     }
 
     saveDisabled() {
@@ -284,12 +311,10 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
     }
 
     isFormInvalid() {
-        return this.editForm.$invalid
+        return this.editForm.$invalid;
     }
 
-    onCancel() {
-
-    }
+    onCancel() {}
 
     cancel() {
         this.$state.go('^');
@@ -298,26 +323,22 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
     _doCancel() {
         Promise.resolve(this.onCancel && this.onCancel()).then(() => {
             this.cancel && this.cancel();
-        })
+        });
     }
 
-    onClose() {
+    onClose() {}
 
-    }
-
-    close() {
-
-    }
+    close() {}
 
     _doClose() {
         Promise.resolve(this.onClose && this.onClose()).then(() => {
             this.close && this.close();
-        })
+        });
     }
 
     // for creating new item
     initNewItem() {
-        return { };
+        return {};
     }
 
     createItem() {
@@ -331,16 +352,16 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
                 const currentItem = this.getReactively('$currentItem');
                 if (_.isObject(currentItem)) {
                     c.stop();
-                    _resolve(currentItem)
+                    _resolve(currentItem);
                 }
-            })
-        })
+            });
+        });
     }
 
     // crud functions for the modifier collection
     updateDoc(selector, modifier, options, callback) {
         if (!selector) {
-            selector = {_id: this.$currentItem._id};
+            selector = { _id: this.$currentItem._id };
         }
         callback = callback || _.noop;
 
@@ -348,7 +369,7 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
         this.modifierCollection.update(selector, modifier, options, (...args) => {
             this.$timeout(() => this.$tmvUiUtils.hideWaitDialog());
             callback && callback.apply(this, args);
-        })
+        });
     }
 
     insertDoc(doc, callback) {
@@ -362,7 +383,7 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
 
     removeDoc(selector, callback) {
         if (!selector) {
-            selector = {_id: this.$currentItem._id};
+            selector = { _id: this.$currentItem._id };
         }
         callback = callback || _.noop;
         this.$tmvUiUtils.showWaitDialog();
@@ -373,26 +394,39 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
     }
 
     afterInsert() {
-        let message = this.formSchema.insertSuccessMessage !== undefined ? this.formSchema.insertSuccessMessage : 'home.insertSuccess';
+        let message =
+            this.formSchema.insertSuccessMessage !== undefined
+                ? this.formSchema.insertSuccessMessage
+                : 'home.insertSuccess';
         return this.$tmvUiUtils.alert(`tx:${this.translatePrefix}.${message}`);
     }
 
     afterUpdate() {
-        let message = this.formSchema.updateSuccessMessage !== undefined ? this.formSchema.updateSuccessMessage : 'home.updateSuccess';
+        let message =
+            this.formSchema.updateSuccessMessage !== undefined
+                ? this.formSchema.updateSuccessMessage
+                : 'home.updateSuccess';
         return this.$tmvUiUtils.alert(`tx:${this.translatePrefix}.${message}`);
     }
 
     afterRemove() {
-        let message = this.formSchema.removeSuccessMessage !== undefined ? this.formSchema.removeSuccessMessage : 'home.removeSuccess';
+        let message =
+            this.formSchema.removeSuccessMessage !== undefined
+                ? this.formSchema.removeSuccessMessage
+                : 'home.removeSuccess';
         return this.$tmvUiUtils.alert(`tx:${this.translatePrefix}.${message}`);
     }
 
     exitAfterUpdate() {
-        return (this.formSchema.options && this.formSchema.options.exitAfterUpdate) !== undefined ? this.formSchema.options.exitAfterUpdate : true;
+        return (this.formSchema.options && this.formSchema.options.exitAfterUpdate) !== undefined
+            ? this.formSchema.options.exitAfterUpdate
+            : true;
     }
 
     exitAfterInsert() {
-        return (this.formSchema.options && this.formSchema.options.exitAfterInsert) !== undefined ? this.formSchema.options.exitAfterInsert : true;
+        return (this.formSchema.options && this.formSchema.options.exitAfterInsert) !== undefined
+            ? this.formSchema.options.exitAfterInsert
+            : true;
     }
 
     // for sanitizing item before committing to the collection
@@ -403,10 +437,10 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
     __doExcludedFields(itemToSave) {
         let excludedFields = this.excludedFields && this.excludedFields(itemToSave);
         if (excludedFields) {
-            if (_.isString(excludedFields)) excludedFields = [excludedFields];
-            _.each(excludedFields, k => {
+            if (_.isString(excludedFields)) excludedFields = [ excludedFields ];
+            _.each(excludedFields, (k) => {
                 if (itemToSave[k]) delete itemToSave[k];
-            })
+            });
         }
     }
 
@@ -414,9 +448,9 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
         return this.$parse(property)(this.$currentItem);
     }
 
-    _getDirtyFields(formCtrl, forceIncludes = { }, forceExcludes = [ ]) {
-        if (!formCtrl) formCtrl = this.editForm;     // use the default form used by tmvCollection
-        let dirtyFields = { };
+    _getDirtyFields(formCtrl, forceIncludes = {}, forceExcludes = []) {
+        if (!formCtrl) formCtrl = this.editForm; // use the default form used by tmvCollection
+        let dirtyFields = {};
 
         if (this.options.includeAllWhenSaving === true || this.formSchema.includeAllWhenSaving === true) {
             dirtyFields = this.$tmvUiUtils.cleanUpData(this.$currentItem);
@@ -427,8 +461,12 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
                         property = value.$tmvModelName;
                     }
                     // do not include ngModel which has $ as start
-                    if (!property.startsWith('$') && property.indexOf('.$') < 0 &&
-                        forceExcludes.indexOf(property) < 0 && value.$dirty === true) {
+                    if (
+                        !property.startsWith('$') &&
+                        property.indexOf('.$') < 0 &&
+                        forceExcludes.indexOf(property) < 0 &&
+                        value.$dirty === true
+                    ) {
                         dirtyFields[property] = this.__getPropertyValue(property);
                     }
                 }
@@ -440,63 +478,66 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
         return dirtyFields;
     }
 
-    __constructUpdateInstruction(delta, prefix='', setterObj, unsetterObj, item) {
+    __constructUpdateInstruction(delta, prefix = '', setterObj, unsetterObj, item) {
         if (_.isObject(delta) && delta._t === 'a') {
             // it's an array, save the whole array as mongo cannot remove by array index
             let fieldName = prefix;
             if (fieldName.endsWith('.')) {
-                fieldName = fieldName.substr(0, fieldName.length-1);
+                fieldName = fieldName.substr(0, fieldName.length - 1);
             }
             console.log(fieldName);
             setterObj[fieldName] = this.$parse(fieldName)(item);
             return;
         }
         _.each(delta, (value, key) => {
-            if (key === '_t') return;       // ignore array indicator
+            if (key === '_t') return; // ignore array indicator
             if (_.isArray(value)) {
-                if (value.length === 1) {           // it's a new value
+                if (value.length === 1) {
+                    // it's a new value
                     setterObj[`${prefix}${key}`] = value[0];
-                } else if (value.length === 2) {    // it's an update value
+                } else if (value.length === 2) {
+                    // it's an update value
                     setterObj[`${prefix}${key}`] = value[1];
-                } else if (value.length === 3) {    // value was remove
-                    unsetterObj[`${prefix}${key}`] = ''
+                } else if (value.length === 3) {
+                    // value was remove
+                    unsetterObj[`${prefix}${key}`] = '';
                 }
             } else if (_.isObject(value)) {
                 this.__constructUpdateInstruction(value, `${prefix}${key}.`, setterObj, unsetterObj, item);
             }
-        })
+        });
     }
 
     _constructUpdateInstruction(itemToSave) {
         if (this.options.includeAllWhenSaving === true || this.formSchema.includeAllWhenSaving === true) {
-            return {$set: itemToSave}
+            return { $set: itemToSave };
         }
 
         // get delta between old and using jsondiffpatch
         let delta = jsondiffpatch.diff(this.$previousItem, itemToSave),
-            setterObj = { }, unsetterObj = { };
-        if (_.isObject(delta)) delete delta._id;        // remove id from the delta
+            setterObj = {},
+            unsetterObj = {};
+        if (_.isObject(delta)) delete delta._id; // remove id from the delta
         this.__constructUpdateInstruction(delta, '', setterObj, unsetterObj, itemToSave);
 
-        let result = { };
+        let result = {};
         if (!_.isEmpty(setterObj)) {
             result.$set = setterObj;
         }
         if (!_.isEmpty(unsetterObj)) {
             result.$unset = unsetterObj;
         }
-        
+
         return result;
     }
 
     // will save the
     saveDetails(exitAfter, cb) {
-        let when = Promise.resolve;
         if (this.isNewMode()) {
             // call the before insert event first inserting; it can be used to transform item for saving
-            when(this.beforeInsert && this.beforeInsert(this.$currentItem)).then((item) => {
+            Promise.resolve(this.beforeInsert && this.beforeInsert(this.$currentItem)).then((item) => {
                 item = item || this.$currentItem;
-                let itemToSave = this.__sanitizeItem(item, true);       // clean up the item to save
+                let itemToSave = this.__sanitizeItem(item, true); // clean up the item to save
 
                 // check if there are properties to be excluded from the fields
                 this.__doExcludedFields(itemToSave);
@@ -510,15 +551,15 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
                             this.$tmvUiUtils.error(err);
                         }
                     } else {
-                        this.editForm.$setPristine();   // clean form data
-                        this.$previousItem = { }        // reset previous item
+                        this.editForm.$setPristine(); // clean form data
+                        this.$previousItem = {}; // reset previous item
                         this.currentItemId = itemToSave._id = _id;
                         if (cb) {
-                            cb(itemToSave)
+                            cb(itemToSave);
                         } else {
-                            when(this.afterInsert && this.afterInsert(itemToSave)).then(() => {
+                            Promise.resolve(this.afterInsert && this.afterInsert(itemToSave)).then(() => {
                                 if (exitAfter !== false && this.exitAfterInsert()) {
-                                    this._doCancel({action: 'insert'});
+                                    this._doCancel({ action: 'insert' });
                                 } else {
                                     // turn the form into edit mode
                                     this.turnToEditMode();
@@ -526,49 +567,52 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
                             });
                         }
                     }
-                })
-            })
+                });
+            });
         } else {
             let itemToSave = this.$tmvUiUtils.cleanUpData(this.$currentItem);
             this.__doExcludedFields(itemToSave);
-            when(this.beforeUpdate && this.beforeUpdate(this.$currentItem, itemToSave)).then((item) => {
+            Promise.resolve(this.beforeUpdate && this.beforeUpdate(this.$currentItem, itemToSave)).then((item) => {
                 itemToSave = item || itemToSave;
                 let updateInstruction = this._constructUpdateInstruction(itemToSave);
-                this.updateDoc({_id: this.currentItemId}, updateInstruction, {}, (err) => {
+                this.updateDoc({ _id: this.currentItemId }, updateInstruction, {}, (err) => {
                     if (err) {
                         if (this.updateError) {
-                            this.updateError(err)
+                            this.updateError(err);
                         } else {
                             // by default display the error message
                             this.$tmvUiUtils.error(err);
                         }
                     } else {
-                        this.editForm.$setPristine();   // clean the form
+                        this.editForm.$setPristine(); // clean the form
                         this.$previousItem = this.$tmvUiUtils.deepCopy(this.$currentItem);
                         if (cb) {
                             cb(itemToSave, updateInstruction);
                         } else {
-                            when(this.afterUpdate && this.afterUpdate(this.$currentItem, itemToSave)).then(() => {
+                            Promise.resolve(
+                                this.afterUpdate && this.afterUpdate(this.$currentItem, itemToSave)
+                            ).then(() => {
                                 if (exitAfter !== false && this.exitAfterUpdate()) {
-                                    this._doCancel({action: 'update'});
+                                    this._doCancel({ action: 'update' });
                                 }
                             });
                         }
                     }
-                })
-            })
+                });
+            });
         }
     }
 
     removeItem() {
         let formSchema = this.formSchema || this.options.formSchema;
-        let translatePrefix = this.translatePrefix || (formSchema && formSchema.translatePrefix) || this.options.translatePrefix || '';
+        let translatePrefix =
+            this.translatePrefix || (formSchema && formSchema.translatePrefix) || this.options.translatePrefix || '';
 
-        let confirmMessage = formSchema.confirmDeleteMessage || `${translatePrefix}.home.deleteConfirmation`
-        confirmMessage = this.$translate.instant(confirmMessage)
+        let confirmMessage = formSchema.confirmDeleteMessage || `${translatePrefix}.home.deleteConfirmation`;
+        confirmMessage = this.$translate.instant(confirmMessage);
         this.$tmvUiUtils.confirm(confirmMessage).then(() => {
             Promise.resolve(this.beforeRemove && this.beforeRemove()).then(() => {
-                this.removeDoc({_id: this.currentItemId}, (err) => {
+                this.removeDoc({ _id: this.currentItemId }, (err) => {
                     if (err) {
                         if (this.removeError) {
                             this.removeError(err);
@@ -579,19 +623,31 @@ export class TmvCollectionFormBaseCtrl extends TmvCollectionBase {
                     } else {
                         this.afterRemove && this.afterRemove(this.$currentItem);
                     }
-                })
-            })
-        })
+                });
+            });
+        });
     }
 
-    isNewMode() { return this.viewMode === 'new'; }
+    isNewMode() {
+        return this.viewMode === 'new';
+    }
 
-    isEditMode() { return this.viewMode === 'edit'; }
+    isEditMode() {
+        return this.viewMode === 'edit';
+    }
 
-    isViewMode() { return this.viewMode === 'view'; }
+    isViewMode() {
+        return this.viewMode === 'view';
+    }
 
-    isDeleteMode() { return this.viewMode == 'del'; }
+    isDeleteMode() {
+        return this.viewMode == 'del';
+    }
 
-    turnToEditMode() { this.viewMode = 'edit'; }
-    turnToViewMode() { this.viewMode = 'view'; }
+    turnToEditMode() {
+        this.viewMode = 'edit';
+    }
+    turnToViewMode() {
+        this.viewMode = 'view';
+    }
 }
