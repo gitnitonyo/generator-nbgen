@@ -83,15 +83,15 @@ _.assign(TmvGenerator.prototype, {
 
             this.templateLocation = path.join(destdir, this.componentName + '.html')
 
-            this.template('__ngcomponent.html', this.templateLocation);
-            this.template('__ngcomponent.js', path.join(destdir, this.componentName + 'Ctrl.js'))
-            this.template('__ngcomponentConfig.js', path.join(destdir, this.componentName + 'Config.js'))
-            this.template('__ngcomponent.scss', path.join(destdir, '_' + this.componentName + '.scss'))
+            this.template('__ngcomponent.html.ejs', this.templateLocation);
+            this.template('__ngcomponent.js.ejs', path.join(destdir, this.componentName + 'Ctrl.js'))
+            this.template('__ngcomponentConfig.js.ejs', path.join(destdir, this.componentName + 'Config.js'))
+            this.template('__ngcomponent.scss.ejs', path.join(destdir, '_' + this.componentName + '.scss'))
             if (this.generateState) {
                 // i18n file
-                this.template('__ngcomponent.hjson', path.join(CONSTANTS.i18nDir, this.componentName + '.hjson'))
-                this.template('__ngcomponentState.html', path.join(destdir, this.componentName + 'State.html'))
-                this.template('__ngcomponentState.js', path.join(destdir, this.componentName + 'State.js'))
+                this.template('__ngcomponent.hjson.ejs', path.join(destdir, 'i18n/en', this.componentName + '.hjson'))
+                this.template('__ngcomponentState.html.ejs', path.join(destdir, this.componentName + 'State.html'))
+                this.template('__ngcomponentState.js.ejs', path.join(destdir, this.componentName + 'State.js'))
             }
         },
 

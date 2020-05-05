@@ -53,7 +53,7 @@ _.assign(TmvCollectionGenerator.prototype, {
 
         this.iconClass = this.collection.options.iconClass || this.options.iconClass || 'mdi-package'
     },
-    
+
     prompting: {
         // checkForNewVersion: function() {
         //    if (this.abort) return;
@@ -96,7 +96,7 @@ _.assign(TmvCollectionGenerator.prototype, {
             this.askForConfirmation('generateUI', `Generate UI for ${this.collection.name}?`,
                 !(this.collection.options && this.collection.options.generateUI))
         },
-        
+
         askForFields() {
             if (this.abort) return;
             if (this.generateUI) {
@@ -148,10 +148,10 @@ _.assign(TmvCollectionGenerator.prototype, {
 
             // write the server files
             this.serverDest = path.join(CONSTANTS.defaultServerDir, '', this.collectionName)
-            this.template('server/__collection.js', path.join(this.serverDest, 'index.js'))
+            this.template('server/__collection.js.ejs', path.join(this.serverDest, 'index.js'))
 
             files.forEach((filename) => {
-                this.template(`server/__${filename}`, path.join(this.serverDest, filename))
+                this.template(`server/__${filename}.ejs`, path.join(this.serverDest, filename))
             })
 
             this.serverIsGenerated = true;
@@ -210,33 +210,33 @@ _.assign(TmvCollectionGenerator.prototype, {
             this.entryPointImportDir = path.relative(targetDir, CONSTANTS.clientDir);
 
             // i18n
-            this.template('client/__collection.hjson', path.join(targetDir, 'i18n', 'en', this.collectionName + '.hjson'))
+            this.template('client/__collection.hjson.ejs', path.join(targetDir, 'i18n', 'en', this.collectionName + '.hjson'))
 
             // collection controller js file
-            this.template('client/__collection.js', path.join(targetDir, 'collection.js'))
+            this.template('client/__collection.js.ejs', path.join(targetDir, 'collection.js'))
 
             // configuration js file
-            this.template('client/__collectionConfig.js', path.join(targetDir, 'config.js'))
+            this.template('client/__collectionConfig.js.ejs', path.join(targetDir, 'config.js'))
 
             // listLayout js file
-            this.template('client/__listLayout.js', path.join(targetDir, 'listLayout.js'))
+            this.template('client/__listLayout.js.ejs', path.join(targetDir, 'listLayout.js'))
 
             // formSchema js file
-            this.template('client/__formSchema.js', path.join(targetDir, 'formSchema.js'))
+            this.template('client/__formSchema.js.ejs', path.join(targetDir, 'formSchema.js'))
 
             // setup js file
-            this.template('client/__collectionSetup.js', path.join(targetDir, 'setup.js'))
+            this.template('client/__collectionSetup.js.ejs', path.join(targetDir, 'setup.js'))
 
             // collection-specific styles
-            this.template('client/___collection.scss', path.join(targetDir, '_' + this.collectionName + '.scss'))
+            this.template('client/___collection.scss.ejs', path.join(targetDir, '_' + this.collectionName + '.scss'))
 
             // main entry point for this module
-            this.template('client/__index.js', path.join(targetDir, 'index.js'));
+            this.template('client/__index.js.ejs', path.join(targetDir, 'index.js'));
 
             // action toolbar templates
             if (this.generateToolbar === true) {
-                this.template('client/__actionToolbarFormView.html', path.join(targetDir, 'actionToolbarFormView.html'));
-                this.template('client/__actionToolbarListView.html', path.join(targetDir, 'actionToolbarListView.html'));
+                this.template('client/__actionToolbarFormView.html.ejs', path.join(targetDir, 'actionToolbarFormView.html'));
+                this.template('client/__actionToolbarListView.html.ejs', path.join(targetDir, 'actionToolbarListView.html'));
             }
 
             this.clientIsGenerated = true;
