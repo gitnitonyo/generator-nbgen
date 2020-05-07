@@ -1,13 +1,13 @@
 /**
- * Declares the <%= collection.name %> Mongo collection here.
- */
+* Declares the <%= collection.name %> Mongo collection here.
+*/
 <% if (collectionName === 'users') { -%>
 import { Meteor } from '../common';
 <% } else { -%>
 import { Mongo } from '../common';
 <% } -%>
 
-export const collectionName = '<%= collectionName %>';
+export const collectionName = '_<%= collectionName %>';
 export const publishName = '<%= collectionName %>';
 
 <% if (collectionName === 'users') { -%>
