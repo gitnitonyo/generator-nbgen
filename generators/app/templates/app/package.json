@@ -83,7 +83,7 @@
     "gulp-hjson": "^2.4.3",
     "gulp-inject": "^5.0.5",
     "gulp-string-replace": "^1.1.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "node-sass": "^4.13.1"
   },
   "babel": {
