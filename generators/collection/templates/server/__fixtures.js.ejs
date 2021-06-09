@@ -3,7 +3,7 @@
  */
 import { Meteor } from '../common';
 import { EJSON } from '../common';
-import { <%= collection.name %>, collectionName } from '.';
+import { <%= collection.name %>, publishName } from '.';
 
 import { COLLECTION_GROUP_FIELD, GLOBAL_GROUP } from '../../common/app.roles';
 
@@ -15,7 +15,7 @@ const indices = [{
     index: {[COLLECTION_GROUP_FIELD]: 1},
 }];
 
-const fileToLoad = `dataload/${collectionName}.json`;
+const fileToLoad = `dataload/${publishName}.json`;
 /* global Assets */
 
 Meteor.startup(() => {

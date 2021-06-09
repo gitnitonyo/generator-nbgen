@@ -85,8 +85,4 @@ export const PERMISSIONS = {
     }
 }
 
-<%_ if (collection.options.isVirtual) { _%>
 <%= collection.name %>.allow(false)
-<%_ } else { _%>
-<%= collection.name %>.allow(PERMISSIONS)
-<%_ } _%>

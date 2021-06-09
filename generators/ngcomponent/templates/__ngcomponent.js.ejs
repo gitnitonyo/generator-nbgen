@@ -1,6 +1,5 @@
 import angular from 'angular';
 
-import config from './<%= componentName %>Config.js';
 import template from './<%= componentName %>.html';
 import moduleName from '../nbgenApp';
 
@@ -10,29 +9,32 @@ const controllerAs = '$tmvCollection';
 class <%= controllerName %> {
     constructor() {
         'ngInject';
-
-        this.$config = config
     }
 
     $onInit() {
         // all controllers have been initialized
     }
 
-    $onDestroy() {
-        // scope is about to be destroyed; do cleanup
-    }
+    // uncomment if needed
+    // for cleanup
+    // $onDestroy() {
+    // }
 
-    $postLink() {
-        // all elements have been linked
-    }
+    // uncomment if needed
+    // codes to be executed once all elements have been linked
+    // $postLink() {
+    // }
 
-    $onChanges(changesObj) {    // eslint-disable-line
+    // uncomment if needed
+    // called whenever there are changes on bound parameters
+    // $onChanges(changesObj) {
+    // }
 
-    }
-
-    $doCheck() {
-
-    }
+    // uncomment if needed
+    // called every angular digest cycle
+    // $doCheck() {
+    //
+    // }
 }
 
 angular.module(moduleName)
